@@ -1,7 +1,23 @@
 security:
+
+    encoders:
+        App\Entity\ParentUser:
+            algorithm: bcrypt
+        App\Entity\ChildUser:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+#        in_memory: { memory: ~ }
+        parent_user_provider:
+            entity:
+                class: App:ParentUser
+                property: email
+        child_user_provider:
+            entity:
+                class: App:ChildUser
+                property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
