@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,21 @@ class ChildUser
      * @ORM\Column(type="integer")
      */
     private $exp;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ParentUser", inversedBy="children", cascade={"persist"})
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Quest", mappedBy="child")
+     */
+    private $quests;
+
+    public function __construct()
+    {
+        $this->quests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +85,49 @@ class ChildUser
     public function setExp(int $exp): self
     {
         $this->exp = $exp;
+
+        return $this;
+    }
+
+    public function getParent(): ?ParentUser
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?ParentUser $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quest[]
+     */
+    public function getQuests(): Collection
+    {
+        return $this->quests;
+    }
+
+    public function addQuest(Quest $quest): self
+    {
+        if (!$this->quests->contains($quest)) {
+            $this->quests[] = $quest;
+            $quest->setChild($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuest(Quest $quest): self
+    {
+        if ($this->quests->contains($quest)) {
+            $this->quests->removeElement($quest);
+            // set the owning side to null (unless already changed)
+            if ($quest->getChild() === $this) {
+                $quest->setChild(null);
+            }
+        }
 
         return $this;
     }

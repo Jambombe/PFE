@@ -51,6 +51,16 @@ class Quest
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ParentUser", inversedBy="quests", cascade={"persist"})
+     */
+    private $owner;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildUser", inversedBy="quests")
+     */
+    private $child;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +146,30 @@ class Quest
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOwner(): ?ParentUser
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?ParentUser $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getChild(): ?ChildUser
+    {
+        return $this->child;
+    }
+
+    public function setChild(?ChildUser $child): self
+    {
+        $this->child = $child;
 
         return $this;
     }
