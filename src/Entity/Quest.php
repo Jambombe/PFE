@@ -1,0 +1,142 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\QuestRepository")
+ */
+class Quest
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=2047, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $daily;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $assignatedDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $returnDate;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $limitTime;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDaily(): ?\DateTimeInterface
+    {
+        return $this->daily;
+    }
+
+    public function setDaily(?\DateTimeInterface $daily): self
+    {
+        $this->daily = $daily;
+
+        return $this;
+    }
+
+    public function getAssignatedDate(): ?\DateTimeInterface
+    {
+        return $this->assignatedDate;
+    }
+
+    public function setAssignatedDate(?\DateTimeInterface $assignatedDate): self
+    {
+        $this->assignatedDate = $assignatedDate;
+
+        return $this;
+    }
+
+    public function getReturnDate(): ?\DateTimeInterface
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(?\DateTimeInterface $returnDate): self
+    {
+        $this->returnDate = $returnDate;
+
+        return $this;
+    }
+
+    public function getLimitTime(): ?\DateTimeInterface
+    {
+        return $this->limitTime;
+    }
+
+    public function setLimitTime(?\DateTimeInterface $limitTime): self
+    {
+        $this->limitTime = $limitTime;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+}
