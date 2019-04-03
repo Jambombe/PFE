@@ -25,6 +25,11 @@ class ChildUser
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
+
+    /**
      * @ORM\Column(type="string", length=1023)
      */
     private $password;

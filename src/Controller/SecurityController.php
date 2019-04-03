@@ -71,17 +71,22 @@ class SecurityController extends AbstractController
                 $user->setRoles(array('ROLE_USER_PENDING'))->setEmail($user->getEmail())->setEmailToken($emailToken);
                 $isSend = $userEmailService->sendValidationEmail($user);
             }
-//
+
 //            // 5) Sauvegarder l'utilisateur
             $em->persist($user);
             $em->flush();
-//
-//            // 6) On authentifie l'utilisateur directement
-//            // afin de lui éviter de saisir à nouveau ses identifiants
-              // Alors NON parce que l'email est pas vérifiée
-////            $this->authenticateUser($user);
-//
-//            return $this->redirectToRoute('home');
+
+//            $this->render(
+//                'global/alert-modal.html.twig',
+//                [
+//                    'title' => "Vous êtes inscris !",
+//                    'message' => "Veillez valider votre compte à l'aide de le-mail envoyé à l'adresse saisie.",
+//                    'type' => "success"
+//                ]
+//            );
+
+            // Confirmer inscription + prévenir envoi mail
+            return $this->redirectToRoute('home');
         }
 
         return $this->render(
@@ -110,10 +115,13 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render('/Security/Login/login.html.twig', array(
-                'last_username' => $lastUsername,
-                'error' => $error,
-        ));
+        return $this->render(
+            '/security/loginTMP.html.twig',
+            [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            ]
+        );
     }
 
     /**
@@ -128,14 +136,15 @@ class SecurityController extends AbstractController
 
     /**
      * Affiche un formulaire pour redéfinir son MDP, et envoie un email de redéfinition du mdp
-     * 
+     *
      * @Route("/lostpassword", name="lostpassword")
-     * 
+     *
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param Swift_Mailer $mailer
-     * 
-     * @return Response     
+     *
+     * @return Response
+     * @throws \Exception
      */
     public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, Swift_Mailer $mailer)
     {
@@ -238,7 +247,7 @@ class SecurityController extends AbstractController
     /**
      * Valide un email depuis le lien de validation
      * 
-     * @Route("/validateemail/{emailTemp}/{emailToken}", name="validateemail")
+     * @Route("/validate/{emailTemp}/{emailToken}", name="validateemail")
      * 
      * @param Request $request
      * @param EntityManagerInterface $em

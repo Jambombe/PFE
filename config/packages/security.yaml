@@ -3,6 +3,7 @@ security:
     encoders:
         App\Entity\ParentUser:
             algorithm: bcrypt
+
         App\Entity\ChildUser:
             algorithm: bcrypt
 
@@ -16,14 +17,30 @@ security:
         child_user_provider:
             entity:
                 class: App:ChildUser
-                property: email
+                property: pseudo
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             anonymous: true
+            access_denied_url: /accessdenied
+            pattern:   ^/
+#            anonymous: true
+            logout_on_user_change: true
+            provider:  parent_user_provider
+            form_login:
+                check_path: login
+                login_path: login
+                default_target_path: home
+            logout:
+                path: /logout
+                target: /
+
+#        dashboard:
+
 
             # activate different ways to authenticate
 
@@ -38,3 +55,5 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

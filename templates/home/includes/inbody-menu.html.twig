@@ -5,15 +5,16 @@
 <div class="ui container">
     <div class="ui large secondary inverted pointing menu">
         <a class="toc item"><i class="sidebar icon"></i></a>
-        <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item">Accueil1</a>
+        <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil1</a>
         <a class="item">Work</a>
         <a class="item">Company</a>
         <a class="item">Careers</a>
         <div class="right item">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-{#                <b>{{ app.user.firstname }} {{ app.user.lastname }}</b>#}
+                <a class="ui inverted labeled icon button blue"><i class="user icon"></i>{{ app.user.name }}</a>
+                <a class="ui inverted icon button" href="{{ path('logout') }}"><i class="sign-out icon"></i></a>
             {% else %}
-                <a class="ui inverted button">Connexion</a>
+                <a class="ui inverted button" href="{{ path('login') }}">Connexion</a>
                 <a class="ui inverted button" href="{{ path('register') }}">Inscription</a>
             {% endif %}
         </div>

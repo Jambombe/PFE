@@ -75,6 +75,12 @@ body {
     display: none;
 }
 
+div.error-msg {
+    color: #c00 !important;
+    border: 1px solid #c00;
+    border-radius: 1px;
+}
+
 @media only screen and (max-width: 700px) {
     .ui.fixed.menu {
         display: none !important;
@@ -102,4 +108,4 @@ body {
         margin-top: 0.5em;
         font-size: 1.5em;
     }
-}
+} /* FIN MEDIA SCREEN */
