@@ -15,3 +15,10 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    assets:
+        packages:
+            cst_css:
+                base_path: 'assets/css/'
+            home_img:
+                base_path: 'assets/img/home/'
