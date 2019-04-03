@@ -27,6 +27,9 @@ class ParentUser implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide",
+     * )
      */
     private $email;
 
@@ -42,6 +45,10 @@ class ParentUser implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=1023)
+     * @Assert\Length(
+     *     min=8,
+     *     minMessage="Le mot de passe doit être de {{limit}} caractères minimum"
+     * )
      */
     private $password;
 
@@ -84,23 +91,12 @@ class ParentUser implements UserInterface, \Serializable
         $this->setRoles(['ROLE_USER']);
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
+//////////
     public function getName(): ?string
     {
         return $this->name;
@@ -112,7 +108,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     public function getEmail(): ?string
     {
         return $this->email;
@@ -124,7 +120,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     public function getPassword(): ?string
     {
         return $this->password;
@@ -136,7 +132,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     /**
      * @return Collection|ChildUser[]
      */
@@ -167,7 +163,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     /**
      * @return Collection|Quest[]
      */
@@ -198,7 +194,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
@@ -233,25 +229,6 @@ class ParentUser implements UserInterface, \Serializable
     }
 
     /**
-     * Returns the roles granted to the user.
-     *
-     *     public function getRoles()
-     *     {
-     *         return ['ROLE_USER'];
-     *     }
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
      * Returns the salt that was originally used to encode the password.
      *
      * This can return null if the password was not encoded using a salt.
@@ -282,7 +259,7 @@ class ParentUser implements UserInterface, \Serializable
     public function eraseCredentials()
     {
     }
-
+//////////
     public function getEmailToken(): ?string
     {
         return $this->emailToken;
@@ -294,13 +271,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
+//////////
 
     public function setPlainPassword($password) {
         $this->plainPassword = $password;
@@ -310,7 +281,7 @@ class ParentUser implements UserInterface, \Serializable
     public function getPlainPassword() {
         return $this->plainPassword;
     }
-
+//////////
     public function getLostPasswordToken(): ?string
     {
         return $this->lostPasswordToken;
@@ -322,7 +293,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     public function getLostPasswordDate(): ?\DateTimeInterface
     {
         return $this->lostPasswordDate;
@@ -334,7 +305,7 @@ class ParentUser implements UserInterface, \Serializable
 
         return $this;
     }
-
+//////////
     /**
      * Add a role
      *
@@ -361,6 +332,32 @@ class ParentUser implements UserInterface, \Serializable
         if(in_array($role, $roles)){
             $this->setRoles(array_diff($roles, array($role)));
         }
+
+        return $this;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }

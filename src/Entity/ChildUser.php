@@ -26,11 +26,19 @@ class ChildUser
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage="Le nom d'aventurier doit être de {{limit}} caractères minimum"
+     * )
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=1023)
+     * @Assert\Length(
+     *     min=8,
+     *     minMessage="Le mot de passe doit être de {{limit}} caractères minimum"
+     * )
      */
     private $password;
 
