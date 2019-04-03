@@ -26,7 +26,7 @@ class ParentUser implements UserInterface, \Serializable
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -300,6 +300,15 @@ class ParentUser implements UserInterface, \Serializable
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function setPlainPassword($password) {
+        $this->plainPassword = $password;
+        return $this;
+    }
+
+    public function getPlainPassword() {
+        return $this->plainPassword;
     }
 
     public function getLostPasswordToken(): ?string

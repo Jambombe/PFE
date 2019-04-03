@@ -5,6 +5,7 @@ use App\Service\Security\UserEmailService;
 use App\Form\RegisterUserType;
 use App\Form\ResetPasswordType;
 use App\Entity\ParentUser;
+use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class SecurityController extends AbstractController
     /**
      * Use this function to authenticate a User "manually"
      * 
-     * @param User $user
+     * @param ParentUser $user
      */
 
     private function authenticateUser(ParentUser $user)
@@ -35,17 +36,20 @@ class SecurityController extends AbstractController
 
     /**
      * Permet d'enregistrer un nouvel utilisateur
-     * 
-     * @Route("/register", name="register")     
-     * 
+     *
+     * @Route("/register", name="register")
+     *
      * @param Request $request
-     * @param EntityManagerInterface $em     
+     * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserEmailService $userEmailService
-     * 
+     *
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function registerAction(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, UserEmailService $userEmailService)
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, UserEmailService $userEmailService)
     {
         // 1) Construire le form User
         $user = new ParentUser();
@@ -53,33 +57,38 @@ class SecurityController extends AbstractController
 
         // 2) Hydrater l'objet User
         $registerForm->handleRequest($request);
+
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
 
             // 3) Encoder le mdp
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-
-            // 4) Faut-il valider l'email ? (boolean dans le fichier parameters.yml)
+//
+//            // 4) Faut-il valider l'email ? (boolean dans le fichier parameters.yml)
             $needEmailValidation = $this->getParameter('verify_email_after_registration');
             if ($needEmailValidation) {
                 $emailToken = md5(uniqid());
-                $user->setRoles(array('ROLE_USER_PENDING'))->setEmailTemp($user->getEmail())->setEmailToken($emailToken);
-                $userEmailService->sendValidationEmail($user);
+                $user->setRoles(array('ROLE_USER_PENDING'))->setEmail($user->getEmail())->setEmailToken($emailToken);
+                $isSend = $userEmailService->sendValidationEmail($user);
             }
-
-            // 5) Sauvegarder l'utilisateur
+//
+//            // 5) Sauvegarder l'utilisateur
             $em->persist($user);
             $em->flush();
-
-            // 6) On authentifie l'utilisateur directement
-            // afin de lui éviter de saisir à nouveau ses identifiants
-            $this->authenticateUser($user);
-
-            return $this->redirectToRoute('dashboard');
+//
+//            // 6) On authentifie l'utilisateur directement
+//            // afin de lui éviter de saisir à nouveau ses identifiants
+              // Alors NON parce que l'email est pas vérifiée
+////            $this->authenticateUser($user);
+//
+//            return $this->redirectToRoute('home');
         }
 
         return $this->render(
-                '/Security/Register/register.html.twig', array('registerForm' => $registerForm->createView())
+                'security/registerTMP.html.twig',
+                [
+                    'registerForm' => $registerForm->createView(),
+                ]
         );
     }
 
@@ -93,7 +102,7 @@ class SecurityController extends AbstractController
      * 
      * @return Response
      */
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
+    public function login(Request $request, AuthenticationUtils $authUtils)
     {
         // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
@@ -112,7 +121,7 @@ class SecurityController extends AbstractController
      * 
      * @Route("/logout", name="logout")
      */
-    public function logoutAction()
+    public function logout()
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
@@ -128,7 +137,7 @@ class SecurityController extends AbstractController
      * 
      * @return Response     
      */
-    public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, \Swift_Mailer $mailer)
+    public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, Swift_Mailer $mailer)
     {
         $userMail = $request->get('email');
         $responseParams = [];
@@ -237,13 +246,12 @@ class SecurityController extends AbstractController
      * 
      * @return Response
      */
-    public function validateEmailAction(Request $request, EntityManagerInterface $em, ParentUser $user = null)
+    public function validateEmail(Request $request, EntityManagerInterface $em, ParentUser $user = null)
     {
 
         if ($user) {
-            $user->setEmail($user->getEmailTemp())
+            $user->setEmail($user->getEmail())
                 ->setEmailToken(null)
-                ->setEmailTemp(null)
                 ->addRole('ROLE_USER')
                 ->removeRole('ROLE_USER_PENDING');
             $em->flush();
@@ -253,7 +261,7 @@ class SecurityController extends AbstractController
                 "success", "Email validé avec succès"
             );
 
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('home');
         }
 
         $this->addFlash(
@@ -273,7 +281,7 @@ class SecurityController extends AbstractController
      * 
      * @return Response
      */
-    public function accessDeniedAction(Request $request, UserEmailService $userEmailService)
+    public function accessDenied(Request $request, UserEmailService $userEmailService)
     {
 
         if ($request->get('resendEmailValidation') == 1) {

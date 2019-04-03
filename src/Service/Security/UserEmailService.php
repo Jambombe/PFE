@@ -2,6 +2,8 @@
 
 namespace App\Service\Security;
 
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Entity\ParentUser;
 
@@ -16,7 +18,7 @@ class UserEmailService
     private $urlGenerator;
     private $twig;
     
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, string $mailerUser)
+    public function __construct(Swift_Mailer $mailer, \Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, string $mailerUser = 'lucas.barneoudarnaud@gmail.com')
     {
         $this->mailer = $mailer;
         $this->mailerUser = $mailerUser;
@@ -40,12 +42,12 @@ class UserEmailService
             return false;
         }
         
-        $message = (new \Swift_Message('Validation email'))
+        $message = (new Swift_Message('Validation email'))
             ->setFrom($this->mailerUser)
             ->setTo($user->getEmail())
             ->setBody(
             $this->twig->render(
-                '/Security/Email/emailvalidation-email.html.twig', array('link' => $this->urlGenerator->generate('validateemail', ['emailToken' => $user->getEmailToken(), 'emailTemp' => $user->getEmail()], UrlGeneratorInterface::ABSOLUTE_URL))
+                '/security/validation-email.html.twig', array('link' => $this->urlGenerator->generate('validateemail', ['emailToken' => $user->getEmailToken(), 'emailTemp' => $user->getEmail()], UrlGeneratorInterface::ABSOLUTE_URL))
             ), 'text/html'
             )
         ;
