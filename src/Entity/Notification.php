@@ -31,6 +31,16 @@ class Notification
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildUser", inversedBy="notifications")
+     */
+    private $childUsers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ParentUser", inversedBy="notifications")
+     */
+    private $parentUsers;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +78,30 @@ class Notification
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getChildUsers(): ?ChildUser
+    {
+        return $this->childUsers;
+    }
+
+    public function setChildUsers(?ChildUser $childUsers): self
+    {
+        $this->childUsers = $childUsers;
+
+        return $this;
+    }
+
+    public function getParentUsers(): ?ParentUser
+    {
+        return $this->parentUsers;
+    }
+
+    public function setParentUsers(?ParentUser $parentUsers): self
+    {
+        $this->parentUsers = $parentUsers;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\QuestStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,6 +62,11 @@ class Quest
      * @ORM\ManyToOne(targetEntity="ChildUser", inversedBy="quests")
      */
     private $child;
+
+    public function __construct()
+    {
+        $this->status = QuestStatus::CREATED;
+    }
 
     public function getId(): ?int
     {

@@ -84,10 +84,16 @@ class ParentUser implements UserInterface, \Serializable
      */
     private $oldPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="parentUsers", cascade={"remove"})
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->quests = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
         $this->setRoles(['ROLE_USER']);
     }
 
@@ -358,6 +364,37 @@ class ParentUser implements UserInterface, \Serializable
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setParentUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getParentUsers() === $this) {
+                $notification->setParentUsers(null);
+            }
+        }
 
         return $this;
     }

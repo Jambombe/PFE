@@ -57,9 +57,21 @@ class ChildUser
      */
     private $quests;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Trophy", inversedBy="children")
+     */
+    private $trophies;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="childUsers", cascade={"remove"})
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->quests = new ArrayCollection();
+        $this->trophies = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +152,75 @@ class ChildUser
             // set the owning side to null (unless already changed)
             if ($quest->getChild() === $this) {
                 $quest->setChild(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trophy[]
+     */
+    public function getTrophies(): Collection
+    {
+        return $this->trophies;
+    }
+
+    public function addTrophy(Trophy $trophy): self
+    {
+        if (!$this->trophies->contains($trophy)) {
+            $this->trophies[] = $trophy;
+        }
+
+        return $this;
+    }
+
+    public function removeTrophy(Trophy $trophy): self
+    {
+        if ($this->trophies->contains($trophy)) {
+            $this->trophies->removeElement($trophy);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setChildUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getChildUsers() === $this) {
+                $notification->setChildUsers(null);
             }
         }
 
