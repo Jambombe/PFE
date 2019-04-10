@@ -22,3 +22,5 @@ framework:
                 base_path: 'assets/css/'
             home_img:
                 base_path: 'assets/img/home/'
+            parent_dashboard:
+                base_path: 'assets/parent-dashboard'
