@@ -5,13 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParentUserRepository")
+ * @UniqueEntity("email", message="Cette adresse email est déjà utilisée")
  */
-class ParentUser implements UserInterface, \Serializable
+class ParentUser implements UserInterface, Serializable
 {
     /**
      * @ORM\Id()
@@ -22,6 +25,7 @@ class ParentUser implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
      */
     private $name;
 
@@ -40,6 +44,10 @@ class ParentUser implements UserInterface, \Serializable
 
     /**
      * not persisted plainPassword
+     * @Assert\Length(
+     *     min=8,
+     *     minMessage="Le mot de passe doit être de {{ limit }} caractères minimum"
+     * )
      */
     private $plainPassword;
 
@@ -47,7 +55,7 @@ class ParentUser implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=1023)
      * @Assert\Length(
      *     min=8,
-     *     minMessage="Le mot de passe doit être de {{limit}} caractères minimum"
+     *     minMessage="Le mot de passe doit être de {{ limit }} caractères minimum"
      * )
      */
     private $password;

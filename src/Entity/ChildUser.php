@@ -23,6 +23,7 @@ class ChildUser
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
      */
     private $name;
 
@@ -32,6 +33,7 @@ class ChildUser
      *     min=3,
      *     minMessage="Le nom d'aventurier doit être de {{ limit }} caractères minimum"
      * )
+     * @Assert\NotNull
      */
     private $pseudo;
 
