@@ -85,7 +85,7 @@ class ParentUser implements UserInterface, \Serializable
     private $oldPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity="Notification", mappedBy="parentUsers", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="parentUsers", cascade={"remove"}, orphanRemoval=true)
      */
     private $notifications;
 

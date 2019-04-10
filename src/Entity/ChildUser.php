@@ -63,7 +63,7 @@ class ChildUser
     private $trophies;
 
     /**
-     * @ORM\OneToMany(targetEntity="Notification", mappedBy="childUsers", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="childUsers", cascade={"remove"}, orphanRemoval=true)
      */
     private $notifications;
 
