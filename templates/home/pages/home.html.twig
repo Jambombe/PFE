@@ -3,15 +3,16 @@
 {% block body %}
 
 <div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui inverted vertical masthead center aligned segment" id="header-div">
 
         {% include 'home/includes/inbody-menu.html.twig' %}
 
         <div class="ui text container">
-            <h1 class="ui inverted header">Imagine-a-Company</h1>
-            <h2>Do whatever you want when you want to.</h2>
-            <div class="ui huge primary button">
-                Commencer <i class="right arrow icon"></i>
+{#            <h1 class="ui inverted header">Imagine-a-Company</h1>#}
+{#            <h2>Do whatever you want when you want to.</h2>#}
+{#            <div class="ui huge primary button">#}
+            <div class="ui massive primary icon circular button">
+                 <i class="right book icon"></i>
             </div>
         </div>
     </div>
@@ -126,3 +127,36 @@
 </div>
 
 {% endblock body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #header-div {
+            background-image: url({{ asset('com_fire_cave.png', 'home_img') }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+        }
+
+        #main-menu>div {
+            padding: 15px 10px;
+            background-color: rgba(30,30,30,0.8);
+        }
+
+        .ui.massive.button {
+            font-size: 6rem;
+            background-color: rgba(20,20,20,0.8);
+            transition: all .2s;
+        }
+        .ui.massive.button:hover {
+            font-size: 8rem;
+            background-color: rgba(20,20,20,0.8);
+            transition: all .2s;
+
+        }
+
+        div.ui.text.container {
+            padding-top: 30px;
+        }
+    </style>
+{% endblock stylesheets %}

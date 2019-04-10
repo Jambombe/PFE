@@ -2,7 +2,7 @@
 {% set currentPath = path(app.request.get('_route'),
     app.request.get('_route_params')) %}
 
-<div class="ui container">
+<div class="ui container" id="main-menu">
     <div class="ui large secondary inverted pointing menu">
         <a class="toc item"><i class="sidebar icon"></i></a>
         <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil1</a>
