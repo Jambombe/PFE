@@ -22,6 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="{{ asset('dist/css/skins/skin-blue.min.css', 'parent_dashboard') }}">
 
+    {% block stylesheets %}
+    {% endblock stylesheets %}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -96,7 +99,7 @@ desired effect
 {#                                            <a href="#">#}
 {#                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today#}
 {#                                            </a>#}
-                                            <a href="#">
+                                            <a href="{{ path('dashboard-notifications') }}">
                                                 <i class="fa fa-users text-aqua"></i>{{ n.title }}
                                             </a>
 
@@ -173,7 +176,9 @@ desired effect
 
                 <!-- Onglet Quêtes -->
                 <li class=" {% if currentPath is same as(path('home')) %}active{% endif %}"><a href="#"><i class="fa fa-trophy"></i> <span>Quêtes</span></a></li>
-                <!-- Fin onglet quêtes -->
+
+                <!-- Onglet Notifications -->
+                <li class=" {% if currentPath is same as(path('dashboard-notifications')) %}active{% endif %}"><a href="{{ path('dashboard-notifications') }}"><i class="fa fa-bell"></i> <span>Notifications</span> <span class="badge badge-pill badge-primary">{{ user.notifications |length }}</span></a></li>
 
                 <!-- <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
             </ul>

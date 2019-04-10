@@ -12,9 +12,24 @@ class ChildUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [ 'label'=>'Prénom' ])
-            ->add('pseudo', TextType::class, [ 'label'=>"Nom d'aventurier" ])
-            ->add('password', TextType::class, [ 'label'=>'Mot de passe'])
+            ->add('name', TextType::class,
+                [
+                    'label'=>'Prénom',
+                    'attr'=> ['class'=>'form-control']
+                ]
+            )
+            ->add('pseudo', TextType::class,
+                [
+                    'label'=>"Nom d'aventurier",
+                    'attr'=> ['class'=>'form-control']
+                ]
+            )
+            ->add('password', TextType::class,
+                [
+                    'label'=>'Mot de passe',
+                    'attr'=> ['class'=>'form-control']
+                ]
+            )
         ;
     }
 

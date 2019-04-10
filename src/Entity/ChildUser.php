@@ -25,9 +25,9 @@ class ChildUser
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(
-     *     min=2,
+     *     min=3,
      *     minMessage="Le nom d'aventurier doit être de {{limit}} caractères minimum"
      * )
      */

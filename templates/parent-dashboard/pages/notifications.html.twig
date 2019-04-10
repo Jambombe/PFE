@@ -1,0 +1,17 @@
+{% extends 'parent-dashboard/base.html.twig' %}
+
+    {% block pagetitle %}
+        Nouvel enfant
+    {% endblock pagetitle %}
+
+{% block content %}
+
+    {{ form_start(childForm) }}
+    {{ form_row(childForm.name) }}
+    {{ form_row(childForm.pseudo) }}
+    <i class="fa fa-info-circle" title="Le Nom d'aventurier servira à l'enfant pour se connecter et accéder à son Journal"></i>
+    {{ form_row(childForm.password) }}
+    <input type="submit" value="Ajouter" class="btn btn-primary">
+    {{ form_end(childForm) }}
+
+{% endblock content %}
