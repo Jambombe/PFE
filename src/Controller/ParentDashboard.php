@@ -4,7 +4,6 @@
 namespace App\Controller;
 
 use App\Entity\ChildUser;
-use App\Entity\ParentUser;
 use App\Form\ChildUserType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 
 /**
@@ -39,6 +40,7 @@ class ParentDashboard extends AbstractController
     /**
      * @Route("dashboard/nouvel-enfant", name="dashboard-add-child")
      * @param Request $request
+     * @param EntityManagerInterface $em
      * @return Response
      */
     public function createChild(Request $request, EntityManagerInterface $em) {
@@ -52,7 +54,10 @@ class ParentDashboard extends AbstractController
 
         if ($childForm->isSubmitted() && $childForm->isValid()) {
             $newChild->setParent($user);
-//            $user->addChild($newChild);
+
+//            $encodedPassword = $encoder->encodePassword($newChild->getPassword(), PASSWORD_BCRYPT);
+            $encodedPassword = password_hash($newChild->getPassword(), PASSWORD_BCRYPT);
+            $newChild->setPassword($encodedPassword);
 
             $em->persist($newChild);
             $em->flush();
@@ -66,5 +71,22 @@ class ParentDashboard extends AbstractController
             ]
         );
     }
+
+
+    /**
+     * @Route("dashboard/notifications", name="dashboard-notifications")
+     */
+    public function notifications() {
+
+        return $this->render(
+            'parent-dashboard/pages/notifications.html.twig',
+            [
+                'user' => $this->getUser(),
+            ]
+        );
+
+    }
+
+
 
 }

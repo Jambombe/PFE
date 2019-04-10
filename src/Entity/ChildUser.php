@@ -5,10 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChildUserRepository")
+ * @UniqueEntity("pseudo", message="Ce Nom d'aventurier est déjà utilisé")
  */
 class ChildUser
 {
@@ -28,7 +30,7 @@ class ChildUser
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(
      *     min=3,
-     *     minMessage="Le nom d'aventurier doit être de {{limit}} caractères minimum"
+     *     minMessage="Le nom d'aventurier doit être de {{ limit }} caractères minimum"
      * )
      */
     private $pseudo;
@@ -37,7 +39,7 @@ class ChildUser
      * @ORM\Column(type="string", length=1023)
      * @Assert\Length(
      *     min=8,
-     *     minMessage="Le mot de passe doit être de {{limit}} caractères minimum"
+     *     minMessage="Le mot de passe doit être de {{ limit }} caractères minimum"
      * )
      */
     private $password;

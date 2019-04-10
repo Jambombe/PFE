@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\ChildUser;
 
 class ChildUserType extends AbstractType
 {
@@ -36,7 +37,8 @@ class ChildUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-//            'data_class' => 'App\Entity\ChildUser'
+//            'data_class' => 'App\Entity\ChildUser',
+            'cascade_validation' => true,
         ]);
     }
 }

@@ -1,17 +1,30 @@
 {% extends 'parent-dashboard/base.html.twig' %}
 
     {% block pagetitle %}
-        Nouvel enfant
+        Notifications
     {% endblock pagetitle %}
 
 {% block content %}
 
-    {{ form_start(childForm) }}
-    {{ form_row(childForm.name) }}
-    {{ form_row(childForm.pseudo) }}
-    <i class="fa fa-info-circle" title="Le Nom d'aventurier servira à l'enfant pour se connecter et accéder à son Journal"></i>
-    {{ form_row(childForm.password) }}
-    <input type="submit" value="Ajouter" class="btn btn-primary">
-    {{ form_end(childForm) }}
+    {% for n in user.notifications %}
+        <div class="col-md-3">
+            <div class="box box-success box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ n.title }}</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {{ n.message }}
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    {% endfor %}
 
 {% endblock content %}
