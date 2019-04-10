@@ -11,7 +11,7 @@
         <a class="item">Careers</a>
         <div class="right item">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="ui inverted labeled icon button blue"><i class="user icon"></i>{{ app.user.name }}</a>
+                <a class="ui inverted labeled icon button blue" href="{{ path('dashboard') }}"><i class="columns icon"></i>{{ app.user.name }}</a>
                 <a class="ui inverted icon button" href="{{ path('logout') }}"><i class="sign-out icon"></i></a>
             {% else %}
                 <a class="ui inverted button" href="{{ path('login') }}">Connexion</a>

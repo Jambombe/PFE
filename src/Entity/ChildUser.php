@@ -72,6 +72,7 @@ class ChildUser
         $this->quests = new ArrayCollection();
         $this->trophies = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->setExp(0);
     }
 
     public function getId(): ?int
