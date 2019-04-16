@@ -12,16 +12,16 @@ class QuestStatus
         'i'=> 0,
         'icon' => 'a',
         'color' => 'a',
-        'colorclass' => 'success',
+        'colorclass' => '',
         ];
 
     /* Quete assignee à un ChildUser */
     const ASSIGNATED = 1;
     public $ASSIGNATED =  [
         'i'=> 1,
-        'icon' => '',
+        'icon' => 'ra ra-crossed-swords',
         'color' => '',
-        'colorclass' => '',
+        'colorclass' => 'assignated',
     ];
 
     /* Quete retournée par le ChildUser */
@@ -37,9 +37,9 @@ class QuestStatus
     const VALIDATED = 3;
     public $VALIDATED =  [
         'i'=> 3,
-        'icon' => 'fa-check',
+        'icon' => 'ra ra-muscle-up',
         'color' => '#108009',
-        'colorclass' => 'success',
+        'colorclass' => 'valid',
     ];
 
     /* Quete non validée par le ParentUser ou temps imparti dépassé */
