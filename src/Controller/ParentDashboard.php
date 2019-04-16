@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\ChildUser;
 use App\Entity\ParentUser;
 use App\Form\ChildUserType;
+use App\Service\LevelService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,10 +42,11 @@ class ParentDashboard extends AbstractController
 
     /**
      * @Route("/dashboard/e/{adventurer}")
+     * @param LevelService $lv
      * @param $adventurer
      * @return Response
      */
-    public function oneChild($adventurer) {
+    public function oneChild(LevelService $lv, $adventurer) {
 
         $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
 
