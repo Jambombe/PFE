@@ -80,7 +80,21 @@ class ParentDashboard extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('dashboard');
+//            return $this->redirectToRoute('dashboard');
+        }
+
+        dump($childForm && $childForm->isSubmitted() && ! $childForm->isValid());
+
+        if ($childForm && $childForm->isSubmitted() && ! $childForm->isValid())
+        {
+            $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
+
+            if (sizeof($childUsers) > 0) {
+                $childUser = $childUsers[0];
+            } else {
+                $childUser = null;
+            }
+
         }
 
         return $this->render(
