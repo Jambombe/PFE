@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Quest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,25 @@ class QuestRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Quest::class);
+    }
+
+    /**
+     * Retourne un array de Quete de statut $status appartenant au childUser $childUser
+     * @param $status
+     * @param $childUser
+     * @return Query
+     */
+    public function getQuestsFromStatus($status, $childUser) {
+
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->where($qb->expr()->eq('q.status', ':status'))
+            ->andWhere($qb->expr()->eq('q.child', ':child'))
+            ->setParameter('status', $status)
+            ->setParameter('child', $childUser)
+        ;
+
+        return $qb->getQuery();
     }
 
     // /**

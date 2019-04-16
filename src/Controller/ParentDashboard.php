@@ -46,7 +46,7 @@ class ParentDashboard extends AbstractController
      * @param $adventurer
      * @return Response
      */
-    public function oneChild(LevelService $lv, $adventurer) {
+    public function oneChild(LevelService $lv, $adventurer, Request $request) {
 
         $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
 
@@ -62,11 +62,32 @@ class ParentDashboard extends AbstractController
             $childUser = null;
         }
 
+        if ($childUser) {
+            $childForm = $this->createForm(ChildUserType::class, $childUser);
+        } else {
+            $childForm = null;
+        }
+
+        $childForm->handleRequest($request);
+
+        if ($childForm && $childForm->isSubmitted() && $childForm->isValid()) {
+
+            dump($childUser);
+
+//            $encodedPassword = password_hash($childUser->getPassword(), PASSWORD_BCRYPT);
+//            $childUser->setPassword($encodedPassword);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($childUser);
+            $em->flush();
+        }
+
         return $this->render(
             'parent-dashboard/pages/one-child.html.twig',
             [
                 'user' => $user,
                 'child' => $childUser,
+                'childForm' => $childForm->createView(),
             ]
         );
 
