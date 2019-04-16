@@ -44,6 +44,7 @@ class ParentDashboard extends AbstractController
      * @Route("/dashboard/e/{adventurer}", name="one-child")
      * @param LevelService $lv
      * @param $adventurer
+     * @param Request $request
      * @return Response
      */
     public function oneChild(LevelService $lv, $adventurer, Request $request) {

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\QuestStatus;
+use App\Service\QuestStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

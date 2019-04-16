@@ -21,7 +21,8 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{{ asset('dist/img/user4-128x128.jpg', 'parent_dashboard') }}" alt="User profile picture">
+{#                        <img class="profile-user-img img-responsive img-circle" src="{{ asset('dist/img/user4-128x128.jpg', 'parent_dashboard') }}" alt="User profile picture">#}
+                        <img class="profile-user-img img-responsive img-circle" src="https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png" alt="User profile picture">
 
                         <h3 class="profile-username text-center">{{ child.name }}</h3>
 
@@ -100,7 +101,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#activity" data-toggle="tab">Dernières quêtes</a></li>
                         <li><a href="#timeline" data-toggle="tab">Autre chose</a></li>
-                        <li><a href="#settings" data-toggle="tab">Options</a></li>
+                        <li><a href="#settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
                     </ul>
                     <div class="tab-content">
 
@@ -112,7 +113,8 @@
                                     <!-- Quete -->
                                     <div class="post">
                                         <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">
+{#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
+                                            <span class="quest-status {{ qs.statusByNumber(q.status).colorclass }}"><i class="fa fa-check-circle"></i></span>
 
                                             <span class="username">
                                               <a href="#">{{ q.title }}</a>
@@ -316,3 +318,22 @@
     {% endif %}
 
 {% endblock content %}
+
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <style>
+            span.quest-status {
+                width: 40px;
+                height: 40px;
+                float: left;
+                left: 5px;
+                padding: 0 0 0 5px;
+            }
+            span.quest-status i{
+                vertical-align: middle;
+                font-size: 40px;
+                margin: auto;
+            }
+        </style>
+    {% endblock stylesheets %}
