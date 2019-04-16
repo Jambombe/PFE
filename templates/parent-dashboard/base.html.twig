@@ -156,6 +156,12 @@ desired effect
                     app.request.get('_route_params')) %}
 
                 <!-- Onglet Enfants -->
+
+                {% set active = false %}
+                {% if currentPath is same as(path('dashboard') or currentPath is same as(path('one-child'))) %}
+                    {% set active = true %}
+                {% endif %}
+
                 <li class="treeview {% if currentPath is same as(path('dashboard')) %}active{% endif %}">
                     <a href="{{ path('dashboard') }}"><i class="fa fa-child"></i> <span>Mes enfants</span>
                         <span class="pull-right-container">
@@ -167,7 +173,7 @@ desired effect
 {#                        <li><a href="#">Enfant 2</a></li>#}
 
                         {% for c in user.children %}
-                            <li><a href="#">{{ c.name }}</a></li>
+                            <li class="{% if currentPath is same as(path('one-child', {adventurer: c.pseudo})) %}active{% endif %} }}"><a href="{{ path('one-child', {adventurer: c.pseudo}) }}">{{ c.name }}</a></li>
                         {% endfor %}
                         <li><a href="{{ path('dashboard-add-child') }}"><i class="fa fa-plus"></i></a></li>
                     </ul>

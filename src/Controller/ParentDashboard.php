@@ -41,7 +41,7 @@ class ParentDashboard extends AbstractController
 
 
     /**
-     * @Route("/dashboard/e/{adventurer}")
+     * @Route("/dashboard/e/{adventurer}", name="one-child")
      * @param LevelService $lv
      * @param $adventurer
      * @return Response
@@ -64,11 +64,11 @@ class ParentDashboard extends AbstractController
 
         if ($childUser) {
             $childForm = $this->createForm(ChildUserType::class, $childUser);
+
+            $childForm->handleRequest($request);
         } else {
             $childForm = null;
         }
-
-        $childForm->handleRequest($request);
 
         if ($childForm && $childForm->isSubmitted() && $childForm->isValid()) {
 
@@ -87,7 +87,7 @@ class ParentDashboard extends AbstractController
             [
                 'user' => $user,
                 'child' => $childUser,
-                'childForm' => $childForm->createView(),
+                'childForm' => $childForm ? $childForm->createView() : null,
             ]
         );
 
