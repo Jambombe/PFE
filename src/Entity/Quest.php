@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Service\QuestStatus;
+use App\Service\QuestStatusService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -65,7 +65,7 @@ class Quest
 
     public function __construct()
     {
-        $this->status = QuestStatus::CREATED;
+        $this->status = QuestStatusService::CREATED;
     }
 
     public function getId(): ?int

@@ -114,7 +114,9 @@
                                     <div class="post">
                                         <div class="user-block">
 {#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
-                                            <span class="quest-status {{ qs.statusByNumber(q.status).colorclass }}"><i class="fa fa-check-circle"></i></span>
+
+                                            {% set questStatus = qs.statusByNumber(q.status) %}
+                                            <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
 
                                             <span class="username">
                                               <a href="#">{{ q.title }}</a>
@@ -242,16 +244,28 @@
 
                         <!-- ONLGET OPTIONS -->
                         <div class="tab-pane" id="settings">
-                            <form class="form-horizontal">
+{#                            <form class="form-horizontal">#}
 
-                                {{ form_start(childForm) }}
-                                {{ form_widget(childForm) }}
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Modifier</button>
+
+                                <div class="box box-success">
+                                    <div class="box-body">
+
+                                        {{ form_start(childForm) }}
+                                        {#            {{ form(childForm, {'attr':{'class':'form-horizontal'}}) }}#}
+                                        <div class="form-group">
+                                            {{ form_row(childForm.name) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(childForm.pseudo) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(childForm.password) }}
+                                        </div>
+                                        <input type="submit" value="Modifier" class="btn btn-primary">
+                                        {{ form_end(childForm) }}
+
                                     </div>
                                 </div>
-                                {{ form_end(childForm) }}
 {#                                <div class="form-group">#}
 {#                                    <label for="inputName" class="col-sm-2 control-label">Name</label>#}
 
@@ -296,7 +310,7 @@
 {#                                        </div>#}
 {#                                    </div>#}
 {#                                </div>#}
-                            </form>
+{#                            </form>#}
                         </div>
                         <!-- /.tab-pane -->
                     </div>
@@ -335,5 +349,9 @@
                 font-size: 40px;
                 margin: auto;
             }
+
+            span.quest-status.valid { color: #108009}
+            span.quest-status.assignated { color: #FF8D2B }
+            span.quest-status.fail { color: #FF2929 }
         </style>
     {% endblock stylesheets %}

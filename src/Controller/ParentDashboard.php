@@ -42,12 +42,11 @@ class ParentDashboard extends AbstractController
 
     /**
      * @Route("/dashboard/e/{adventurer}", name="one-child")
-     * @param LevelService $lv
      * @param $adventurer
      * @param Request $request
      * @return Response
      */
-    public function oneChild(LevelService $lv, $adventurer, Request $request) {
+    public function oneChild($adventurer, Request $request) {
 
         $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
 
@@ -64,23 +63,24 @@ class ParentDashboard extends AbstractController
         }
 
         if ($childUser) {
-            $childForm = $this->createForm(ChildUserType::class, $childUser);
+            $childUser->setPassword('');
+            $childForm = $this->createForm(ChildUserType::class, $childUser, array('method'=>'put'));
 
             $childForm->handleRequest($request);
         } else {
             $childForm = null;
         }
 
-        if ($childForm && $childForm->isSubmitted() && $childForm->isValid()) {
+        if ($childForm && $childForm->isSubmitted() && $childForm->isValid())
+        {
 
-            dump($childUser);
-
-//            $encodedPassword = password_hash($childUser->getPassword(), PASSWORD_BCRYPT);
-//            $childUser->setPassword($encodedPassword);
+            $encodedPassword = password_hash($childUser->getPassword(), PASSWORD_BCRYPT);
+            $childUser->setPassword($encodedPassword);
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($childUser);
             $em->flush();
+
+            return $this->redirectToRoute('dashboard');
         }
 
         return $this->render(

@@ -22,6 +22,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="{{ asset('dist/css/skins/skin-blue.min.css', 'parent_dashboard') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/rpg-awesome.min.css', 'ra') }}"/>
+    <style>
+        ul {
+            list-style: none;
+            margin-left:0;
+            padding-left:0;
+        }
+        .form-group ul>li {
+            color: red;
+        }
+        .form-group ul>li:before {
+            content: "Erreur";
+            color: white;
+            background-color: #f44;
+            padding: 1px 3px;
+            border-radius: 3px;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+    </style>
+
     {% block stylesheets %}
     {% endblock stylesheets %}
 
@@ -63,7 +84,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ path('dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <!-- <span class="logo-mini"><b>A</b>LT</span> -->
             <!-- logo for regular state and mobile devices -->
