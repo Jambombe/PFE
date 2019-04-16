@@ -24,3 +24,5 @@ framework:
                 base_path: 'assets/img/home/'
             parent_dashboard:
                 base_path: 'assets/parent-dashboard'
+            ra:
+                base_path: 'assets/ra'

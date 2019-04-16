@@ -4,12 +4,12 @@
 namespace App\Service;
 
 
-class QuestStatus
+class QuestStatusService
 {
     /* Quete creee */
     const CREATED = 0;
     public $CREATED =  [
-        'i'=> 0,
+        's'=> self::CREATED,
         'icon' => 'a',
         'color' => 'a',
         'colorclass' => '',
@@ -18,7 +18,7 @@ class QuestStatus
     /* Quete assignee à un ChildUser */
     const ASSIGNATED = 1;
     public $ASSIGNATED =  [
-        'i'=> 1,
+        's'=> self::ASSIGNATED,
         'icon' => 'ra ra-crossed-swords',
         'color' => '',
         'colorclass' => 'assignated',
@@ -27,7 +27,7 @@ class QuestStatus
     /* Quete retournée par le ChildUser */
     const RETURNED = 2;
     public $RETURNED =  [
-        'i'=> 2,
+        's'=> self::RETURNED,
         'icon' => '',
         'color' => '',
         'colorclass' => '',
@@ -36,7 +36,7 @@ class QuestStatus
     /* Quete validée par le ParentUser */
     const VALIDATED = 3;
     public $VALIDATED =  [
-        'i'=> 3,
+        's'=> self::VALIDATED,
         'icon' => 'ra ra-muscle-up',
         'color' => '#108009',
         'colorclass' => 'valid',
@@ -45,10 +45,10 @@ class QuestStatus
     /* Quete non validée par le ParentUser ou temps imparti dépassé */
     const FAILED = 4;
     public $FAILED =  [
-        'i'=> 4,
-        'icon' => 'fa-times',
+        'i'=> self::FAILED,
+        'icon' => 'ra ra-player-despair',
         'color' => '#cc1e27',
-        'colorclass' => 'danger',
+        'colorclass' => 'fail',
     ];
 
     public function statusByNumber($nb) {

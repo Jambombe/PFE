@@ -4,4 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         lv: '@App\Service\LevelService'
-        qs: '@App\Service\QuestStatus'
+        qs: '@App\Service\QuestStatusService'
