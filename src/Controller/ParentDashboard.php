@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\ChildUser;
+use App\Entity\ParentUser;
 use App\Form\ChildUserType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,11 +31,43 @@ class ParentDashboard extends AbstractController
         $parentUser = $this->getUser();
 
         return $this->render(
-            'parent-dashboard/base.html.twig',
+            'parent-dashboard/pages/my-children.html.twig',
             [
                 'user' => $parentUser,
             ]
         );
+    }
+
+
+    /**
+     * @Route("/dashboard/e/{adventurer}")
+     * @param $adventurer
+     * @return Response
+     */
+    public function oneChild($adventurer) {
+
+        $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
+
+        if (sizeof($childUsers) > 0) {
+            $childUser = $childUsers[0];
+        } else {
+            $childUser = null;
+        }
+
+        $user = $this->getUser();
+
+        if (! $user->getChildren()->contains($childUser)) {
+            $childUser = null;
+        }
+
+        return $this->render(
+            'parent-dashboard/pages/one-child.html.twig',
+            [
+                'user' => $user,
+                'child' => $childUser,
+            ]
+        );
+
     }
 
     /**
