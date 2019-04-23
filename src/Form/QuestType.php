@@ -40,19 +40,29 @@ class QuestType extends AbstractType
                     'choices' => $options['parent']->getChildren(),
                 ]
             )
-            ->add('exp', RangeType::class,
-                [
-                    'mapped' => false,
-                    'attr' => [
-                        'min'=>0,
-                        'max'=>100,
-                        'step'=>1,
-                        'value'=>0,
-                    ],
-                ]
-            )
+//            ->add('exp', TextType::class,
+//                [
+//                    'mapped' => false,
+//                    'attr' => [
+//                        'value'=>"0,50",
+//                        'class' => 'slider form-control',
+//                        'data-slider-min' => "0",
+//                        'data-slider-max' => "100",
+//                        'data-slider-step' => "1",
+//                        'data-slider-value' => "[0,50]",
+//                        'data-slider-orientation' => 'horizontal',
+//                        'data-slider-selection' => 'before',
+//                        'data-slider-tooltip' => 'show',
+//                        'data-slider-id' => 'yellow',
+//                        'data-value' => "[0,50]",
+//                        'style' => 'display: none;',
+//                    ],
+//                ]
+//            )
         ;
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -135,6 +135,9 @@ class ParentDashboard extends AbstractController
 
             $em->persist($newChild);
             $em->flush();
+
+//            dump($this->generateUrl('one-child', ['adventurer' => $newChild->getPseudo()]));
+            $this->redirectToRoute('one-child', ['adventurer' => $newChild->getPseudo()]);
         }
 
         return $this->render(

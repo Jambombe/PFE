@@ -13,7 +13,7 @@ class QuestStatusService
         'icon' => 'a',
         'color' => 'a',
         'colorclass' => '',
-        ];
+    ];
 
     /* Quete assignee à un ChildUser */
     const ASSIGNATED = 1;

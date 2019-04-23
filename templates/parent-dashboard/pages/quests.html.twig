@@ -119,9 +119,9 @@
                                         <div class="form-group">
                                             {{ form_row(questForm.child) }}
                                         </div>
-                                        <div class="form-group">
-                                            {{ form_row(questForm.exp) }}
-                                        </div>
+{#                                        <div class="form-group">#}
+{#                                            {{ form_row(questForm.exp) }}#}
+{#                                        </div>#}
                                         <input type="submit" value="Créer" class="btn btn-primary">
                                     {{ form_end(questForm) }}
 
@@ -143,6 +143,8 @@
 
     {% block stylesheets %}
         {{ parent() }}
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap-slider/slider.css', 'parent_dashboard') }}">
         <style>
             span.quest-status {
                 width: 40px;
@@ -172,3 +174,14 @@
             }
         </style>
     {% endblock stylesheets %}
+
+{% block script %}
+<!-- Bootstrap slider -->
+<script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
+<script>
+    $(function () {
+        /* BOOTSTRAP SLIDER */
+        $('.slider').slider()
+    })
+</script>
+{% endblock %}
