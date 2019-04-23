@@ -38,7 +38,7 @@ class QuestStatusService
     public $VALIDATED =  [
         's'=> self::VALIDATED,
         'icon' => 'ra ra-muscle-up',
-        'color' => '#108009',
+        'color' => '#77cc77',
         'colorclass' => 'valid',
     ];
 
@@ -47,7 +47,7 @@ class QuestStatusService
     public $FAILED =  [
         'i'=> self::FAILED,
         'icon' => 'ra ra-player-despair',
-        'color' => '#cc1e27',
+        'color' => '#ff6961',
         'colorclass' => 'fail',
     ];
 

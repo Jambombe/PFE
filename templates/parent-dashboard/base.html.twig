@@ -109,7 +109,7 @@ desired effect
                             <span class="label label-warning">{{ user.notifications | length }}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">{{ user.notifications | length }} notification{% if user.notifications|length >1 %}s{% endif %}</li>
+                            <li class="header">{{ user.notifications | length }} notification{% if user.notifications|length is not same as(1) %}s{% endif %}</li>
                             <li>
                                 <!-- Inner Menu: contains the notifications -->
                                 <ul class="menu">
@@ -179,11 +179,14 @@ desired effect
                 <!-- Onglet Enfants -->
 
                 {% set active = false %}
-                {% if currentPath is same as(path('dashboard') or currentPath is same as(path('one-child'))) %}
+                {% if currentPath is same as(path('dashboard') or currentPath is same as(path('one-child', {adventurer: c.pseudo}))) %}
                     {% set active = true %}
                 {% endif %}
 
-                <li class="treeview {% if currentPath is same as(path('dashboard')) %}active{% endif %}">
+{#                {{ dump(active) }}#}
+{#                {{ dump(path('one-child', {adventurer: c.pseudo})) }}#}
+
+                <li class="treeview {% if currentPath is same as (path('dashboard')) %}active{% endif %}">
                     <a href="{{ path('dashboard') }}"><i class="fa fa-child"></i> <span>Mes enfants</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -202,7 +205,7 @@ desired effect
                 <!-- Fin onglet enfant -->
 
                 <!-- Onglet Quêtes -->
-                <li class=" {% if currentPath is same as(path('home')) %}active{% endif %}"><a href="#"><i class="fa fa-trophy"></i> <span>Quêtes</span></a></li>
+                <li class=" {% if currentPath is same as(path('dashboard-quests')) %}active{% endif %}"><a href="{{ path('dashboard-quests') }}"><i class="fa fa-trophy"></i> <span>Quêtes</span></a></li>
 
                 <!-- Onglet Notifications -->
                 <li class=" {% if currentPath is same as(path('dashboard-notifications')) %}active{% endif %}"><a href="{{ path('dashboard-notifications') }}"><i class="fa fa-bell"></i> <span>Notifications</span> <span class="badge badge-pill badge-primary">{{ user.notifications |length }}</span></a></li>

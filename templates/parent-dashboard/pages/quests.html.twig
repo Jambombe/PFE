@@ -1,0 +1,174 @@
+{% extends 'parent-dashboard/base.html.twig' %}
+
+    {% block pagetitle %}
+        Quêtes
+    {% endblock pagetitle %}
+
+{% block content %}
+
+        <div class="row">
+
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#activeQuests" data-toggle="tab">Quêtes en cours</a></li>
+                        <li><a href="#finishedQuests" data-toggle="tab">Quêtes à valider</a></li>
+                        <li><a href="#add-quest" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <!-- ONGLET QUETES EN COURS-->
+                        <div class="active tab-pane" id="activeQuests">
+
+                            {% if user.quests |length > 0 %}
+                                {% for q in user.quests | reverse %}
+                                    {% if q.status is same as (qs.ASSIGNATED.s) %}
+                                    <!-- Quete -->
+                                    <div class="post">
+                                        <div class="user-block">
+{#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
+
+                                            {% set questStatus = qs.statusByNumber(q.status) %}
+                                            <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
+
+                                            <span class="username">
+                                              <a href="#">{{ q.title }}</a>
+                                            </span>
+                                            <span class="description">{{ q.description }}</span>
+                                        </div>
+                                        <!-- /.user-block -->
+                                        <ul>
+                                            <li>Assignée à <b>{{ q.child.name }}</b></li>
+                                            <li>le <b>{{ q.assignatedDate | date("d/m/Y")}}</b> à <b>{{ q.assignatedDate | date("H:i") }}</b></li>
+
+                                            {% if q.status >= 2 %}
+                                                <li>Rendue le <b>{{ q.returnDate | date("d/m/Y")}}</b> à <b>{{ q.returnDate | date("H:i") }}</b></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.quete -->
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Aucune quête à afficher <br>
+                                <a href="">Créer une nouvelle quête</a>
+                            {% endif %}
+                        </div>
+                        <!-- /.quetes en cours -->
+
+                        <!-- ONGLET QUETES EN ATTENTE DE VALIDATION-->
+                        <div class="tab-pane" id="finishedQuests">
+
+                            {% if user.quests |length > 0 %}
+                                {% for q in user.quests %}
+                                    {% if q.status is same as (qs.RETURNED.s) %}
+                                    <!-- Quete -->
+                                    <div class="post">
+                                        <div class="user-block">
+{#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
+
+                                            {% set questStatus = qs.statusByNumber(q.status) %}
+                                            <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
+
+                                            <span class="username">
+                                              <a href="#">{{ q.title }}</a>
+                                            </span>
+                                            <span class="description">{{ q.description }}</span>
+                                        </div>
+                                        <!-- /.user-block -->
+                                        <ul>
+                                            <li>Assignée à <b>{{ q.child.name }}</b></li>
+                                            <li>le <b>{{ q.assignatedDate | date("d/m/Y")}}</b> à <b>{{ q.assignatedDate | date("H:i") }}</b></li>
+
+                                            {% if q.status >= 2 %}
+                                                <li>Rendue le <b>{{ q.returnDate | date("d/m/Y")}}</b> à <b>{{ q.returnDate | date("H:i") }}</b></li>
+                                            {% endif %}
+                                        </ul>
+
+                                        <div class="valid-btns">
+                                            <a class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</a>
+                                            <a class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.quete -->
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Aucune quête à afficher <br>
+                                <a href="">Créer une nouvelle quête</a>
+                            {% endif %}
+                        </div>
+                        <!-- /.quetes en cours -->
+
+                        <!-- ONLGET Creer quete -->
+                        <div class="tab-pane" id="add-quest">
+
+                            <h2>Créer une nouvelle quête</h2>
+
+                            <div class="box box-success">
+                                <div class="box-body">
+
+                                    {{ form_start(questForm) }}
+                                        <div class="form-group">
+                                            {{ form_row(questForm.title) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(questForm.description) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(questForm.child) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(questForm.exp) }}
+                                        </div>
+                                        <input type="submit" value="Créer" class="btn btn-primary">
+                                    {{ form_end(questForm) }}
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.creer quete -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+{% endblock content %}
+
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <style>
+            span.quest-status {
+                width: 40px;
+                height: 40px;
+                float: left;
+                left: 5px;
+                padding: 0 0 0 5px;
+            }
+            span.quest-status i{
+                vertical-align: middle;
+                font-size: 40px;
+                margin: auto;
+            }
+
+            span.quest-status.valid { color: #77cc77}
+            span.quest-status.assignated { color: #FF8D2B }
+            span.quest-status.fail { color: #ff6961 }
+
+            div.valid-btns .btn-app { color: #fff }
+
+            div.valid-btns .valid { background-color: #77cc77 }
+            div.valid-btns .fail { background-color: #ff6961 }
+
+            .btn-app>.ra {
+                font-size: 20px;
+                display: block;
+            }
+        </style>
+    {% endblock stylesheets %}

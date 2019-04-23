@@ -5,8 +5,12 @@ namespace App\Controller;
 
 use App\Entity\ChildUser;
 use App\Entity\ParentUser;
+use App\Entity\Quest;
 use App\Form\ChildUserType;
+use App\Form\QuestType;
 use App\Service\LevelService;
+use App\Service\QuestStatusService;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 /**
@@ -83,8 +88,6 @@ class ParentDashboard extends AbstractController
 //            return $this->redirectToRoute('dashboard');
         }
 
-        dump($childForm && $childForm->isSubmitted() && ! $childForm->isValid());
-
         if ($childForm && $childForm->isSubmitted() && ! $childForm->isValid())
         {
             $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
@@ -139,6 +142,47 @@ class ParentDashboard extends AbstractController
             [
                 'user' => $user,
                 'childForm' => $childForm->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("dashboard/quetes", name="dashboard-quests")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param QuestStatusService $qs
+     * @return Response
+     * @throws \Exception
+     */
+    public function quests(Request $request, EntityManagerInterface $em, QuestStatusService $qs) {
+
+        $newQuest = new Quest();
+        $newQuest->setOwner($this->getUser());
+
+        $questForm = $this->createForm(QuestType::class, $newQuest, ['parent' => $this->getUser()]);
+
+        $questForm->handleRequest($request);
+
+        if ($questForm->isSubmitted() && $questForm->isValid()) {
+
+
+            // Met à jour le status de la quête en fonction de si l'enfant est déjà défini ou non
+            if ($newQuest->getChild()) {
+                $newQuest->setStatus($qs->ASSIGNATED['s']);
+                $newQuest->setAssignatedDate(new DateTime());
+            } else {
+                $newQuest->setStatus($qs->CREATED['s']);
+            }
+
+            $em->persist($newQuest);
+            $em->flush();
+        }
+
+        return $this->render(
+            'parent-dashboard/pages/quests.html.twig',
+            [
+                'user' => $this->getUser(),
+                'questForm' => $questForm->createView()
             ]
         );
     }

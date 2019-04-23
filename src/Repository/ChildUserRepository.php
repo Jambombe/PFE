@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ChildUser;
+use App\Entity\ParentUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -18,6 +19,15 @@ class ChildUserRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, ChildUser::class);
+    }
+
+    public function getFromParent(ParentUser $parent) {
+
+        return $this->createQueryBuilder('c')
+            ->where('c.parent = :parent')
+            ->setParameter(':parent', $parent)
+            ->getQuery()
+            ;
     }
 
     // /**
