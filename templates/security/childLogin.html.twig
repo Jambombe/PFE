@@ -1,0 +1,50 @@
+{% extends 'home/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #main {
+            min-height: 100vh;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment" id="main">
+
+            {% include 'home/includes/inbody-menu.html.twig' %}
+
+            <div class="ui text container">
+                <h1 class="ui inverted header">Ouvrir mon journal</h1>
+                <br>
+                {% if error %}
+                    {% if error.code == 0 %}
+                        <div class="error-msg">Ton nom d'aventurier ou ton code secret est incorrect :(</div>
+                        <br>
+                    {% endif %}
+                {% endif %}
+                <form action="{{ path('childLogin') }}" method="post" class="ui form">
+{#                    <label for="email">Email:</label>#}
+                    <div class="ui fluid input">
+                        <input type="text" id="pseudo" name="_username" value="{{ last_username }}" class="ui input" placeholder="Nom d'aventurier"/>
+                    </div>
+                    <br>
+                    <div class="ui fluid input">
+                        <input type="password" id="password" name="_password" class="ui input" placeholder="Code secret"/>
+                    </div>
+{#                    <label for="password">Password:</label>#}
+                    <br>
+                    <br>
+                    <button type="submit" class="ui inverted green button huge">Connexion</button>
+                </form>
+                <br>
+                <a href="{{ path('lostpassword') }}">Mot de passe perdu</a><br>
+                <a href="{{ path('register') }}">Créer un compte</a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

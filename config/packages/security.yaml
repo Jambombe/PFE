@@ -14,6 +14,7 @@ security:
             entity:
                 class: App:ParentUser
                 property: email
+
         child_user_provider:
             entity:
                 class: App:ChildUser
@@ -24,17 +25,29 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        parent_dashboard:
             anonymous: true
             access_denied_url: /accessdenied
             pattern:   ^/
-#            anonymous: true
             logout_on_user_change: true
             provider:  parent_user_provider
             form_login:
                 check_path: login
                 login_path: login
                 default_target_path: home
+            logout:
+                path: /logout
+                target: /
+
+        journal:
+            pattern: ^/journal
+            anonymous: false
+            provider: child_user_provider
+            logout_on_user_change: true
+            access_denied_url: /accessdenied
+            form_login:
+                check_path: ouvrir-journal
+                login_path: ouvrir-journal
             logout:
                 path: /logout
                 target: /
@@ -55,5 +68,6 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+#        - { path: ^/journal, roles: ROLE_CHILD_USER }
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

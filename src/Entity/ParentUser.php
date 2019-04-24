@@ -239,7 +239,7 @@ class ParentUser implements UserInterface, Serializable
             $this->id,
             $this->email,
             $this->password,
-            ) = unserialize($serialized);
+        ) = unserialize($serialized);
     }
 
     /**

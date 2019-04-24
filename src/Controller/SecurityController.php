@@ -5,6 +5,7 @@ use App\Service\Security\UserEmailService;
 use App\Form\RegisterUserType;
 use App\Form\ResetPasswordType;
 use App\Entity\ParentUser;
+use RuntimeException;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,13 +126,40 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Permet de se connecter au journal en tnt que child user
+     *
+     * @Route("/ouvrir-journal", name="childLogin")
+     *
+     * @param Request $request
+     * @param AuthenticationUtils $authUtils
+     *
+     * @return Response
+     */
+    public function childLogin(Request $request, AuthenticationUtils $authUtils)
+    {
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authUtils->getLastUsername();
+
+        return $this->render(
+            '/security/childLogin.html.twig',
+            [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            ]
+        );
+    }
+
+    /**
      * Url de deconnexion
      * 
      * @Route("/logout", name="logout")
      */
     public function logout()
     {
-        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
+        throw new RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
     /**
@@ -189,14 +217,15 @@ class SecurityController extends AbstractController
 
     /**
      * Redéfinir un mdp depuis le lien de redéfinition envoyé par mail
-     * 
+     *
      * @Route("/resetpassword/{lostPasswordToken}", name="resetpassword")
-     * 
+     *
      * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder      
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @param ParentUser $user
-     * 
+     *
      * @return Response
+     * @throws \Exception
      */
     public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ParentUser $user = null)
     {
