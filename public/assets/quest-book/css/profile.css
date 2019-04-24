@@ -16,7 +16,7 @@ div.level>span {
     width: 100%;
     position: absolute;
     margin: auto;
-    left: 0px;
+    left: 0;
     top: 30px;
     color: #fff;
     font-size: 500%;

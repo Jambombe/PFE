@@ -21,9 +21,9 @@ div.left-menu a.menu-item i {
     position: absolute;
     margin: auto;
     left: 0;
-    top: 50px;
+    top: 25%;
     color: #999580;
-    font-size: 500%;
+    font-size: 450%;
     vertical-align: middle;
     text-align: center;
     transition: .2s all;
