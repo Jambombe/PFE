@@ -1,0 +1,38 @@
+div.left-menu a.menu-item {
+    width: 100%;
+    /*background: red;*/
+    max-height: 250px;
+    height: 25%;
+    display: block;
+    position: relative;
+}
+
+div.left-menu a.menu-item img {
+    max-height: 100%;
+    max-width: 100%;
+    width: 75%;
+    /*height: 150px;*/
+    position: relative;
+    margin-left: 15px;
+}
+
+div.left-menu a.menu-item i {
+    width: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    top: 50px;
+    color: #999580;
+    font-size: 500%;
+    vertical-align: middle;
+    text-align: center;
+    transition: .2s all;
+}
+
+div.left-menu a.menu-item:hover i {
+    color: #fff;
+}
+
+div.left-menu a.menu-item i.active {
+    color: #fff;
+}

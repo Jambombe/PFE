@@ -6,6 +6,9 @@
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"  type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/main.css', 'quest-book') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/left-menu.css', 'quest-book') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/rpg-awesome.min.css', 'ra') }}"/>
+
     </head>
     <body>
 
@@ -14,6 +17,7 @@
                 <div class="ui grid">
                         <div class="left-margin two wide column">
                             {% block left_margin %}{% endblock %}
+                            {% include 'child-dashboard/includes/left-menu.html.twig' %}
                         </div>
                         <div class="left-page six wide column">
                             <h1>{% block left_page_title %}Titre base{% endblock %}</h1>

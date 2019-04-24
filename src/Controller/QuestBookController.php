@@ -30,7 +30,7 @@ class QuestBookController extends AbstractController
         $user->setPseudo('josé');
 
         return $this->render(
-            'child-dashboard/pages/home.html.twig',
+            'child-dashboard/pages/profile.html.twig',
             [
                 'child' => $user,
             ]

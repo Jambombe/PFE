@@ -1,0 +1,33 @@
+{% extends 'child-dashboard/base.html.twig' %}
+
+{% block left_page_title %}Profil{% endblock %}
+
+{% block left_page %}
+
+    <div class="profile">
+        <div class="profile-img">
+            <img class="ui medium circular image" src="https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png" alt="">
+
+            {# Affiche le ruban rouge contenant le niveau du joueur #}
+            <div class="level">
+                <img src="{{ asset('img/el_02.PNG', 'quest-book') }}" alt="">
+                <span>50</span>
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profile.css', 'quest-book') }}" type="text/css" />
+{% endblock %}

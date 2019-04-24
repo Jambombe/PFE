@@ -1,0 +1,21 @@
+{% set currentPath = path(app.request.get('_route'),
+    app.request.get('_route_params')) %}
+
+<div class="left-menu">
+
+    <a class="menu-item" href="">
+        <img src="{{ asset('img/el_03.PNG', 'quest-book') }}" alt="">
+        <i class="ra ra-muscle-up{% if currentPath is same as (path('quest-book-profile')) %} active{% endif %}"></i>
+    </a>
+
+    <a class="menu-item" href="">
+        <img src="{{ asset('img/el_03.PNG', 'quest-book') }}" alt="">
+        <i class="ra ra-book"></i>
+    </a>
+
+    <a class="menu-item" href="">
+        <img src="{{ asset('img/el_03.PNG', 'quest-book') }}" alt="">
+        <i class="ra ra-book"></i>
+    </a>
+
+</div>

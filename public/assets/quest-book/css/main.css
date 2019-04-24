@@ -1,6 +1,14 @@
+html {
+
+}
+
 body {
-    /*background-image: url("../img/book.png");*/
-    height: 100vh;
+    /*background-image: url("../img/space_bg.jpg");*/
+    height: 100%;
+    min-width: 1200px;
+    background:
+            radial-gradient(circle, transparent 40%, black 75%),
+            url("../img/space_bg.jpg");
 }
 
 @font-face {
@@ -14,12 +22,15 @@ div.container {
 }
 
 div#quest-book {
-    background: #0b3e6f url("../img/book.png") no-repeat center;
+    background: url("../img/book.png") no-repeat center top;
     /*-webkit-background-size: cover;*/
     /*-moz-background-size: cover;*/
     /*-o-background-size: cover;*/
-    background-size: contain;
-    height: 90%;
+    /*background-size: contain;*/
+    background-size: 100% auto;
+    background-origin: content-box;
+    height: 100%;
+    padding: 50px;
 }
 
 #quest-book>div.ui.grid {
@@ -27,9 +38,8 @@ div#quest-book {
 }
 
 h1 {
-
     font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
-    font-size: 4em;
+    font-size: 5em;
     text-align: center;
 }
 
@@ -37,4 +47,12 @@ h1 {
 div.wide {
     margin-top: 80px;
     border: 1px solid black;
+}
+
+div.wide.six {
+    margin-top: 40px;
+}
+
+div.left-margin {
+    height: 100%;
 }

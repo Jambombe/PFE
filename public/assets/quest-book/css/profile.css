@@ -1,0 +1,25 @@
+div.level {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+}
+
+div.level>img {
+    width: 100%;
+    position: relative;
+}
+
+div.level>span {
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+    font-weight: bold;
+    width: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0px;
+    top: 30px;
+    color: #fff;
+    font-size: 500%;
+    vertical-align: middle;
+    text-align: center;
+}
