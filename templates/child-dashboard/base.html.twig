@@ -4,43 +4,32 @@
         <meta charset="UTF-8">
         <title>{% block title %}Journal de quêtes{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link  rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"  type="text/css"  />
-        <style>
-            div.container {
-                height: 100%;
-                margin: 50px;
-            }
-            div#quest-book {
-                background: #0b3e6f url("{{ asset('book.png', 'quest-book') }}") no-repeat;
-                /*-webkit-background-size: cover;*/
-                /*-moz-background-size: cover;*/
-                /*-o-background-size: cover;*/
-                background-size: contain;
-                height: 90%;
-            }
-            body {
-                {#background-image: url("{{ asset('book.png', 'quest-book') }}");#}
-                height: 100vh;
-            }
-        </style>
+        <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"  type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/main.css', 'quest-book') }}" type="text/css" />
     </head>
     <body>
 
-    <div class="container">
-        <div id="quest-book">
-            <div class="ui grid">
-                    <div class="left-page eigth wide column">
-                        Je suis la page de gauche
-                    </div>
-                    <div class="right-page eigth wide column">
-                        Je suis la page de droite
-                    </div>
+        <div class="container">
+            <div id="quest-book">
+                <div class="ui grid">
+                        <div class="left-margin two wide column">
+                            {% block left_margin %}{% endblock %}
+                        </div>
+                        <div class="left-page six wide column">
+                            <h1>{% block left_page_title %}Titre base{% endblock %}</h1>
+                            {% block left_page %}{% endblock %}
+                        </div>
+                        <div class="right-page six wide column">
+                            {% block right_page %}{% endblock %}
+                        </div>
+                        <div class="right-margin two wide column">
+                            {% block right_margin %}{% endblock %}
+                        </div>
+                </div>
             </div>
         </div>
-    </div>
-
-
 
         {% block javascripts %}{% endblock %}
+
     </body>
 </html>

@@ -1,0 +1,40 @@
+body {
+    /*background-image: url("../img/book.png");*/
+    height: 100vh;
+}
+
+@font-face {
+    font-family: "Fantasy1";
+    src: url("../../fonts/Fantasy1.ttf");
+}
+
+div.container {
+    height: 100%;
+    margin: 40px;
+}
+
+div#quest-book {
+    background: #0b3e6f url("../img/book.png") no-repeat center;
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    background-size: contain;
+    height: 90%;
+}
+
+#quest-book>div.ui.grid {
+    margin-top: 20px;
+}
+
+h1 {
+
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+    font-size: 4em;
+    text-align: center;
+}
+
+/* debug */
+div.wide {
+    margin-top: 80px;
+    border: 1px solid black;
+}

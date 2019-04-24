@@ -1,0 +1,37 @@
+{% extends 'child-dashboard/base.html.twig' %}
+
+{% block left_page_title %}Profil{% endblock %}
+
+{% block left_page %}
+
+    <div class="ui card">
+        <div class="image">
+            <img src="https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png">
+        </div>
+        <div class="content">
+            <a class="header">{{ child.pseudo }}</a>
+            <div class="meta">
+                <span class="date">Title si j'en met</span>
+            </div>
+        </div>
+        <div class="extra content">
+            <a>
+                <i class="user icon"></i>
+                Niveau
+            </a>
+        </div>
+        <div class="extra content">
+            <a>
+                <i class="user icon"></i>
+                Quêtes en cours
+            </a>
+        </div>
+        <div class="extra content">
+            <a>
+                <i class="user icon"></i>
+                Quêtes réalisées
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
