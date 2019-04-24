@@ -14,6 +14,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,16 @@ class ParentDashboard extends AbstractController
 {
 
     /**
+     * @Route("/dashboard")
+     * @return RedirectResponse
+     */
+    public function dashboardHome() {
+        return $this->redirectToRoute('dashboard');
+    }
+
+    /**
+     * Affiche tous les enfants du parent connecté
+     *
      * @Route("/dashboard/mes-enfants", name="dashboard")
      */
     public function dashboard() {
@@ -46,6 +57,8 @@ class ParentDashboard extends AbstractController
 
 
     /**
+     * Affiche le profil d'un enfant en particulier
+     *
      * @Route("/dashboard/e/{adventurer}", name="one-child")
      * @param $adventurer
      * @param Request $request
@@ -112,6 +125,8 @@ class ParentDashboard extends AbstractController
     }
 
     /**
+     * Ajout d'un nouvel enfant
+     *
      * @Route("dashboard/nouvel-enfant", name="dashboard-add-child")
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -150,6 +165,8 @@ class ParentDashboard extends AbstractController
     }
 
     /**
+     * Dashboard des quêtes - Permet de voir les quetes en cours, à valider en d'en créer de nouvelles
+     *
      * @Route("dashboard/quetes", name="dashboard-quests")
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -169,12 +186,10 @@ class ParentDashboard extends AbstractController
         if ($questForm->isSubmitted() && $questForm->isValid()) {
 
 
-            // Met à jour le status de la quête en fonction de si l'enfant est déjà défini ou non
+            // Met à jour le status de la quête en fonction de si l'enfant est déjà défini
             if ($newQuest->getChild()) {
                 $newQuest->setStatus($qs->ASSIGNATED['s']);
                 $newQuest->setAssignatedDate(new DateTime());
-            } else {
-                $newQuest->setStatus($qs->CREATED['s']);
             }
 
             $em->persist($newQuest);
@@ -192,6 +207,8 @@ class ParentDashboard extends AbstractController
 
 
     /**
+     * Dashboard des notifications
+     *
      * @Route("dashboard/notifications", name="dashboard-notifications")
      */
     public function notifications() {

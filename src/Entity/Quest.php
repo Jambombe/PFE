@@ -20,11 +20,22 @@ class Quest
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min=5,
+     *     minMessage="Le titre de la quête doit être de minimum {{ limit }} caractères",
+     *     max=255,
+     *     maxMessage="Le titre est trop long"
+     * )
+     * @Assert\NotNull
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=2047, nullable=true)
+     * @Assert\Length(
+     *     max=2047,
+     *     maxMessage="La description est trop longue"
+     * )
      */
     private $description;
 

@@ -2,7 +2,7 @@
 
     {% block pagetitle %}
         {% if child %}
-            <b>{{ child.name }}</b> <i>({{ child.pseudo }})</i>
+            <h1>{{ child.name }}</h1>
         {% else %}
             Enfant inconnu
         {% endif %}
@@ -11,9 +11,6 @@
 {% block content %}
 
     {% if child %}
-
-
-
 
         <div class="row">
             <div class="col-md-3">

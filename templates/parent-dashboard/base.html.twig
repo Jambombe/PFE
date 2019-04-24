@@ -41,6 +41,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             margin-right: 5px;
             font-weight: bold;
         }
+
+        @font-face {
+            font-family: "Fantasy1";
+            src: url("{{ asset('Fantasy1.ttf', 'custom_fonts') }}");
+        }
+
+        h1 {
+            font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+            font-size: 32px !important;
+            font-weight: bold;
+        }
     </style>
 
     {% block stylesheets %}
@@ -179,14 +190,17 @@ desired effect
                 <!-- Onglet Enfants -->
 
                 {% set active = false %}
-                {% if currentPath is same as(path('dashboard') or currentPath is same as(path('one-child', {adventurer: c.pseudo}))) %}
+                {% if currentPath is same as(path('dashboard')) %}
                     {% set active = true %}
                 {% endif %}
 
-{#                {{ dump(active) }}#}
-{#                {{ dump(path('one-child', {adventurer: c.pseudo})) }}#}
+                {% if app.request.attributes.get('_route_params')['adventurer'] is defined %}
+                    {% if currentPath is same as(path('one-child', {adventurer: app.request.attributes.get('_route_params')['adventurer']})) %}
+                        {% set active = true %}
+                    {% endif %}
+                {% endif %}
 
-                <li class="treeview {% if currentPath is same as (path('dashboard')) %}active{% endif %}">
+                <li class="treeview {% if active %}active{% endif %}">
                     <a href="{{ path('dashboard') }}"><i class="fa fa-child"></i> <span>Mes enfants</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>

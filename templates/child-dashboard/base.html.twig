@@ -2,23 +2,45 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Journal de quêtes{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link  rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"  type="text/css"  />
         <style>
-            html {
-                background: url("{{ asset('book.png', 'quest-book') }}") no-repeat center center fixed;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
+            div.container {
+                height: 100%;
+                margin: 50px;
+            }
+            div#quest-book {
+                background: #0b3e6f url("{{ asset('book.png', 'quest-book') }}") no-repeat;
+                /*-webkit-background-size: cover;*/
+                /*-moz-background-size: cover;*/
+                /*-o-background-size: cover;*/
+                background-size: contain;
+                height: 90%;
             }
             body {
-                background-image: url("{{ asset('book.png', 'quest-book') }}");
+                {#background-image: url("{{ asset('book.png', 'quest-book') }}");#}
+                height: 100vh;
             }
         </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+    <div class="container">
+        <div id="quest-book">
+            <div class="ui grid">
+                    <div class="left-page eigth wide column">
+                        Je suis la page de gauche
+                    </div>
+                    <div class="right-page eigth wide column">
+                        Je suis la page de droite
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>
