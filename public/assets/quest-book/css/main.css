@@ -4,11 +4,11 @@ html {
 
 body {
     /*background-image: url("../img/space_bg.jpg");*/
-    height: 100vh;
+    min-height: 100vh;
     min-width: 1200px;
-    background:
-            radial-gradient(circle, transparent 40%, black 75%),
-            url("../img/space_bg.jpg");
+    /*background:*/
+    /*        radial-gradient(circle, transparent 40%, black 75%),*/
+    /*        url("../img/space_bg.jpg");*/
 }
 
 @font-face {
@@ -19,6 +19,10 @@ body {
 div.container {
     height: 100%;
     margin: 40px;
+}
+
+@media all and (min-width: 1200px) {
+
 }
 
 div#quest-book {
