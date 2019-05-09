@@ -23,7 +23,7 @@ class LevelService
      * @return array [
      *          level: Le niveau en fonction de l'exp
      *          expLeft: Les points d'exp restant
-     *          expCurrentLv: LE total de points d'exp pour passer du niveau courrant au suivants
+     *          expCurrentLv: Le total de points d'exp pour passer du niveau courrant au suivant
      * ]
      */
     public function infosFromExp($exp) {

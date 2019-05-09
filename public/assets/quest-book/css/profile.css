@@ -1,3 +1,6 @@
+
+/*** Ruban rouge Niveau ***/
+
 div.level {
     position: absolute;
     top: 0;
@@ -23,3 +26,51 @@ div.level>span {
     vertical-align: middle;
     text-align: center;
 }
+
+/**********************************/
+
+/*** Page gauche - Profil rapide (image, nom) ***/
+
+div.profile {
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+}
+
+div.profile h2 {
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+    font-size: 2em;
+}
+
+div.profile div.profile-img, div.profile div.profile-infos {
+    width: 50%;
+    max-height: 50%;
+    margin: 20px auto 0 auto;
+    text-align: center;
+}
+
+/**********************************/
+
+/*** Page droite - Profile détaillé (page droite) ***/
+
+div.profile-page-details {
+
+}
+
+div.profile-page-details ul {
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+    list-style: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+div.profile-page-details li {
+    margin-bottom: 15px;
+}
+
+div.profile-page-details li:first-child span {
+    font-size: 1.8em;
+}
+
+/**********************************/

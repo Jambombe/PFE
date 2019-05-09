@@ -26,8 +26,7 @@ class QuestBookController extends AbstractController
      */
     public function profile() {
 
-        $user = new ChildUser();
-        $user->setPseudo('josé');
+        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(3);
 
         return $this->render(
             'child-dashboard/pages/profile.html.twig',

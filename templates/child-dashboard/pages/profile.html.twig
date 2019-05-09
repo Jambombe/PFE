@@ -4,30 +4,61 @@
 
 {% block left_page %}
 
-    <div class="profile">
-        <div class="profile-img">
-            <img class="ui medium circular image" src="https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png" alt="">
+    {% set levelInfos = lv.infosFromExp(child.exp) %}
 
-            {# Affiche le ruban rouge contenant le niveau du joueur #}
-            <div class="level">
-                <img src="{{ asset('img/el_02.PNG', 'quest-book') }}" alt="">
-                <span>50</span>
-            </div>
+    <div class="profile-page">
 
-
+        {# Affiche le ruban rouge contenant le niveau du joueur #}
+        <div class="level">
+            <img src="{{ asset('img/el_02.PNG', 'quest-book') }}" alt="">
+            <span>{{ levelInfos.level }}</span>
         </div>
 
+        <div class="profile">
+            <div class="profile-img">
+                <img class="ui medium circular image" src="https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png" alt="">
+            </div>
 
-
-
-
-
+            <div class="profile-infos">
+                <h2>{{ child.pseudo }}</h2>
+            </div>
+        </div>
 
     </div>
 
 {% endblock %}
 
+{% block right_page %}
+
+    {% set levelInfos = lv.infosFromExp(child.exp) %}
+
+    {% set currentQuests = 0 %}
+    {% for q in child.quests if q.status == 1 %}
+        {% set currentQuests = currentQuests +1 %}
+    {% endfor %}
+
+    {% set failedQuests = 0 %}
+    {% set successQuests = 0 %}
+    {% for q in child.quests %}
+        {% if q.status == 3 %}
+            {% set successQuests = successQuests +1 %}
+        {% elseif q.status == 4 %}
+            {% set failedQuests = failedQuests +1 %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="profile-page-details">
+        <ul>
+            <li><span>Niveau {{ levelInfos.level }}</span> &nbsp; ({{ levelInfos.expLeft }} / {{ levelInfos.expCurrentLv }})</li>
+            <li>Quêtes en cours : {{ currentQuests }}</li>
+            <li>Quêtes réalisées : {{ successQuests+failedQuests }} (<span class="success">{{ successQuests }}</span> / <span class="fail">{{ failedQuests }}</span>)</li>
+            <li>Cristaux de niveau disponibles : x</li>
+        </ul>
+    </div>
+
+{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/profile.css', 'quest-book') }}" type="text/css" />
 {% endblock %}

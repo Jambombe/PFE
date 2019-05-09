@@ -56,3 +56,11 @@ div.wide.six {
 div.left-margin {
     height: 100%;
 }
+
+.success {
+    color: #146A1A;
+}
+
+.fail {
+    color: #A41E1C;
+}
