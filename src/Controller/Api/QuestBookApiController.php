@@ -48,15 +48,19 @@ class QuestBookApiController extends AbstractController
                         $message = "Quête rendue avec succès";
                         $responseCode = JsonResponse::HTTP_OK;
                     } else {
+                        // Quete ayant un status différent de Assigné
                         $message = "Impossible de rendre cette quête";
                     }
                 } else {
+                    // User existant mais mauvais
                     $message = "Vous n'avez pas l'autorisation de rendre cette quête (mauvais utilisateur)";
                 }
             } else {
+                // Quete n'existe pas
                 $message = "Impossible de rendre cette quête";
             }
         } else {
+            // User inexistant / non connecté
             $message = "Vous n'avez pas l'autorisation de rendre cette quête (mauvais utilisateur)";
         }
 

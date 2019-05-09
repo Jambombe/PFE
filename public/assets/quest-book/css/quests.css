@@ -2,6 +2,6 @@ div.quests-page {
     /*background-color: rgba(0,0,200,0.5);*/
 }
 
-div[id*="quest-details"].hidden {
+div[id*="quest-details-"].hidden {
     display: none;
 }
