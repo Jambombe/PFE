@@ -1,0 +1,35 @@
+<div id="quest-details-{{ q.id }}" class="hidden quest-details">
+    <h2>{{ q.title }}</h2>
+    <p>{{ q.description }}</p>
+    <p><i class="ra ra-emerald"></i> Affichage des récompenses</p>
+    
+    <div class="checkmark" title="Rendre la quête">
+        <img src="{{ asset('img/check-mark.png', 'quest-book') }}" alt="Image Validation quête">
+    </div>
+</div>
+
+
+<style>
+    div.quest-details{
+        padding: 20px;
+    }
+
+    div.checkmark {
+        max-width: 50px;
+
+        position: relative;
+        bottom: 0;
+    }
+
+    div.checkmark img {
+        width: 100%;
+        max-width: 100%;
+        transition: all .2s;
+    }
+
+    div.checkmark img:hover {
+        width: 110%;
+        max-width: 110%;
+        transition: all .2s;
+    }
+</style>

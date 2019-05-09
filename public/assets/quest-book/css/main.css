@@ -4,7 +4,7 @@ html {
 
 body {
     /*background-image: url("../img/space_bg.jpg");*/
-    height: 100%;
+    height: 100vh;
     min-width: 1200px;
     background:
             radial-gradient(circle, transparent 40%, black 75%),
@@ -35,12 +35,20 @@ div#quest-book {
 
 #quest-book>div.ui.grid {
     margin-top: 20px;
+    max-height: 100%;
+    min-height: 400px;
+    height: 80%;
 }
 
 h1 {
     font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
     font-size: 5em;
     text-align: center;
+}
+
+h2 {
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+
 }
 
 /* debug */
@@ -51,6 +59,10 @@ div.wide {
 
 div.wide.six {
     margin-top: 40px;
+    max-height: 100%;
+    /*background-color: rgba(250,0,0,0.5);*/
+    overflow-y: scroll;
+    /*max-height: 1000px;*/
 }
 
 div.left-margin {

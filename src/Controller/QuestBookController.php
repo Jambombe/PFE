@@ -36,4 +36,20 @@ class QuestBookController extends AbstractController
         );
     }
 
+    /**
+     * @Route("journal/quetes", name="quest-book-quests")
+     * @return Response
+     */
+    public function quests() {
+
+        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(3);
+
+        return $this->render(
+            'child-dashboard/pages/quests.html.twig',
+            [
+                'child' => $user,
+            ]
+        );
+    }
+
 }
