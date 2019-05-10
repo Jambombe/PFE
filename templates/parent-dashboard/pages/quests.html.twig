@@ -64,7 +64,7 @@
                                 {% for q in user.quests %}
                                     {% if q.status is same as (qs.RETURNED.s) %}
                                     <!-- Quete -->
-                                    <div class="post">
+                                    <div class="post" id="quest-post-{{ q.id }}">
                                         <div class="user-block">
 {#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
 
@@ -87,8 +87,8 @@
                                         </ul>
 
                                         <div class="valid-btns">
-                                            <a class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</a>
-                                            <a class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</a>
+                                            <a onclick="validQuest({{ q.id }})" class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</a>
+                                            <a onclick="refuseQuest({{ q.id }})" class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</a>
                                         </div>
                                     </div>
                                     <!-- /.quete -->
@@ -176,12 +176,14 @@
     {% endblock stylesheets %}
 
 {% block script %}
-<!-- Bootstrap slider -->
-<script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
-<script>
-    $(function () {
-        /* BOOTSTRAP SLIDER */
-        $('.slider').slider()
-    })
-</script>
+    <!-- Bootstrap slider -->
+    <script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
+    <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
+
+        <script>
+        $(function () {
+            /* BOOTSTRAP SLIDER */
+            $('.slider').slider()
+        })
+    </script>
 {% endblock %}

@@ -14,7 +14,7 @@
                         <h3 class="box-title">{{ n.title }}</h3>
 
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            <button onclick="deleteNotif({{ n.id }})" type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                         </div>
                         <!-- /.box-tools -->
                     </div>
@@ -34,3 +34,8 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
+{% endblock %}

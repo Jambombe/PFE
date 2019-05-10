@@ -108,7 +108,7 @@
                             {% if child.quests |length > 0 %}
                                 {% for q in child.quests | reverse | slice(0,5) %}
                                     <!-- Quete -->
-                                    <div class="post">
+                                    <div class="post" id="quest-post-{{ q.id }}">
                                         <div class="user-block">
 {#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
 
@@ -122,11 +122,31 @@
                                         </div>
                                         <!-- /.user-block -->
                                         <ul>
-                                            <li>Statut</li>
+                                            <li>
+                                                {% if q.status == 1 %}
+                                                    En cours de réalisation
+                                                {% elseif q.status == 2 %}
+                                                    En attente de validation
+                                                {% elseif q.status == 3 %}
+                                                    Quête réussie <i class="{{ qs.VALIDATED.icon }}"></i>
+                                                {% elseif q.status == 4 %}
+                                                    Quête échouée <i class="{{ qs.FAILED.icon }}"></i>
+                                                {% endif %}
+
+                                            </li>
                                             <li>Assignée le <b>{{ q.assignatedDate | date("d/m/Y")}}</b> à <b>{{ q.assignatedDate | date("H:i") }}</b></li>
 
                                             {% if q.status >= 2 %}
                                                 <li>Rendue le <b>{{ q.returnDate | date("d/m/Y")}}</b> à <b>{{ q.returnDate | date("H:i") }}</b></li>
+                                            {% endif %}
+
+                                            <br>
+
+                                            {% if q.status == 2 %}
+                                                <div class="valid-btns">
+                                                    <button onclick="validQuest({{ q.id }})" class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</button>
+                                                    <button onclick="refuseQuest({{ q.id }})" class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</button>
+                                                </div>
                                             {% endif %}
 
 
@@ -350,5 +370,22 @@
             span.quest-status.valid { color: #77cc77}
             span.quest-status.assignated { color: #FF8D2B }
             span.quest-status.fail { color: #ff6961 }
+
+            div.valid-btns .btn-app { color: #fff }
+
+            div.valid-btns .valid { background-color: #77cc77 }
+            div.valid-btns .fail { background-color: #ff6961 }
+
+            .btn-app>.ra {
+                font-size: 20px;
+                display: block;
+            }
         </style>
     {% endblock stylesheets %}
+
+
+    {% block script %}
+        {{ parent() }}
+        <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
+
+    {% endblock %}

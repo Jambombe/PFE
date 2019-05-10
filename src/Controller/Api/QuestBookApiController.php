@@ -4,6 +4,7 @@
 namespace App\Controller\Api;
 
 
+use App\Entity\Notification;
 use App\Entity\Quest;
 use App\Service\QuestStatusService;
 use DateTime;
@@ -35,14 +36,23 @@ class QuestBookApiController extends AbstractController
 
         if ($user) {
             if ($quest) {
-                if ($quest->getChild() === $user) {
-//                if ($quest->getChild() !== $user) { // Pour tester avec le mauvais utilisateur
+//                if ($quest->getChild() === $user) {
+                if ($quest->getChild() !== $user) { // Pour tester avec le mauvais utilisateur
 
                     if ($quest->getStatus() === QuestStatusService::ASSIGNATED) {
 
                         // On change le statut de la quête
                         $quest->setStatus(QuestStatusService::RETURNED);
                         $quest->setReturnDate(new DateTime());
+
+                        $notif = new Notification();
+                        $notif->setTitle($quest->getChild()->getName() . " a rendu une quête !");
+                        $notif->setMessage($quest->getChild()->getName() . " a rendu la quête \"". $quest->getTitle() ."\"");
+                        $notif->setParentUsers($quest->getOwner());
+                        $notif->setType(0);
+
+                        $em->getManager()->persist($notif);
+
                         $em->getManager()->flush();
 
                         $message = "Quête rendue avec succès";
