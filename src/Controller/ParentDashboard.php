@@ -10,6 +10,7 @@ use App\Form\ChildUserType;
 use App\Form\QuestType;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
+use App\Service\TrophyService;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -222,6 +223,18 @@ class ParentDashboard extends AbstractController
 
     }
 
+    /**
+     * @Route("test")
+     * @param TrophyService $ts
+     * @return Response
+     */
+    public function testTrophy(TrophyService $ts) {
+        $u = $this->getDoctrine()->getRepository(ChildUser::class)->find(3);
+
+        $ts->lfNewTrophies($u);
+
+        return new Response();
+    }
 
 
 }

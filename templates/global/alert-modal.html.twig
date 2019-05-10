@@ -1,5 +1,8 @@
+<div onload="showModal()"></div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    swal("{{ title }}", "{{ message }}", "{{ type }}" );
-    console.log("{{ title }}", "{{ message }}", "{{ type }}" );
+    function showModal() {
+        swal("{{ title }}", "{{ message }}", "{{ type }}" );
+        console.log("{{ title }}", "{{ message }}", "{{ type }}" );
+    }
 </script>

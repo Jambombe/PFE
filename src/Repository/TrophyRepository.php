@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\ChildUser;
 use App\Entity\Trophy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 
 /**
  * @method Trophy|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +20,43 @@ class TrophyRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trophy::class);
+    }
+
+    /**
+     * Retourne le 1er Trophée non validé de $childUser dans la catégorie $category
+     * @param $category
+     * @param ChildUser $childUser
+     * @return Query
+     */
+    public function getFirstTrophyOf($category, $childUser) {
+
+//        $validatedTrophies = $childUser->getTrophies();
+
+        $q = $this->createQueryBuilder('t');
+        $q
+            ->where($q->expr()->eq('t.category', ':category'))
+            ->setParameter(':category', $category)
+
+
+            // Et où $childUser NOT IN $trophy->getChildren()
+//            ->andWhere($q->expr())
+
+            ///////////////////////////////
+
+            ->orderBy('t.argument')
+            ;
+
+        return $q->getQuery();
+
+        /*
+         * Requete pseudo SQL
+         *
+         * SELECT t
+         * From Trophy t
+         * Where t.category = $category
+         * AND $childUser NOT IN t->getChildren()
+         *
+         */
     }
 
     // /**

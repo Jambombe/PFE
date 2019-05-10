@@ -29,6 +29,16 @@ class Trophy
     private $description;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $argument;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ChildUser", mappedBy="trophies")
      */
     private $children;
@@ -91,6 +101,30 @@ class Trophy
             $this->children->removeElement($child);
             $child->removeTrophy($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?int
+    {
+        return $this->category;
+    }
+
+    public function setCategory(int $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getArgument(): ?int
+    {
+        return $this->argument;
+    }
+
+    public function setArgument(int $argument): self
+    {
+        $this->argument = $argument;
 
         return $this;
     }
