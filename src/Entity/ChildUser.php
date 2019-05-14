@@ -73,12 +73,24 @@ class ChildUser implements UserInterface, Serializable
      */
     private $notifications;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="ProfileImage", inversedBy="unlockedByChildren")
+     */
+    private $unlockedImages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ProfileImage", inversedBy="setByChildren")
+     */
+    private $profileImage;
+
+
     public function __construct()
     {
         $this->quests = new ArrayCollection();
         $this->trophies = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->setExp(0);
+        $this->unlockedImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,5 +329,43 @@ class ChildUser implements UserInterface, Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection|ProfileImage[]
+     */
+    public function getUnlockedImages(): Collection
+    {
+        return $this->unlockedImages;
+    }
+
+    public function addUnlockedImage(ProfileImage $unlockedImage): self
+    {
+        if (!$this->unlockedImages->contains($unlockedImage)) {
+            $this->unlockedImages[] = $unlockedImage;
+        }
+
+        return $this;
+    }
+
+    public function removeUnlockedImage(ProfileImage $unlockedImage): self
+    {
+        if ($this->unlockedImages->contains($unlockedImage)) {
+            $this->unlockedImages->removeElement($unlockedImage);
+        }
+
+        return $this;
+    }
+
+    public function getProfileImage(): ?ProfileImage
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(?ProfileImage $profileImage): self
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
     }
 }
