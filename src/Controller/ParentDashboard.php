@@ -224,6 +224,19 @@ class ParentDashboard extends AbstractController
     }
 
     /**
+     * @Route("dashboard/options", name="parent-options")
+     */
+    public function options() {
+
+        return $this->render(
+            'parent-dashboard/pages/options.html.twig',
+            [
+                'user' => $this->getUser(),
+            ]
+        );
+    }
+
+    /**
      * @Route("test")
      * @param TrophyService $ts
      * @return Response

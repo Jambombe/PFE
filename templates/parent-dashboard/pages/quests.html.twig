@@ -21,7 +21,7 @@
                         <!-- ONGLET QUETES EN COURS-->
                         <div class="active tab-pane" id="activeQuests">
 
-                            {% if user.quests |length > 0 %}
+                            {% if user.quests | length > 0 %}
                                 {% for q in user.quests | reverse %}
                                     {% if q.status is same as (qs.ASSIGNATED.s) %}
                                     <!-- Quete -->

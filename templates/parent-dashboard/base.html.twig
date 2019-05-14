@@ -124,7 +124,7 @@ desired effect
                             <span class="label label-warning">{{ user.notifications | length }}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">{{ user.notifications | length }} notification{% if user.notifications|length is not same as(1) %}s{% endif %}</li>
+                            <li class="header">{{ user.notifications | length }} notification{% if user.notifications|length is not same as(0,1) %}s{% endif %}</li>
                             <li>
                                 <!-- Inner Menu: contains the notifications -->
                                 <ul class="menu">
@@ -269,10 +269,10 @@ desired effect
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Anything you want
+            Nom site
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2019 <a href="#">Nom Site</a>.</strong>
     </footer>
 
     <!-- Control Sidebar -->
@@ -286,21 +286,17 @@ desired effect
         <div class="tab-content">
             <!-- Settings tab content -->
             <div class="tab-pane active" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
+{#                <form method="post">#}
+                    <h3 class="control-sidebar-heading">Options</h3>
 
                     <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
+                        <a href="{{ path("parent-options") }}">Mon compte</a>
                         <p>
-                            Some information about this general settings option
+                            Voir et modifier vos informations personnelles
                         </p>
                     </div>
                     <!-- /.form-group -->
-                </form>
+{#                </form>#}
             </div>
             <!-- /.tab-pane -->
         </div>
