@@ -6,9 +6,9 @@ body {
     /*background-image: url("../img/space_bg.jpg");*/
     min-height: 100vh;
     min-width: 1200px;
-    /*background:*/
-    /*        radial-gradient(circle, transparent 40%, black 75%),*/
-    /*        url("../img/space_bg.jpg");*/
+    background:
+            radial-gradient(circle, transparent 40%, black 75%),
+            url("../img/space_bg.jpg");
 }
 
 @font-face {

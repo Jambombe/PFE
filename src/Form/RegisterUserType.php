@@ -20,17 +20,44 @@ class RegisterUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-                'constraints' => array(
-                    new NotBlank(),
-                    new Length(array('max' => 4096))
-                ),
-            ))
-            ->add('name', TextType::class)
+            ->add('email', EmailType::class,
+                [
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Email',
+                        'class' => 'ui input',
+                    ],
+                ]
+            )
+            ->add('plainPassword', RepeatedType::class,
+                [
+                    'type' => PasswordType::class,
+                    'first_options'  => array(
+                        'label' => false,
+                        'attr' => ['placeholder' => 'Mot de passe'],
+                    ),
+                    'second_options' => array(
+                        'label' => false,
+                        'attr' => ['placeholder' => 'Confirmer le mot de passe'],
+                        ),
+                    'constraints' => array(
+                        new NotBlank(),
+                        new Length(array('max' => 4096))
+                    ),
+                    'attr' => [
+                        'class' => 'ui input',
+                    ],
+                ]
+            )
+            ->add('name', TextType::class,
+                [
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Prénom',
+                        'class' => 'ui input',
+                    ],
+                ]
+            )
         ;
     }
 

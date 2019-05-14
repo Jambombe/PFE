@@ -1,8 +1,61 @@
+{% extends 'home/base.html.twig' %}
 
-<h1>Inscription</h1>
-{{ form_start(registerForm) }}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #main {
+            min-height: 100vh;
+        }
+    </style>
+{% endblock stylesheets %}
 
-    {{ form_widget(registerForm) }}
-<button type="submit" class="btn-default">Register!</button>
+{% block body %}
 
-{{ form_end(registerForm) }}
+    <div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment" id="main">
+
+            {% include 'home/includes/inbody-menu.html.twig' %}
+
+            <div class="ui text container">
+                <h1 class="ui inverted header">Inscription</h1>
+                <br>
+{#                {% if error %}#}
+{#                    {% if error.code == 0 %}#}
+{#                        <div class="error-msg">Cet email est déjà enregistré</div>#}
+{#                        <br>#}
+{#                    {% endif %}#}
+{#                {% endif %}#}
+
+                {{ form_start(registerForm, {attr: {class: 'ui form'}}) }}
+
+                {% if form_errors(registerForm) %}
+                    <div class="error-msg">
+                        {{ form_errors(registerForm) }}
+                    </div>
+                {% endif %}
+
+                <br>
+                <div class="ui fluid input">
+                    {{ form_row(registerForm.email) }}
+                </div>
+                <br>
+                <div class="ui fluid input">
+                    {{ form_row(registerForm.name, {attr: {class: 'test'}}) }}
+                </div>
+                <br>
+                <div class="ui fluid input">
+                    {{ form_row(registerForm.plainPassword) }}
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="ui inverted green button huge">S'inscrire</button>
+
+                {{ form_end(registerForm) }}
+                <br>
+                <a href="{{ path('login') }}">Déjà un compte ?</a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
