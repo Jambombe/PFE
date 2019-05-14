@@ -52,4 +52,20 @@ class QuestBookController extends AbstractController
         );
     }
 
+
+    /**
+     * @Route("journal/boutique", name="quest-book-shop")
+     */
+    public function shop() {
+
+        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
+
+        return $this->render(
+            'child-dashboard/pages/shop.html.twig',
+            [
+                'child' => $user,
+            ]
+        );
+    }
+
 }

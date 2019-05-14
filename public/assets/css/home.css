@@ -4,6 +4,15 @@ body {
     -moz-font-smoothing: grayscale;
 }
 
+@font-face {
+    font-family: "Fantasy1";
+    src: url("../fonts/Fantasy1.ttf");
+}
+
+h1 {
+    font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
+}
+
 .hidden.menu {
     display: none;
 }
