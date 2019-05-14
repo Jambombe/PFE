@@ -1,7 +1,11 @@
 <div id="quest-details-{{ q.id }}" class="hidden quest-details">
     <h2>{{ q.title }}</h2>
     <p>{{ q.description }}</p>
-    <p><i class="ra ra-emerald"></i> Affichage des récompenses</p>
+    <p>
+        <img class="ui middle aligned mini image" src="{{ asset('img/exp-gem.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.exp }}</span>
+        <br/>
+        <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.goldCoins }}</span>
+    </p>
     
     <div class="checkmark" title="Rendre la quête" onclick="returnQuest({{ q.id }})">
         <img src="{{ asset('img/check-mark.png', 'quest-book') }}" alt="Image Validation quête">

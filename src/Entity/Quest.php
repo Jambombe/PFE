@@ -39,6 +39,17 @@ class Quest
      */
     private $description;
 
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $exp;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $goldCoins;
+
     /**
      * @ORM\Column(type="time", nullable=true)
      */
@@ -188,6 +199,30 @@ class Quest
     public function setChild(?ChildUser $child): self
     {
         $this->child = $child;
+
+        return $this;
+    }
+
+    public function getExp(): ?int
+    {
+        return $this->exp;
+    }
+
+    public function setExp(int $exp): self
+    {
+        $this->exp = $exp;
+
+        return $this;
+    }
+
+    public function getGoldCoins(): ?int
+    {
+        return $this->goldCoins;
+    }
+
+    public function setGoldCoins(int $goldCoins): self
+    {
+        $this->goldCoins = $goldCoins;
 
         return $this;
     }

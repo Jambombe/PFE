@@ -57,6 +57,10 @@ div.profile-page-details {
 
 }
 
+div.profile-page-details div.child-ressources{
+    padding-left: 40px;
+}
+
 div.profile-page-details ul {
     font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
     list-style: none;

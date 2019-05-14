@@ -29,6 +29,7 @@ class ParentApiController extends AbstractController
 
         $em = $this->getDoctrine();
 
+        /** @var Quest $quest */
         $quest = $em->getRepository(Quest::class)->find($questId);
 
         $responseCode = JsonResponse::HTTP_FORBIDDEN;
@@ -40,6 +41,11 @@ class ParentApiController extends AbstractController
 
                         // On change le statut de la quête
                         $quest->setStatus(QuestStatusService::VALIDATED);
+
+                        $quest->getChild()
+                            ->addExp($quest->getExp())
+                            ->addGoldCoins($quest->getGoldCoins());
+
                         $em->getManager()->flush();
 
                         $message = "Quête validée avec succès";

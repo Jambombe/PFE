@@ -54,6 +54,16 @@ class ChildUser implements UserInterface, Serializable
     private $exp;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $levelCrystal;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $goldCoins;
+
+    /**
      * @ORM\ManyToOne(targetEntity="ParentUser", inversedBy="children", cascade={"persist"})
      */
     private $parent;
@@ -89,8 +99,10 @@ class ChildUser implements UserInterface, Serializable
         $this->quests = new ArrayCollection();
         $this->trophies = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->setExp(0);
         $this->unlockedImages = new ArrayCollection();
+        $this->setExp(0);
+        $this->setLevelCrystal(0);
+        $this->setGoldCoins(0);
     }
 
     public function getId(): ?int
@@ -130,6 +142,13 @@ class ChildUser implements UserInterface, Serializable
     public function setExp(int $exp): self
     {
         $this->exp = $exp;
+
+        return $this;
+    }
+
+    public function addExp(int $exp): self
+    {
+        $this->exp+=$exp;
 
         return $this;
     }
@@ -365,6 +384,37 @@ class ChildUser implements UserInterface, Serializable
     public function setProfileImage(?ProfileImage $profileImage): self
     {
         $this->profileImage = $profileImage;
+
+        return $this;
+    }
+
+    public function getLevelCrystal(): ?int
+    {
+        return $this->levelCrystal;
+    }
+
+    public function setLevelCrystal(int $levelCrystal): self
+    {
+        $this->levelCrystal = $levelCrystal;
+
+        return $this;
+    }
+
+    public function getGoldCoins(): ?int
+    {
+        return $this->goldCoins;
+    }
+
+    public function setGoldCoins(int $goldCoins): self
+    {
+        $this->goldCoins = $goldCoins;
+
+        return $this;
+    }
+
+    public function addGoldCoins(int $goldCoins): self
+    {
+        $this->goldCoins+=$goldCoins;
 
         return $this;
     }

@@ -5,6 +5,8 @@ namespace App\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +40,26 @@ class QuestType extends AbstractType
                     'required'=>true,
                     'attr'=> ['class'=>'form-control'],
                     'choices' => $options['parent']->getChildren(),
+                ]
+            )
+            ->add('exp', IntegerType::class,
+                [
+                    'label'=>"Points d'expérience",
+                    'attr'=> [
+                        'class'=>'form-control',
+                        'placeholder' => "Points d'expérience",
+                        'min'=>0,
+                    ]
+                ]
+            )
+            ->add('goldCoins', IntegerType::class,
+                [
+                    'label'=>"Pièces d'or",
+                    'attr'=> [
+                        'class'=>'form-control',
+                        'placeholder' => "Pièces d'or",
+                        'min'=>0,
+                    ]
                 ]
             )
 //            ->add('exp', TextType::class,

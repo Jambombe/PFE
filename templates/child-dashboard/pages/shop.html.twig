@@ -4,7 +4,7 @@
 
 {% block left_page %}
 
-    <div class="quests-page">
+    <div class="shop-images">
         {% for q in child.quests if q.status == 1 %}
             {% include 'child-dashboard/includes/quest-card.html.twig' with {'quest': q} %}
         {% endfor %}
@@ -14,7 +14,7 @@
 
 {% block right_page %}
 
-    <div class="quests-page-details">
+    <div class="shop-rewards">
         {% for q in child.quests if q.status == 1 %}
             {% include 'child-dashboard/includes/quest-details.html.twig' with {'quest': q} %}
 

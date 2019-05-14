@@ -52,8 +52,14 @@
             <li><span>Niveau {{ levelInfos.level }}</span> &nbsp; ({{ levelInfos.expLeft }} / {{ levelInfos.expCurrentLv }})</li>
             <li>Quêtes en cours : {{ currentQuests }}</li>
             <li>Quêtes réalisées : {{ successQuests+failedQuests }} (<span class="success">{{ successQuests }}</span> / <span class="fail">{{ failedQuests }}</span>)</li>
-            <li>Cristaux de niveau disponibles : x</li>
         </ul>
+
+        <br/>
+        <div class="child-ressources">
+            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ child.goldCoins }}</span>
+            <br/>
+            <img class="ui middle aligned mini image" src="{{ asset('img/level-crystal.png', 'quest-book') }}" alt="Image crystal de niveau"> <span>{{ child.levelCrystal }}</span>
+        </div>
     </div>
 
 {% endblock %}
