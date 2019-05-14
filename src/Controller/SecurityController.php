@@ -91,7 +91,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render(
-                'security/registerTMP.html.twig',
+                'security/register.html.twig',
                 [
                     'registerForm' => $registerForm->createView(),
                 ]
@@ -117,7 +117,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authUtils->getLastUsername();
 
         return $this->render(
-            '/security/loginTMP.html.twig',
+            '/security/login.html.twig',
             [
             'last_username' => $lastUsername,
             'error' => $error,
