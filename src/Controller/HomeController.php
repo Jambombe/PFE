@@ -23,4 +23,15 @@ class HomeController extends AbstractController {
         );
     }
 
+    /**
+     * @Route("/presentation", name="presentation")
+     */
+    public function presentation() {
+
+        return $this->render(
+            'home/pages/presentation.html.twig',
+            []
+        );
+    }
+
 }
