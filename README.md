@@ -2,9 +2,12 @@
 
     
 ## Todo
-* Finaliser le schéma de la base
-    * Créer les entités manquantes: `Récompense`
-        * Auparavant, bien visualiser comment fonctionne la Récompense (le type : exp fixe, %age d'exp du niveau en cours ..., relation ManyToMany vers Quete (Recompense réutilisable pour n'importe quelle Quete, obtenue si le statut de la Quete est VALIDATED))
-    * Créer les relations en conséquences
-
-##### Une fois que tout est bien beau, on commence le dashboard `ParentUser`
+* CustomReward
+    - [ ] L'entité (Nom, description, prix en pièces d'or, image ?)
+    - [ ] Création de récompenses perso depuis le dashboard parent
+    - [ ] Possibilité pour l'enfant d'acheter en pièce d'or une récompense perso
+    
+* ProfileImage
+    - [ ] En ajouter plusieurs
+    - [ ] Possibilité pour l'enfant d'en acheter avec les cristaux de niveaux
+    - [ ] Sélection d'une image pour l'enfant en tant qu'image de profil

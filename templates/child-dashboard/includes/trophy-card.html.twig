@@ -1,0 +1,96 @@
+{#<div class="quest-card" id="quest-card-{{ q.id }}" onclick="displayQuestDetails({{ quest.id }})">#}
+{#    {{ quest.title }}#}
+{#</div>#}
+
+{#<div class="ui accordion">#}
+<div class="quest-card" id="quest-card-{{ quest.id }}">
+    <div class="title">
+        <i class="ra ra-crossed-swords"></i>
+        {{ quest.title }}
+    </div>
+
+    <div class="content">
+        <p>{{ quest.description }}</p>
+        <p>
+            <img class="ui middle aligned mini image" src="{{ asset('img/exp-gem.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.exp }}</span>
+            &nbsp;&nbsp;&nbsp;
+            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.goldCoins }}</span>
+        </p>
+
+        <div class="checkmark" title="Rendre la quête" onclick="returnQuest({{ q.id }})">
+            <img src="{{ asset('img/check-mark.png', 'quest-book') }}" alt="Image Validation quête">
+        </div>
+    </div>
+</div>
+{#</div>#}
+
+
+<style>
+
+    .quest-card {
+        border: 1px solid #333;
+        padding: 5px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+
+    .quest-card .content {
+        padding-left: 20px;
+    }
+
+    .checkmark {
+        max-width: 42px;
+
+        position: relative;
+        bottom: 0;
+    }
+
+    .checkmark img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .checkmark img:hover {
+        box-shadow: 0 0 5px black;
+        padding: 3px;
+        /*width: 110%;*/
+        /*max-width: 110%;*/
+    }
+</style>
+
+<script>
+
+    // Initialisation des accordion
+        $('.ui.accordion')
+            .accordion()
+        ;
+    ///////////////////////////////
+
+    function returnQuest(questId) {
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        //     if (this.readyState === 4 && this.status === 200) {
+        //         console.log('oui');
+        //     }
+        // };
+        // xhttp.open('GET', '/api/c/return/'+questId, true);
+        // xhttp.send();
+
+        if (confirm("Rendre cette quête ?")) {
+
+            window.fetch('/api/c/return/'+questId)
+                .then(r => r.json())
+                .then(r => {
+                    if (r.code === 400) {
+                        alert(r.message);
+                    } else if (r.code === 200){
+                        alert(r.message);
+
+                        const questCard = document.getElementById('quest-card-'+questId);
+
+                        questCard.remove();
+                    }
+                });
+        }
+    }
+</script>
