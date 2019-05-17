@@ -14,13 +14,15 @@
 
 {% endblock %}
 
+
+
+{% block right_page_title %}Trophées{% endblock %}
+
 {% block right_page %}
 
     <div class="quests-page-details">
-        {% for q in child.quests if q.status == 1 %}
-{#            {% include 'child-dashboard/includes/quest-details.html.twig' with {'quest': q} %}#}
-
-
+        {% for t in child.trophies %}
+            {% include 'child-dashboard/includes/trophy-card.html.twig' with {'trophy': t} %}
         {% endfor %}
     </div>
 

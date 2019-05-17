@@ -1,25 +1,12 @@
-{#<div class="quest-card" id="quest-card-{{ q.id }}" onclick="displayQuestDetails({{ quest.id }})">#}
-{#    {{ quest.title }}#}
-{#</div>#}
-
 {#<div class="ui accordion">#}
-<div class="quest-card" id="quest-card-{{ quest.id }}">
+<div class="trophy-card" id="trophy-card-{{ trophy.id }}">
     <div class="title">
         <i class="ra ra-crossed-swords"></i>
-        {{ quest.title }}
+        {{ trophy.title }}
     </div>
 
     <div class="content">
-        <p>{{ quest.description }}</p>
-        <p>
-            <img class="ui middle aligned mini image" src="{{ asset('img/exp-gem.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.exp }}</span>
-            &nbsp;&nbsp;&nbsp;
-            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ q.goldCoins }}</span>
-        </p>
-
-        <div class="checkmark" title="Rendre la quête" onclick="returnQuest({{ q.id }})">
-            <img src="{{ asset('img/check-mark.png', 'quest-book') }}" alt="Image Validation quête">
-        </div>
+        <p>{{ trophy.description }}</p>
     </div>
 </div>
 {#</div>#}
@@ -27,7 +14,7 @@
 
 <style>
 
-    .quest-card {
+    .trophy-card {
         border: 1px solid #333;
         padding: 5px;
         border-radius: 3px;
@@ -36,25 +23,6 @@
 
     .quest-card .content {
         padding-left: 20px;
-    }
-
-    .checkmark {
-        max-width: 42px;
-
-        position: relative;
-        bottom: 0;
-    }
-
-    .checkmark img {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .checkmark img:hover {
-        box-shadow: 0 0 5px black;
-        padding: 3px;
-        /*width: 110%;*/
-        /*max-width: 110%;*/
     }
 </style>
 
