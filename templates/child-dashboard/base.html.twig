@@ -9,6 +9,15 @@
         <link rel="stylesheet" href="{{ asset('css/left-menu.css', 'quest-book') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/rpg-awesome.min.css', 'ra') }}"/>
 
+
+        <script
+                src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous">
+
+        </script>
+        {% block javascripts %}
+        {% endblock %}
     </head>
     <body>
 
@@ -32,8 +41,6 @@
                 </div>
             </div>
         </div>
-
-        {% block javascripts %}{% endblock %}
 
     </body>
 </html>

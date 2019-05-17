@@ -6,6 +6,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Notification;
 use App\Entity\Quest;
+use App\Service\LevelService;
 use App\Service\QuestStatusService;
 use DateTime;
 use Exception;
@@ -24,7 +25,7 @@ class ParentApiController extends AbstractController
      * @return JsonResponse
      * @throws Exception
      */
-    public function validQuest($questId) {
+    public function validQuest($questId, LevelService $ls) {
         $user = $this->getUser();
 
         $em = $this->getDoctrine();
@@ -42,10 +43,24 @@ class ParentApiController extends AbstractController
                         // On change le statut de la quête
                         $quest->setStatus(QuestStatusService::VALIDATED);
 
-                        $quest->getChild()
+                        // Enfant quête
+                        $child = $quest->getChild();
+
+                        // Niveau actuel de l'enfant avant ajout de l'exp
+                        $currentLevel = $ls->infosFromExp($child->getExp())['level'];
+
+                        // Ajout de l'exp et des pièces d'or
+                        $child
                             ->addExp($quest->getExp())
                             ->addGoldCoins($quest->getGoldCoins());
 
+                        // Nouveau niveau après ajout de l'exp (peut ne pas avoir changé
+                        $newCurrentLevel = $ls->infosFromExp($child->getExp())['level'];
+
+                        // Ajout de n cristaux de niveaux (min = 0)
+                        $child->addLevelCrystal($newCurrentLevel-$currentLevel);
+
+                        // Sauvegarde
                         $em->getManager()->flush();
 
                         $message = "Quête validée avec succès";

@@ -400,6 +400,12 @@ class ChildUser implements UserInterface, Serializable
         return $this;
     }
 
+    public function addLevelCrystal(int $n) :self
+    {
+        $this->levelCrystal += $n;
+        return $this;
+    }
+
     public function getGoldCoins(): ?int
     {
         return $this->goldCoins;

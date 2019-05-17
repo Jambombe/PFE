@@ -34,7 +34,7 @@ class ProfileImage
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="ChildUser", mappedBy="unlockedImages")
+     * @ORM\ManyToMany(targetEntity="ChildUser", mappedBy="unlockedImages")
      */
     private $unlockedByChildren;
 

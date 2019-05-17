@@ -45,7 +45,7 @@ class QuestBookController extends AbstractController
         $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
 
         return $this->render(
-            'child-dashboard/pages/quests.html.twig',
+            'child-dashboard/pages/questsv2.html.twig',
             [
                 'child' => $user,
             ]

@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Entity\ChildUser;
 use App\Entity\Trophy;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
