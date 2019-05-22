@@ -31,14 +31,14 @@
                             </li>
                             <li class="list-group-item">
                                 {% set currentQuests = 0 %}
-                                {% for q in child.quests if q.status == 1 %}
+                                {% for q in child.quests | filter(q => q.status == 1) %}
                                     {% set currentQuests = currentQuests +1 %}
                                 {% endfor %}
                                 <b>Quêtes en cours</b> <a class="pull-right">{{ currentQuests }}</a>
                             </li>
                             <li class="list-group-item">
                                 {% set realisedQuests = 0 %}
-                                {% for q in child.quests if q.status == 3 or q.status == 4 %}
+                                {% for q in child.quests | filter(q => q.status == 3 or q.status == 4) %}
                                     {% set realisedQuests = realisedQuests +1 %}
                                 {% endfor %}
                                 <b>Quêtes réalisées</b> <a class="pull-right">{{ realisedQuests }}</a>

@@ -10,12 +10,12 @@
 
 
         {% set currentQuests = 0 %}
-        {% for q in c.quests if q.status == 1 %}
+        {% for q in c.quests  | filter(q => q.status == 1)  %}
             {% set currentQuests = currentQuests +1 %}
         {% endfor %}
 
         {% set realisedQuests = 0 %}
-        {% for q in c.quests if q.status == 3 or q.status == 4 %}
+        {% for q in c.quests  | filter(q => q.status == 3 or q.status == 4)  %}
             {% set realisedQuests = realisedQuests +1 %}
         {% endfor %}
 

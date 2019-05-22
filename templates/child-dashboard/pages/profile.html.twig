@@ -33,7 +33,7 @@
     {% set levelInfos = lv.infosFromExp(child.exp) %}
 
     {% set currentQuests = 0 %}
-    {% for q in child.quests if q.status == 1 %}
+    {% for q in child.quests  | filter(q => q.status == 1)  %}
         {% set currentQuests = currentQuests +1 %}
     {% endfor %}
 

@@ -3,9 +3,11 @@
     
 ## Todo
 * CustomReward
-    - [ ] L'entité (Nom, description, prix en pièces d'or, image ?)
-    - [ ] Création de récompenses perso depuis le dashboard parent
-    - [ ] Possibilité pour l'enfant d'acheter en pièce d'or une récompense perso
+    - [X] L'entité (Nom, description, prix en pièces d'or, image ?)
+    - [X] Création de récompenses perso depuis le dashboard parent
+    - [X] Possibilité pour l'enfant d'acheter en pièce d'or une récompense perso
+    - [ ] Modification, suppression
+
     
 * ProfileImage
     - [ ] En ajouter plusieurs
