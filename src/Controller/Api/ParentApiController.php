@@ -159,7 +159,7 @@ class ParentApiController extends AbstractController
                     $em->getManager()->remove($reward);
                     $em->getManager()->flush();
 
-                    $message = "Notification supprimée avec succès";
+                    $message = "Récompense supprimée avec succès";
                     $responseCode = JsonResponse::HTTP_OK;
                 } else {
                     // User existant mais mauvais
