@@ -4,6 +4,7 @@
 namespace App\Controller\Api;
 
 
+use App\Entity\CustomReward;
 use App\Entity\Notification;
 use App\Entity\Quest;
 use App\Service\LevelService;
@@ -111,23 +112,66 @@ class ParentApiController extends AbstractController
                         $quest->setStatus(QuestStatusService::FAILED);
                         $em->getManager()->flush();
 
-                        $message = "Quête validée avec succès";
+                        $message = "Quête refusée avec succès";
                         $responseCode = JsonResponse::HTTP_OK;
                     } else {
                         // Quete ayant un status différent de Assigné
-                        $message = "Impossible de valider cette quête";
+                        $message = "Impossible de refuser cette quête";
                     }
                 } else {
                     // User existant mais mauvais
-                    $message = "Vous n'avez pas l'autorisation de rendre cette quête (mauvais utilisateur)";
+                    $message = "Vous n'avez pas l'autorisation pour refuser cette quête (mauvais utilisateur)";
                 }
             } else {
                 // Quete n'existe pas
-                $message = "Impossible de valider cette quête";
+                $message = "Impossible de refuser cette quête";
             }
         } else {
             // User inexistant / non connecté
-            $message = "Vous n'avez pas l'autorisation de valider cette quête (mauvais utilisateur)";
+            $message = "Vous n'avez pas l'autorisation pour refuser cette quête (mauvais utilisateur)";
+        }
+
+        return $this->getJsonResponse($responseCode, $message);
+    }
+
+
+    /**
+     * Supprimer une reward
+     *
+     * @Route("/api/p/delete-reward/{rewardId}", name="delete-reward")
+     * @param $rewardId
+     * @return JsonResponse
+     */
+    public function deleteReward($rewardId) {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine();
+
+        $reward = $em->getRepository(CustomReward::class)->find($rewardId);
+
+        $responseCode = JsonResponse::HTTP_FORBIDDEN;
+
+        if ($user) {
+            if ($reward) {
+                if ($reward->getRewardOwner() === $user) {
+                    // On change le statut de la quête
+
+                    $em->getManager()->remove($reward);
+                    $em->getManager()->flush();
+
+                    $message = "Notification supprimée avec succès";
+                    $responseCode = JsonResponse::HTTP_OK;
+                } else {
+                    // User existant mais mauvais
+                    $message = "Vous n'avez pas l'autorisation de supprimer cette récompense (mauvais utilisateur)";
+                }
+            } else {
+                // Quete n'existe pas
+                $message = "Impossible de supprimer cette récompense (elle n'existe pas)";
+            }
+        } else {
+            // User inexistant / non connecté
+            $message = "Vous n'avez pas l'autorisation de supprimer cette récompense (mauvais utilisateur)";
         }
 
         return $this->getJsonResponse($responseCode, $message);
@@ -161,7 +205,7 @@ class ParentApiController extends AbstractController
                     $responseCode = JsonResponse::HTTP_OK;
                 } else {
                     // User existant mais mauvais
-                    $message = "Vous n'avez pas l'autorisation de supprimer xette notification (mauvais utilisateur)";
+                    $message = "Vous n'avez pas l'autorisation de supprimer cette notification (mauvais utilisateur)";
                 }
             } else {
                 // Quete n'existe pas

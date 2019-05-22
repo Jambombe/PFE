@@ -23,9 +23,9 @@
                             {% if user.customRewards | length > 0 %}
                                 {% for r in user.customRewards %}
                                     <!-- Reward -->
-                                    <div class="post">
+                                    <div class="post" id="custom-reward-{{ r.id }}">
                                         <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="{{ r.image }}" alt="status">
+                                            <img class="img-circle img-bordered-sm" src="{{ r.image }}" alt="status"/>
 
                                             <span class="username">
                                               <a href="#">{{ r.name }}</a>
@@ -34,6 +34,11 @@
                                             <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ r.goldCoinPrice }}</span>
 
                                             {#                                            <span class="description">{{ r.image }}</span>#}
+                                            <div class="action-buttons">
+                                                <i class="fa fa-edit" onclick="editReward({{ r.id }})"></i>
+                                                &nbsp;
+                                                <i class="fa fa-trash" onclick="deleteReward({{ r.id }})"></i>
+                                            </div>
                                         </div>
                                         <!-- /.user-block -->
                                     </div>
@@ -106,18 +111,29 @@
                 font-size: 20px;
                 display: block;
             }
+
+            .action-buttons {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            .action-buttons i {
+                /*padding: 3px;*/
+            }
+
+            .action-buttons i:hover {
+                color: #333;
+            }
+
+            .post {
+                position: relative;
+            }
         </style>
     {% endblock stylesheets %}
 
 {% block script %}
     <!-- Bootstrap slider -->
-    <script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
+    {{ parent() }}
     <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
-
-        <script>
-        $(function () {
-            /* BOOTSTRAP SLIDER */
-            $('.slider').slider()
-        })
-    </script>
 {% endblock %}
