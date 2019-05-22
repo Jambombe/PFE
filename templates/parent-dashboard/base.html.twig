@@ -225,6 +225,10 @@ desired effect
                 <!-- Onglet Quêtes -->
                 <li class=" {% if currentPath is same as(path('dashboard-quests')) %}active{% endif %}"><a href="{{ path('dashboard-quests') }}"><i class="fa fa-trophy"></i> <span>Quêtes</span></a></li>
 
+
+                <!-- Onglet Récompenses perso -->
+                <li class=" {% if currentPath is same as(path('dashboard-custom-rewards')) %}active{% endif %}"><a href="{{ path('dashboard-custom-rewards') }}"><i class="fa fa-trophy"></i> <span>Récompenses personnalisées</span></a></li>
+
                 <!-- Onglet Notifications -->
                 <li class=" {% if currentPath is same as(path('dashboard-notifications')) %}active{% endif %}"><a href="{{ path('dashboard-notifications') }}"><i class="fa fa-bell"></i> <span>Notifications</span> <span class="badge badge-pill badge-primary">{{ user.notifications |length }}</span></a></li>
 

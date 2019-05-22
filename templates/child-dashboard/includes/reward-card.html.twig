@@ -1,0 +1,70 @@
+{#<div class="quest-card" id="quest-card-{{ q.id }}" onclick="displayQuestDetails({{ quest.id }})">#}
+{#    {{ quest.title }}#}
+{#</div>#}
+
+{#<div class="ui accordion">#}
+<div class="reward-card four wide column" id="quest-card-{{ reward.id }}" onclick="buyItem({{ reward.id }})">
+    <div class="title">
+        <img class="ui middle aligned mini image" src="{{ r.image }}" alt="Image">
+        {{ reward.name }}
+    </div>
+
+    <div class="content">
+        <p><i>{{ reward.description }}</i></p>
+        <p>
+            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ reward.goldCoinPrice }}</span>
+        </p>
+    </div>
+</div>
+{#</div>#}
+
+
+<style>
+
+    .reward-card {
+        border: 0 !important;
+        /*border: 1px solid #333 !important;*/
+        /*border-left: 0 !important;*/
+        /*border-right: 0 !important;*/
+
+        padding: 5px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        transition: all .2s;
+
+        margin-top: 0 !important;
+    }
+
+
+    .reward-card:hover{
+        box-shadow: 0 0 5px black;
+        transition: all .2s;
+    }
+
+    .reward-card .content {
+        padding-left: 20px;
+    }
+</style>
+
+<script>
+
+    function buyItem(rewardId) {
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        //     if (this.readyState === 4 && this.status === 200) {
+        //         console.log('oui');
+        //     }
+        // };
+        // xhttp.open('GET', '/api/c/return/'+questId, true);
+        // xhttp.send();
+
+        if (confirm("Acheter cette récompense ?")) {
+
+            window.fetch('/api/c/buy/'+rewardId)
+                .then(r => r.json())
+                .then(r => {
+                    alert(r.message);
+                });
+        }
+    }
+</script>

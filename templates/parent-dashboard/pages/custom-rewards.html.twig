@@ -1,0 +1,123 @@
+{% extends 'parent-dashboard/base.html.twig' %}
+
+    {% block pagetitle %}
+        Récompenses personnalisées
+    {% endblock pagetitle %}
+
+{% block content %}
+
+        <div class="row">
+
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#my-rewards" data-toggle="tab">Récompenses personnaliées</a></li>
+                        <li><a href="#create-reward" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <!-- ONGLET QUETES EN COURS-->
+                        <div class="active tab-pane" id="my-rewards">
+
+                            {% if user.customRewards | length > 0 %}
+                                {% for r in user.customRewards %}
+                                    <!-- Reward -->
+                                    <div class="post">
+                                        <div class="user-block">
+                                            <img class="img-circle img-bordered-sm" src="{{ r.image }}" alt="status">
+
+                                            <span class="username">
+                                              <a href="#">{{ r.name }}</a>
+                                            </span>
+                                            <span class="description">{{ r.description }}</span>
+                                            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ r.goldCoinPrice }}</span>
+
+                                            {#                                            <span class="description">{{ r.image }}</span>#}
+                                        </div>
+                                        <!-- /.user-block -->
+                                    </div>
+                                    <!-- /.reward -->
+                                {% endfor %}
+                            {% else %}
+                                Aucune récompense personnalisée à afficher <br>
+                            {% endif %}
+                        </div>
+                        <!-- /.quetes en cours -->
+
+                        <!-- ONLGET Creer quete -->
+                        <div class="tab-pane" id="create-reward">
+
+                            <h2>Créer une nouvelle récompense personnalisée</h2>
+
+                            <div class="box box-success">
+                                <div class="box-body">
+
+                                    {{ form_start(customRewardForm) }}
+                                        <div class="form-group">
+                                            {{ form_row(customRewardForm.name) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(customRewardForm.description) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(customRewardForm.goldCoinPrice) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(customRewardForm.image) }}
+                                        </div>
+                                        <input type="submit" value="Créer" class="btn btn-primary">
+                                    {{ form_end(customRewardForm) }}
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.creer quete -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+{% endblock content %}
+
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <!-- Theme style -->
+        <style>
+            span.quest-status {
+                width: 40px;
+                height: 40px;
+                float: left;
+                left: 5px;
+                padding: 0 0 0 5px;
+            }
+            span.quest-status i{
+                vertical-align: middle;
+                font-size: 40px;
+                margin: auto;
+            }
+
+            .btn-app>.ra {
+                font-size: 20px;
+                display: block;
+            }
+        </style>
+    {% endblock stylesheets %}
+
+{% block script %}
+    <!-- Bootstrap slider -->
+    <script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
+    <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
+
+        <script>
+        $(function () {
+            /* BOOTSTRAP SLIDER */
+            $('.slider').slider()
+        })
+    </script>
+{% endblock %}

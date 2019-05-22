@@ -93,6 +93,11 @@ class ParentUser implements UserInterface, Serializable
     private $oldPassword;
 
     /**
+     * @ORM\OneToMany(targetEntity="CustomReward", mappedBy="rewardOwner", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $customRewards;
+
+    /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="parentUsers", cascade={"remove"}, orphanRemoval=true)
      */
     private $notifications;
@@ -103,6 +108,7 @@ class ParentUser implements UserInterface, Serializable
         $this->quests = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->setRoles(['ROLE_USER']);
+        $this->customRewards = new ArrayCollection();
     }
 
 
@@ -401,6 +407,37 @@ class ParentUser implements UserInterface, Serializable
             // set the owning side to null (unless already changed)
             if ($notification->getParentUsers() === $this) {
                 $notification->setParentUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomReward[]
+     */
+    public function getCustomRewards(): Collection
+    {
+        return $this->customRewards;
+    }
+
+    public function addCustomReward(CustomReward $customReward): self
+    {
+        if (!$this->customRewards->contains($customReward)) {
+            $this->customRewards[] = $customReward;
+            $customReward->setRewardOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomReward(CustomReward $customReward): self
+    {
+        if ($this->customRewards->contains($customReward)) {
+            $this->customRewards->removeElement($customReward);
+            // set the owning side to null (unless already changed)
+            if ($customReward->getRewardOwner() === $this) {
+                $customReward->setRewardOwner(null);
             }
         }
 

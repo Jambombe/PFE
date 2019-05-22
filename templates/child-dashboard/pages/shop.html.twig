@@ -1,6 +1,6 @@
 {% extends 'child-dashboard/base.html.twig' %}
 
-{% block left_page_title %}Quêtes{% endblock %}
+{% block left_page_title %}Images{% endblock %}
 
 {% block left_page %}
 
@@ -12,12 +12,17 @@
 
 {% endblock %}
 
+{% block right_page_title %}Récompenses{% endblock %}
+
 {% block right_page %}
+    <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ child.goldCoins }}</span>
+    <div class="ui divider"></div>
 
-    <div class="shop-rewards">
-        {% for q in child.quests if q.status == 1 %}
-            {% include 'child-dashboard/includes/quest-details.html.twig' with {'quest': q} %}
+    <div class="shop-rewards ui grid">
 
+
+        {% for r in child.parent.customRewards %}
+            {% include 'child-dashboard/includes/reward-card.html.twig' with {'reward': r} %}
 
         {% endfor %}
     </div>

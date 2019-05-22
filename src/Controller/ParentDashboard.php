@@ -4,9 +4,11 @@
 namespace App\Controller;
 
 use App\Entity\ChildUser;
+use App\Entity\CustomReward;
 use App\Entity\ParentUser;
 use App\Entity\Quest;
 use App\Form\ChildUserType;
+use App\Form\CustomRewardType;
 use App\Form\QuestType;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
@@ -206,6 +208,46 @@ class ParentDashboard extends AbstractController
         );
     }
 
+    /**
+     * Dashboard des quêtes - Permet de voir les quetes en cours, à valider en d'en créer de nouvelles
+     *
+     * @Route("dashboard/recompenses", name="dashboard-custom-rewards")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function customRewards(Request $request, EntityManagerInterface $em, \Symfony\Component\Asset\Packages $assetsManager) {
+
+        $newCustomReward = new CustomReward();
+        $newCustomReward->setRewardOwner($this->getUser());
+
+        $customRewardForm = $this->createForm(CustomRewardType::class, $newCustomReward);
+
+        $customRewardForm->handleRequest($request);
+
+        if ($customRewardForm->isSubmitted() && $customRewardForm->isValid()) {
+
+
+            if (! $newCustomReward->getImage() || ! file_exists($newCustomReward->getImage())) {
+//                $path = $assetsManager->getUrl('assets/img/home/white-image.png');
+                $path = 'https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png';
+                $newCustomReward->setImage($path);
+//                {{ asset('book_icon.PNG', 'home_img') }}
+            }
+
+            $em->persist($newCustomReward);
+            $em->flush();
+        }
+
+        return $this->render(
+            'parent-dashboard/pages/custom-rewards.html.twig',
+            [
+                'user' => $this->getUser(),
+                'customRewardForm' => $customRewardForm->createView()
+            ]
+        );
+    }
+
 
     /**
      * Dashboard des notifications
@@ -240,6 +282,8 @@ class ParentDashboard extends AbstractController
      * @Route("test")
      * @param TrophyService $ts
      * @return Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function testTrophy(TrophyService $ts) {
         $u = $this->getDoctrine()->getRepository(ChildUser::class)->find(3);
