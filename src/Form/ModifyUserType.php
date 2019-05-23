@@ -15,18 +15,26 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
-class RegisterUserType extends AbstractType
+class ModifyUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class,
+            ->add('name', TextType::class,
                 [
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Email',
-                        'class' => 'ui input',
+                        'placeholder' => 'Prénom',
+                        'class' => 'ui input form-control',
                     ],
+                ]
+            )
+            ->add('currentPassword',PasswordType::class,
+                [
+                    'mapped' => false,
+                    'label' => false,
+                    'attr' => ['placeholder' => 'Mot de passe actuel','class'=>'form-control'],
+
                 ]
             )
             ->add('plainPassword', RepeatedType::class,
@@ -34,27 +42,18 @@ class RegisterUserType extends AbstractType
                     'type' => PasswordType::class,
                     'first_options'  => array(
                         'label' => false,
-                        'attr' => ['placeholder' => 'Mot de passe'],
+                        'attr' => ['placeholder' => 'Nouveau mot de passe','class'=>'form-control'],
                     ),
                     'second_options' => array(
                         'label' => false,
-                        'attr' => ['placeholder' => 'Confirmer le mot de passe'],
+                        'attr' => ['placeholder' => 'Confirmer le nouveau mot de passe','class'=>'form-control'],
                         ),
                     'constraints' => array(
                         new NotBlank(),
                         new Length(array('max' => 4096))
                     ),
                     'attr' => [
-                        'class' => 'ui input',
-                    ],
-                ]
-            )
-            ->add('name', TextType::class,
-                [
-                    'label' => false,
-                    'attr' => [
-                        'placeholder' => 'Prénom',
-                        'class' => 'ui input',
+                        'class' => 'ui input form-control',
                     ],
                 ]
             )

@@ -6,12 +6,34 @@
 
 {% block content %}
 
-    user info
-    Besoin des compo du dashboard pour continuer
+    {% for m in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ m }}
+        </div>
+    {% endfor %}
+
+    <div class="box box-success">
+        <div class="box-body">
+
+            {{ form_start(optionsForm) }}
+{#                        {{ form(childForm, {'attr':{'class':'form-horizontal'}}) }}#}
+            <div class="form-group">
+                {{ form_row(optionsForm.name) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(optionsForm.currentPassword) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(optionsForm.plainPassword) }}
+            </div>
+            <input type="submit" value="Modifier" class="btn btn-primary">
+            {{ form_end(optionsForm) }}
+
+        </div>
+    </div>
 
 {% endblock content %}
 
 {% block script %}
     {{ parent() }}
-{#    <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>#}
 {% endblock %}

@@ -9,6 +9,7 @@ use App\Entity\ParentUser;
 use App\Entity\Quest;
 use App\Form\ChildUserType;
 use App\Form\CustomRewardType;
+use App\Form\ModifyUserType;
 use App\Form\QuestType;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
@@ -17,11 +18,14 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -267,13 +271,44 @@ class ParentDashboard extends AbstractController
 
     /**
      * @Route("dashboard/options", name="parent-options")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $pe
+     * @return Response
      */
-    public function options() {
+    public function options(Request $request, UserPasswordEncoderInterface $pe) {
+
+        /** @var ParentUser $user */
+        $user = $this->getUser();
+
+        $optionForm = $this->createForm(ModifyUserType::class, $user);
+
+        $optionForm->handleRequest($request);
+
+        if ($optionForm->isSubmitted() && $optionForm->isValid()) {
+
+            $currentPasswordField = $optionForm->get('currentPassword');
+
+            // Le mot de passe actuel correspond à celui saisi par l'utilisateur
+            if ($pe->isPasswordValid($user, $currentPasswordField->getData())) {
+
+                $password = $pe->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success',"Informations changées avec succès");
+
+            } else {
+                $currentPasswordField->addError(new FormError("Le mot de passe actuel est incorrect"));
+            }
+
+        }
 
         return $this->render(
             'parent-dashboard/pages/options.html.twig',
             [
-                'user' => $this->getUser(),
+                'user' => $user,
+                'optionsForm' => $optionForm->createView(),
             ]
         );
     }
