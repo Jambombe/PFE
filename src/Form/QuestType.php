@@ -2,12 +2,9 @@
 
 namespace App\Form;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,7 +41,7 @@ class QuestType extends AbstractType
             )
             ->add('exp', IntegerType::class,
                 [
-                    'label'=>"Points d'expérience",
+                    'label'=>"Points d'expérience (conseillé : entre x et y en fonction de l'enfant sélectionné au-dessus)",
                     'attr'=> [
                         'class'=>'form-control',
                         'placeholder' => "Points d'expérience",
