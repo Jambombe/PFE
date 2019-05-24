@@ -34,6 +34,11 @@ class ProfileImage
     private $price;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $requiredLevel;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ChildUser", mappedBy="unlockedImages")
      */
     private $unlockedByChildren;
@@ -47,6 +52,7 @@ class ProfileImage
     {
         $this->unlockedByChildren = new ArrayCollection();
         $this->setByChildren = new ArrayCollection();
+        $this->requiredLevel = 0;
     }
 
     public function getId(): ?int
@@ -148,6 +154,18 @@ class ProfileImage
                 $setByChild->setProfileImage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRequiredLevel(): ?int
+    {
+        return $this->requiredLevel;
+    }
+
+    public function setRequiredLevel(int $requiredLevel): self
+    {
+        $this->requiredLevel = $requiredLevel;
 
         return $this;
     }
