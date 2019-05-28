@@ -25,7 +25,7 @@
                         <br>
                     {% endif %}
                 {% endif %}
-                <form action="{{ path('childLogin') }}" method="post" class="ui form">
+                <form action="{{ path('ouvrir-journal') }}" method="post" class="ui form">
 {#                    <label for="email">Email:</label>#}
                     <div class="ui fluid input">
                         <input type="text" id="pseudo" name="_username" value="{{ last_username }}" class="ui input" placeholder="Nom d'aventurier"/>
@@ -37,11 +37,11 @@
 {#                    <label for="password">Password:</label>#}
                     <br>
                     <br>
-                    <button type="submit" class="ui inverted green button huge">Connexion</button>
+                    <button type="submit" class="ui inverted green button huge">Ouvrir mon journal</button>
                 </form>
                 <br>
-                <a href="{{ path('lostpassword') }}">Mot de passe perdu</a><br>
-                <a href="{{ path('register') }}">Créer un compte</a>
+{#                <a href="{{ path('lostpassword') }}">Mot de passe perdu</a><br>#}
+{#                <a href="{{ path('register') }}">Créer un compte</a>#}
 
             </div>
         </div>

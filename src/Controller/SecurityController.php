@@ -131,7 +131,7 @@ class SecurityController extends AbstractController
     /**
      * Permet de se connecter au journal en tnt que child user
      *
-     * @Route("/ouvrir-journal", name="childLogin")
+     * @Route("/journal/ouvrir", name="ouvrir-journal")
      *
      * @param Request $request
      * @param AuthenticationUtils $authUtils
