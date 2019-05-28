@@ -187,7 +187,33 @@
     <script src="{{ asset('plugins/bootstrap-slider/bootstrap-slider.js', 'parent_dashboard')}}"></script>
     <script src="{{ asset('js/api.js', 'parent_dashboard') }}"></script>
 
-        <script>
+    <script>
+
+        /** Ajout de l'event onchange sur le select "Choix de l'enfant" **/
+        const choices = document.getElementById('quest_child');
+        choices.addEventListener("change", updateExp, true);
+        updateExp();
+
+        // Fonction appelée lors du changement de l'enfant sélectionné
+        function updateExp(e) {
+            const choices = document.getElementById('quest_child');
+
+            const childOption = choices.options[choices.selectedIndex];
+            const exp = childOption.getAttribute('data-exp');
+
+            const questExpInput = document.getElementById('quest_exp');
+            const placeholderText = "Conseillé : entre " + (Math.round(exp*0.1)) + " et " + (Math.round(exp*0.8));
+            questExpInput.placeholder = placeholderText;
+        }
+
+    </script>
+
+
+
+
+
+
+    <script>
         $(function () {
             /* BOOTSTRAP SLIDER */
             $('.slider').slider()

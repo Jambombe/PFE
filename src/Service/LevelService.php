@@ -45,6 +45,9 @@ class LevelService
             'expLeft' => $exp,
             'expCurrentLv' => round($this->expForLevelN($level+1))
         ];
+
+        // Niveau 'level' ('expLeft' / 'expCurrentLv')
+        // Ex: 27 (1158/11200)
     }
 
     /**

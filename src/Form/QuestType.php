@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Service\LevelService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -35,13 +36,22 @@ class QuestType extends AbstractType
                     'choice_label'=> 'name',
                     'multiple'=>false,
                     'required'=>true,
-                    'attr'=> ['class'=>'form-control'],
+                    'attr'=> [
+                        'class'=>'form-control',
+                    ],
                     'choices' => $options['parent']->getChildren(),
+
+                    'choice_attr' => function($choice, $key, $value) use ($options) {
+                        // adds a class like attending_yes, attending_no, etc
+                        return [
+                                'data-exp' => $options['ls']->infosFromExp($choice->getExp())['expCurrentLv']
+                        ];
+                    },
                 ]
             )
             ->add('exp', IntegerType::class,
                 [
-                    'label'=>"Points d'expérience (conseillé : entre x et y en fonction de l'enfant sélectionné au-dessus)",
+                    'label'=>"Points d'expérience",
                     'attr'=> [
                         'class'=>'form-control',
                         'placeholder' => "Points d'expérience",
@@ -59,25 +69,6 @@ class QuestType extends AbstractType
                     ]
                 ]
             )
-//            ->add('exp', TextType::class,
-//                [
-//                    'mapped' => false,
-//                    'attr' => [
-//                        'value'=>"0,50",
-//                        'class' => 'slider form-control',
-//                        'data-slider-min' => "0",
-//                        'data-slider-max' => "100",
-//                        'data-slider-step' => "1",
-//                        'data-slider-value' => "[0,50]",
-//                        'data-slider-orientation' => 'horizontal',
-//                        'data-slider-selection' => 'before',
-//                        'data-slider-tooltip' => 'show',
-//                        'data-slider-id' => 'yellow',
-//                        'data-value' => "[0,50]",
-//                        'style' => 'display: none;',
-//                    ],
-//                ]
-//            )
         ;
     }
 
@@ -89,6 +80,7 @@ class QuestType extends AbstractType
             'data_class' => 'App\Entity\Quest',
             'cascade_validation' => true,
             'parent' => null, // Permet de passer la variable parent depuis le controller
+            'ls' => null, // Permet de passer la variable parent depuis le controller
         ]);
     }
 }

@@ -12,6 +12,7 @@ use App\Form\ChildUserType;
 use App\Form\CustomRewardType;
 use App\Form\ModifyUserType;
 use App\Form\QuestType;
+use App\Service\LevelService;
 use App\Service\QuestStatusService;
 use App\Service\TrophyService;
 use DateTime;
@@ -182,12 +183,12 @@ class ParentDashboard extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function quests(Request $request, EntityManagerInterface $em, QuestStatusService $qs) {
+    public function quests(Request $request, EntityManagerInterface $em, QuestStatusService $qs, LevelService $ls) {
 
         $newQuest = new Quest();
         $newQuest->setOwner($this->getUser());
 
-        $questForm = $this->createForm(QuestType::class, $newQuest, ['parent' => $this->getUser()]);
+        $questForm = $this->createForm(QuestType::class, $newQuest, ['parent' => $this->getUser(), 'ls'=>$ls]);
 
         $questForm->handleRequest($request);
 
