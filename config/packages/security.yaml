@@ -43,7 +43,7 @@ security:
         parent_dashboard:
             anonymous: true
             access_denied_url: /accessdenied
-            #            pattern:   ^/login
+#            pattern:   ^/login
             logout_on_user_change: true
             provider:  parent_user_provider
             form_login:

@@ -151,8 +151,8 @@ class QuestBookApiController extends AbstractController
      *
      * @Route("buy-image/{imageId}", name="buy-image")
      * @param $imageId
+     * @param LevelService $ls
      * @return JsonResponse
-     * @throws Exception
      */
     public function buyImage($imageId, LevelService $ls) {
 
@@ -179,6 +179,7 @@ class QuestBookApiController extends AbstractController
 
                             // Ajout de l'image aux image débloquées
                             $child->addUnlockedImage($image);
+                            $child->setProfileImage($image);
 
                             $notif = new Notification();
                             $notif->setTitle($child->getName() . " a acheté une nouvelle image !");

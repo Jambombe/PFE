@@ -25,6 +25,7 @@
         
 * Home
     - [ ] Formatage formulaire Inscription
+    - [ ] Si non loggé, le quest-book ne redirige pas sur le page de Connexion
     
 * Inscription
     - [X] Autoriser utilisation de mon email pour validation inscription

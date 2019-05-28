@@ -40,7 +40,7 @@ function returnQuest(questId) {
 
     if (confirm("Rendre cette quête ?")) {
 
-        window.fetch('/api/c/return/'+questId)
+        window.fetch('/journal/api/c/return/'+questId)
             .then(r => r.json())
             .then(r => {
                 if (r.code === 400) {
@@ -51,6 +51,30 @@ function returnQuest(questId) {
                     const questCard = document.getElementById('quest-card-'+questId);
 
                     questCard.remove();
+                }
+            });
+    }
+}
+
+// utilisée dans reward-card.html.twig
+function buyItem(rewardId) {
+    // var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function() {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //         console.log('oui');
+    //     }
+    // };
+    // xhttp.open('GET', '/api/c/return/'+questId, true);
+    // xhttp.send();
+
+    if (confirm("Acheter cette récompense ?")) {
+
+        window.fetch('/journal/api/c/buy/'+rewardId)
+            .then(r => r.json())
+            .then(r => {
+                alert(r.message);
+                if (r.code === 200) {
+                    document.location.reload();
                 }
             });
     }
