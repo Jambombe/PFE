@@ -84,14 +84,14 @@ class ChildUser implements UserInterface, Serializable
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ProfileImage", inversedBy="unlockedByChildren")
-     */
-    private $unlockedImages;
-
-    /**
      * @ORM\ManyToOne(targetEntity="ProfileImage", inversedBy="setByChildren")
      */
     private $profileImage;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ProfileImage", inversedBy="unlockedByChildren")
+     */
+    private $unlockedImages;
 
 
     public function __construct()

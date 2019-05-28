@@ -55,10 +55,10 @@ class TrophyService
 
         // self::REACH_LEVEL
         if ($reachLevelTrophy) {
-//            if (($this->ls->infosFromExp($childUser->getExp())['level']) >= $reachLevelTrophy->getArgument()){
-//                $reachLevelTrophy->addChild($childUser);
-//                $this->em->flush();
-//            }
+            if (($this->ls->infosFromExp($childUser->getExp())['level']) >= $reachLevelTrophy->getArgument()){
+                $reachLevelTrophy->addChild($childUser);
+                $this->em->flush();
+            }
         }
 
         // self::QUEST_SUCCESS
@@ -71,10 +71,10 @@ class TrophyService
 
         // self::QUEST_FAIL
             if ($questFailTrophy) {
-                if (/* Nb quete fail */ >= $questFailTrophy->getArgument()){
-                    $questFailTrophy->addChild($childUser);
-                    $this->em->flush();
-                }
+//                if (/* Nb quete fail */ >= $questFailTrophy->getArgument()){
+//                    $questFailTrophy->addChild($childUser);
+//                    $this->em->flush();
+//                }
             }
     }
 }

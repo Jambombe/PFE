@@ -1,0 +1,54 @@
+
+<div
+        class="image-card four wide column{% if image == child.profileimage %} current-image{% endif %}"
+        id="image-card-{{ image.id }}"
+        {% if image not in child.unlockedimages %} onclick="buyImage({{ image.id }})" {% endif %}
+>
+    <div class="image">
+        <img src="{{ image.url }}" alt="Profile image"/>
+    </div>
+
+    {% if image in child.unlockedimages and image != child.profileimage %}
+        <div class="price-hover">
+            <button class="ui button mini" onclick="changeProfileImage({{ image.id }})">
+                <i class="check icon"></i>
+            </button>
+        </div>
+    {% elseif image not in child.unlockedimages %}
+        <div class="price-hover">
+            <img class="ui middle aligned mini image" src="{{ asset('img/level-crystal.png', 'quest-book') }}" alt="Image cristal de niveau"> <span>{{ image.price }}</span>
+        </div>
+    {% elseif image == child.profileimage %}
+        <div class="price-hover">
+            <button class="ui button mini olive disabled">
+                <i class="check icon"></i>
+            </button>
+        </div>
+    {% endif %}
+
+</div>
+
+<style>
+    .image-card {
+        border: 0 !important;
+        padding: 5px;
+        margin-top: 0 !important;
+    }
+
+    .image-card:hover {
+        box-shadow: 0 0 3px black;
+    }
+
+    .image-card div.image img {
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .image-card div.price-hover {
+        width: 100%;
+    }
+
+    div.price-hover button  {
+        margin: auto;
+    }
+</style>

@@ -1,7 +1,7 @@
 {#<div class="ui accordion">#}
 <div class="trophy-card" id="trophy-card-{{ trophy.id }}">
     <div class="title">
-        <i class="ra ra-crossed-swords"></i>
+        <i class="ra ra-trophy"></i>
         {{ trophy.title }}
     </div>
 
@@ -25,40 +25,3 @@
         padding-left: 20px;
     }
 </style>
-
-<script>
-
-    // Initialisation des accordion
-        $('.ui.accordion')
-            .accordion()
-        ;
-    ///////////////////////////////
-
-    function returnQuest(questId) {
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
-        //     if (this.readyState === 4 && this.status === 200) {
-        //         console.log('oui');
-        //     }
-        // };
-        // xhttp.open('GET', '/api/c/return/'+questId, true);
-        // xhttp.send();
-
-        if (confirm("Rendre cette quête ?")) {
-
-            window.fetch('/api/c/return/'+questId)
-                .then(r => r.json())
-                .then(r => {
-                    if (r.code === 400) {
-                        alert(r.message);
-                    } else if (r.code === 200){
-                        alert(r.message);
-
-                        const questCard = document.getElementById('quest-card-'+questId);
-
-                        questCard.remove();
-                    }
-                });
-        }
-    }
-</script>

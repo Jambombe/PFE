@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\ChildUser;
+use App\Entity\ProfileImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,6 +65,7 @@ class QuestBookController extends AbstractController
             'child-dashboard/pages/shop.html.twig',
             [
                 'child' => $user,
+                'images' => $this->getDoctrine()->getRepository(ProfileImage::class)->findAll(),
             ]
         );
     }

@@ -11,6 +11,7 @@ use App\Service\LevelService;
 use App\Service\QuestStatusService;
 use App\Service\TrophyService;
 use DateTime;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,8 +25,10 @@ class ParentApiController extends AbstractController
      *
      * @Route("/api/p/valid/{questId}", name="valid-quest")
      * @param $questId
+     * @param LevelService $ls
+     * @param TrophyService $ts
      * @return JsonResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
     public function validQuest($questId, LevelService $ls, TrophyService $ts) {
         $user = $this->getUser();

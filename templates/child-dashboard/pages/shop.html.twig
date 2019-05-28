@@ -4,9 +4,10 @@
 
 {% block left_page %}
 
-    <div class="shop-images">
-        {% for q in child.quests if q.status == 1 %}
-            {% include 'child-dashboard/includes/quest-card.html.twig' with {'quest': q} %}
+    <div class="shop-images ui grid">
+        {% for i in images %}
+            {% include 'child-dashboard/includes/image-card.html.twig' with {'image': i} %}
+{#            <img src="{{ i.url }}" alt="Profile image"/>#}
         {% endfor %}
     </div>
 
@@ -20,7 +21,6 @@
 
     <div class="shop-rewards ui grid">
 
-
         {% for r in child.parent.customRewards %}
             {% include 'child-dashboard/includes/reward-card.html.twig' with {'reward': r} %}
 
@@ -32,4 +32,5 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/quests.css', 'quest-book') }}" type="text/css" />
+    <script src="{{ asset('js/api.js', 'quest-book') }}"></script>
 {% endblock %}

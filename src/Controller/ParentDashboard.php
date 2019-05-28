@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\ChildUser;
 use App\Entity\CustomReward;
 use App\Entity\ParentUser;
+use App\Entity\ProfileImage;
 use App\Entity\Quest;
 use App\Form\ChildUserType;
 use App\Form\CustomRewardType;
@@ -148,6 +149,12 @@ class ParentDashboard extends AbstractController
 //            $encodedPassword = $encoder->encodePassword($newChild->getPassword(), PASSWORD_BCRYPT);
             $encodedPassword = password_hash($newChild->getPassword(), PASSWORD_BCRYPT);
             $newChild->setPassword($encodedPassword);
+
+            // Ajout de l'image par defaut
+            /** @var ProfileImage $image */
+            $image = $em->getRepository(ProfileImage::class)->find(1);
+            $newChild->setProfileImage($image);
+            $newChild->addUnlockedImage($image);
 
             $em->persist($newChild);
             $em->flush();
