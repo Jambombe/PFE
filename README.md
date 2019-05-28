@@ -25,3 +25,6 @@
         
 * Home
     - [ ] Formatage formulaire Inscription
+    
+* Inscription
+    - [X] Autoriser utilisation de mon email pour validation inscription
