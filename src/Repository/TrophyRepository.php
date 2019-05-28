@@ -34,21 +34,29 @@ class TrophyRepository extends ServiceEntityRepository
 
         $q = $this->createQueryBuilder('t');
         $q
-            ->where($q->expr()->eq('t.category', ':category'))
+            ->where('t.category = :category')
             ->setParameter(':category', $category)
-
-
-            // Et où $childUser NOT IN $trophy->getChildren()
-//            ->andWhere($q->expr())
-
-            ///////////////////////////////
-
             ->orderBy('t.argument')
-            ;
+        ;
+
+        if (! $childUser->getTrophies()->isEmpty()) {
+            $q
+                ->andWhere($q->expr()->notIn('t', ':cht'))
+                ->setParameter(':cht', $childUser->getTrophies());
+        }
 
         return $q->getQuery();
-
         /*
+         * Requete SQL avec table assiocative child_user_trophy
+         *
+         * SELECT t.*
+         * FROM trophy t, child_user c
+         * WHERE t.id NOT IN(
+         *      SELECT ct.trophy_id
+         *      FROM child_user_trophy ct
+         *      WHERE ct.child_user_id = 1
+         * );
+         *
          * Requete pseudo SQL
          *
          * SELECT t

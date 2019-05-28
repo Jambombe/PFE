@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\ChildUser;
 use App\Entity\Trophy;
+use App\Repository\TrophyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -32,7 +33,6 @@ class TrophyService
      * Crée l'association ChildUser - Trophy si un nouveau trophée est réalisé
      *
      * @param ChildUser $childUser
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function lfNewTrophies($childUser) {
@@ -40,34 +40,41 @@ class TrophyService
         // Pour une même catégorie de Trophée (voir les constantes), on prend seulement le plus bas
         // non réalisé (car si le plus bas n'est pas réalisé, les suivants ne peuvent l'être)
 
+        /** @var TrophyRepository $trophyRepo */
         $trophyRepo = $this->em->getRepository(Trophy::class);
 
-        /** @var Trophy $reachLevelTrophy */
-        $reachLevelTrophy = $trophyRepo->getFirstTrophyOf(self::REACH_LEVEL, $childUser)->setMaxResults(1)->getSingleResult();
+//        /** @var Trophy $reachLevelTrophy */
+        $reachLevelTrophy = $trophyRepo->getFirstTrophyOf(self::REACH_LEVEL, $childUser)->setMaxResults(1)->getOneOrNullResult();
 
         /** @var Trophy $questSuccessTrophy */
-        $questSuccessTrophy = $trophyRepo->getFirstTrophyOf(self::QUEST_SUCCESS, $childUser)->setMaxResults(1)->getSingleResult();
+        $questSuccessTrophy = $trophyRepo->getFirstTrophyOf(self::QUEST_SUCCESS, $childUser)->setMaxResults(1)->getOneOrNullResult();
 
         /** @var Trophy $questFailTrophy */
-        $questFailTrophy = $trophyRepo->getFirstTrophyOf(self::QUEST_FAIL, $childUser)->setMaxResults(1)->getSingleResult();
+        $questFailTrophy = $trophyRepo->getFirstTrophyOf(self::QUEST_FAIL, $childUser)->setMaxResults(1)->getOneOrNullResult();
 
 
         // self::REACH_LEVEL
-        if (($this->ls->infosFromExp($childUser->getExp())['level']) >= $reachLevelTrophy->getArgument()){
-            $reachLevelTrophy->addChild($childUser);
-            $this->em->flush();
+        if ($reachLevelTrophy) {
+//            if (($this->ls->infosFromExp($childUser->getExp())['level']) >= $reachLevelTrophy->getArgument()){
+//                $reachLevelTrophy->addChild($childUser);
+//                $this->em->flush();
+//            }
         }
 
         // self::QUEST_SUCCESS
-//        if (/* nb quete succes */ >= $questSuccessTrophy->getArgument()){
-//            $questSuccessTrophy->addChild($childUser);
-//            $this->em->flush();
-//        }
+        if ($questSuccessTrophy) {
+//            if ($childUser->getQuests()-> >= $questSuccessTrophy->getArgument()){
+//                $questSuccessTrophy->addChild($childUser);
+//                $this->em->flush();
+//            }
+        }
 
         // self::QUEST_FAIL
-//        if (/* Nb quete fail */ >= $questFailTrophy->getArgument()){
-//            $questFailTrophy->addChild($childUser);
-//            $this->em->flush();
-//        }
+            if ($questFailTrophy) {
+                if (/* Nb quete fail */ >= $questFailTrophy->getArgument()){
+                    $questFailTrophy->addChild($childUser);
+                    $this->em->flush();
+                }
+            }
     }
 }

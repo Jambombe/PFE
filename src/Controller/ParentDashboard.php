@@ -315,7 +315,8 @@ class ParentDashboard extends AbstractController
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function testTrophy(TrophyService $ts) {
-        $u = $this->getDoctrine()->getRepository(ChildUser::class)->find(3);
+        /** @var ChildUser $u */
+        $u = $this->getDoctrine()->getRepository(ChildUser::class)->find(1);
 
         $ts->lfNewTrophies($u);
 

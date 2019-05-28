@@ -9,6 +9,7 @@ use App\Entity\Notification;
 use App\Entity\Quest;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
+use App\Service\TrophyService;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,7 @@ class ParentApiController extends AbstractController
      * @return JsonResponse
      * @throws Exception
      */
-    public function validQuest($questId, LevelService $ls) {
+    public function validQuest($questId, LevelService $ls, TrophyService $ts) {
         $user = $this->getUser();
 
         $em = $this->getDoctrine();
@@ -60,6 +61,9 @@ class ParentApiController extends AbstractController
 
                         // Ajout de n cristaux de niveaux (min = 0)
                         $child->addLevelCrystal($newCurrentLevel-$currentLevel);
+
+                        // On regarde s'il y a de nouveaux Trophées à donner à l'enfant
+                        $ts->lfNewTrophies($child);
 
                         // Sauvegarde
                         $em->getManager()->flush();
