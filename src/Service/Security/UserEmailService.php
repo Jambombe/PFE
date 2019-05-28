@@ -42,7 +42,7 @@ class UserEmailService
             return false;
         }
         
-        $message = (new Swift_Message('Validation email'))
+        $message = (new Swift_Message('SITE - Validez votre e-mail'))
             ->setFrom($this->mailerUser)
             ->setTo($user->getEmail())
             ->setBody(
