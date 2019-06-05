@@ -183,7 +183,7 @@ class QuestBookApiController extends AbstractController
 
                             $notif = new Notification();
                             $notif->setTitle($child->getName() . " a acheté une nouvelle image !");
-                            $notif->setMessage("<img src='{{$image->getUrl()}}' alt='Nouvelle image achetée'>");
+                            $notif->setMessage($child->getName() . " a acheté \"" . $image->getName() . "\" pour " . $image->getPrice() . " cristaux de niveau");
                             $notif->setParentUsers($child->getParent());
                             $notif->setType(0);
 

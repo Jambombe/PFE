@@ -20,6 +20,9 @@
 * ChildDashboard
     - [ ] **Faire version mobile**
     - [ ] Compléter prix et niveau de déblocage des ProfileImages
+    
+    - Trophées
+        - [ ] Créer plusieurs trophées
 
 
 * ParentDashboard 

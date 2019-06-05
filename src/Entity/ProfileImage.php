@@ -24,6 +24,11 @@ class ProfileImage
     private $url;
 
     /**
+     * @ORM\Column(type="string", length=127)
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isLocal;
@@ -166,6 +171,18 @@ class ProfileImage
     public function setRequiredLevel(int $requiredLevel): self
     {
         $this->requiredLevel = $requiredLevel;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

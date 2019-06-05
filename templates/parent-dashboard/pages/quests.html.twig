@@ -202,8 +202,7 @@
             const exp = childOption.getAttribute('data-exp');
 
             const questExpInput = document.getElementById('quest_exp');
-            const placeholderText = "Conseillé : entre " + (Math.round(exp*0.1)) + " et " + (Math.round(exp*0.8));
-            questExpInput.placeholder = placeholderText;
+            questExpInput.placeholder = "Conseillé : entre " + (Math.round(exp * 0.25)) + " et " + (Math.round(exp * 0.8));
         }
 
     </script>
