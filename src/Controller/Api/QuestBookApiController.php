@@ -11,6 +11,7 @@ use App\Entity\ProfileImage;
 use App\Entity\Quest;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
+use App\Service\TrophyService;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -152,9 +153,10 @@ class QuestBookApiController extends AbstractController
      * @Route("buy-image/{imageId}", name="buy-image")
      * @param $imageId
      * @param LevelService $ls
+     * @param TrophyService $ts
      * @return JsonResponse
      */
-    public function buyImage($imageId, LevelService $ls) {
+    public function buyImage($imageId, LevelService $ls, TrophyService $ts) {
 
         /** @var ChildUser $child */
         $child = $this->getUser();
@@ -186,6 +188,8 @@ class QuestBookApiController extends AbstractController
                             $notif->setMessage($child->getName() . " a acheté \"" . $image->getName() . "\" pour " . $image->getPrice() . " cristaux de niveau");
                             $notif->setParentUsers($child->getParent());
                             $notif->setType(0);
+
+                            $ts->lfNewTrophies($child);
 
                             $em->getManager()->persist($notif);
 

@@ -8,6 +8,7 @@ use App\Entity\CustomReward;
 use App\Entity\ParentUser;
 use App\Entity\ProfileImage;
 use App\Entity\Quest;
+use App\Entity\Trophy;
 use App\Form\ChildUserType;
 use App\Form\CustomRewardType;
 use App\Form\ModifyUserType;
@@ -72,8 +73,10 @@ class ParentDashboard extends AbstractController
         $childUsers = $this->getDoctrine()->getRepository(ChildUser::class)->findByPseudo($adventurer);
 
         if (sizeof($childUsers) > 0) {
+            /** @var ChildUser $childUser */
             $childUser = $childUsers[0];
         } else {
+            /** @var ChildUser $childUser */
             $childUser = null;
         }
 
@@ -153,9 +156,12 @@ class ParentDashboard extends AbstractController
 
             // Ajout de l'image par defaut
             /** @var ProfileImage $image */
-            $image = $em->getRepository(ProfileImage::class)->find(1);
+            $image = $em->getRepository(ProfileImage::class)->find(20);
             $newChild->setProfileImage($image);
             $newChild->addUnlockedImage($image);
+
+            // Assignation Trophées de base
+//            $newChild->addTrophy($em->getRepository(Trophy::class))
 
             $em->persist($newChild);
             $em->flush();

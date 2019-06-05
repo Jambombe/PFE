@@ -21,8 +21,11 @@
 {% block right_page %}
 
     <div class="quests-page-details">
-        {% for t in child.trophies %}
-            {% include 'child-dashboard/includes/trophy-card.html.twig' with {'trophy': t} %}
+        {% for t in ts.nextTrophiesOfCategories(child) %}
+            {% include 'child-dashboard/includes/trophy-card.html.twig' with {'trophy': t, 'owned': false} %}
+        {% endfor %}
+        {% for t in child.trophies | reverse | slice(0,5) %}
+            {% include 'child-dashboard/includes/trophy-card.html.twig' with {'trophy': t, 'owned': true} %}
         {% endfor %}
     </div>
 

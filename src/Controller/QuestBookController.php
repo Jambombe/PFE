@@ -27,7 +27,7 @@ class QuestBookController extends AbstractController
      */
     public function profile() {
 
-        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
+        $user = $this->getUser();
 
         return $this->render(
             'child-dashboard/pages/profile.html.twig',
@@ -43,7 +43,8 @@ class QuestBookController extends AbstractController
      */
     public function quests() {
 
-        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
+//        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
+        $user = $this->getUser();
 
         return $this->render(
             'child-dashboard/pages/quests.html.twig',
@@ -59,7 +60,7 @@ class QuestBookController extends AbstractController
      */
     public function shop() {
 
-        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
+        $user = $this->getUser();
 
         return $this->render(
             'child-dashboard/pages/shop.html.twig',

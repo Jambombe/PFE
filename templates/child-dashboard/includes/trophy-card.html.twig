@@ -1,15 +1,17 @@
-{#<div class="ui accordion">#}
-<div class="trophy-card" id="trophy-card-{{ trophy.id }}">
+
+{% if t is not null %}
+<div class="trophy-card{% if owned %} owned{% endif %}" id="trophy-card-{{ trophy.id }}">
     <div class="title">
         <i class="ra ra-trophy"></i>
         {{ trophy.title }}
     </div>
 
     <div class="content">
-        <p>{{ trophy.description }}</p>
+        <p>{{ t.description }}</p>
     </div>
 </div>
-{#</div>#}
+{% endif %}
+
 
 
 <style>
@@ -23,5 +25,10 @@
 
     .quest-card .content {
         padding-left: 20px;
+    }
+
+    .trophy-card.owned {
+        border-color: dimgrey;
+        color: dimgrey;
     }
 </style>

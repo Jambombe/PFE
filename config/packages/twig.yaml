@@ -5,3 +5,4 @@ twig:
     globals:
         lv: '@App\Service\LevelService'
         qs: '@App\Service\QuestStatusService'
+        ts: '@App\Service\TrophyService'
