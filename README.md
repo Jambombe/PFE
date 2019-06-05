@@ -17,6 +17,11 @@
     - [X] Sélection d'une image pour l'enfant en tant qu'image de profil
     
     
+* ChildDashboard
+    - [ ] **Faire version mobile**
+    - [ ] Compléter prix et niveau de déblocage des ProfileImages
+
+
 * ParentDashboard 
     - Mon compte
         - [X] Formulaire de modif des infos
