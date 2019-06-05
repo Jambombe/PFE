@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `profile_image`
 --
 
-DROP TABLE IF EXISTS `profile_image`;
+-- DROP TABLE IF EXISTS `profile_image`;
 CREATE TABLE IF NOT EXISTS `profile_image` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(1023) COLLATE utf8mb4_unicode_ci NOT NULL,

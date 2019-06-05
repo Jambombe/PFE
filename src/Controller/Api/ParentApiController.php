@@ -13,6 +13,7 @@ use App\Service\TrophyService;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -179,6 +180,61 @@ class ParentApiController extends AbstractController
         } else {
             // User inexistant / non connecté
             $message = "Vous n'avez pas l'autorisation de supprimer cette récompense (mauvais utilisateur)";
+        }
+
+        return $this->getJsonResponse($responseCode, $message);
+    }
+
+    /**
+     * @Route("/api/p/reward/{id}", name="get-reward")
+     * @param CustomReward $reward
+     * @return JsonResponse
+     */
+    public function getReward(CustomReward $reward) {
+
+//        $r = $this->getDoctrine()->getRepository(CustomReward::class)->find($id);
+
+        $rewardJson = [
+            'id' => $reward->getId(),
+            'name' => $reward->getName(),
+            'description' => $reward->getDescription(),
+            'price' => $reward->getGoldCoinPrice(),
+            'image' => $reward->getImage()
+        ];
+
+        return $this->getJsonResponse(200, $rewardJson);
+    }
+
+    /**
+     * @Route("/api/p/modif-reward/{id}", name="modif-reward")
+     * @param CustomReward $reward
+     * @param Request $r
+     * @return JsonResponse
+     */
+    public function modifReward(Request $r, CustomReward $reward) {
+
+        $responseCode = JsonResponse::HTTP_FORBIDDEN;
+
+        if ($reward) {
+            if ($reward->getRewardOwner() === $this->getUser()) {
+                $newReward = json_decode($r->getContent(), true);
+
+                $newReward['name'] === '' ?: $reward->setName($newReward['name']);
+                $newReward['description'] === '' ?: $reward->setDescription($newReward['description']);
+                $newReward['price'] === '' ?: $reward->setGoldCoinPrice($newReward['price']);
+                $newReward['image'] === '' ?: $reward->setImage($newReward['image']);
+//                $reward->setDescription($newReward['description']);
+//                $reward->setGoldCoinPrice($newReward['price']);
+//                $reward->setImage($newReward['image']);
+
+                $this->getDoctrine()->getManager()->flush();
+                $responseCode = JsonResponse::HTTP_OK;
+                $message = "Récompense modifée avec succès !";
+            } else {
+                $message = "Cette récompenses ne vius appartient pas";
+            }
+        } else {
+            $message = "Cette récompenses personnalisée n'existe pas";
         }
 
         return $this->getJsonResponse($responseCode, $message);

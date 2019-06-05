@@ -6,7 +6,7 @@
     - [X] L'entité (Nom, description, prix en pièces d'or, image ?)
     - [X] Création de récompenses perso depuis le dashboard parent
     - [X] Modification
-    - [ ] Suppression
+    - [X] Suppression
     - [X] Possibilité pour l'enfant d'acheter en pièce d'or une récompense perso
 
 

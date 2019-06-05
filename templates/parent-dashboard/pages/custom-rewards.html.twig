@@ -1,7 +1,7 @@
 {% extends 'parent-dashboard/base.html.twig' %}
 
     {% block pagetitle %}
-        Récompenses personnalisées <a data-toggle="tooltip" data-placement="right" class="fa fa-info-circle" title="Créez de réelles récompenses que votre enfant pourra échager contre des pièces d'or, obtenues en réalisant des quêtes"></a>
+        Récompenses personnalisées <a data-toggle="tooltip" data-placement="right" class="fa fa-info-circle" title="Créez de réelles récompenses que votre enfant pourra échanger contre des pièces d'or, obtenues en réalisant des quêtes"></a>
     {% endblock pagetitle %}
 
 {% block content %}
@@ -39,6 +39,7 @@
                                                 &nbsp;
                                                 <i class="fa fa-trash" onclick="deleteReward({{ r.id }})"></i>
                                             </div>
+                                            <div id="idMyModal"></div>
                                         </div>
                                         <!-- /.user-block -->
                                     </div>

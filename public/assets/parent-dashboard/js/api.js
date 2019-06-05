@@ -63,7 +63,17 @@ function refuseQuest(questId) {
 }
 
 function editReward(rewardId) {
-    console.log(rewardId);
+
+    window.fetch('/api/p/reward/'+rewardId)
+        .then(r => r.json())
+        .then(r => {
+            if (r.code === 200) {
+                console.log(r);
+                doModal('idMyModal', r.message);
+            } else {
+                console.log(r);
+            }
+        });
 }
 
 function deleteReward(rewardId) {
@@ -114,4 +124,77 @@ function deleteNotif(notifId) {
                 }
             });
     // }
+}
+
+function doModal(placementId, reward)
+{
+
+    console.log(reward);
+
+
+    var html = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\n' +
+        '  <div class="modal-dialog" role="document">\n' +
+        '    <div class="modal-content">\n' +
+        '      <div class="modal-header">\n' +
+        '        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+        '        <h4 class="modal-title" id="myModalLabel">Modifier la récompense</h4>\n' +
+        '      </div>\n' +
+        '      <div class="modal-body">\n' +
+
+
+        '<form>' +
+        '<div class="form-group"> <div> <label for="newName" class="required">Titre</label><input value="'+reward.name+'" id="newName" class="form-control" type="text"/></div></div>' +
+        '<div class="form-group"> <div> <label for="newDescription" class="required">Description</label><textarea id="newDescription" class="form-control">'+reward.description+'</textarea></div></div>' +
+        '<div class="form-group"> <div> <label for="newPrice" class="required">Pices d\'or</label><input value="'+reward.price+'" id="newPrice" class="form-control" type="number"/></div></div>' +
+        '<div class="form-group"> <div> <label for="newImage" class="required">Image</label><input value="'+reward.image+'" id="newImage" class="form-control" type="text"/></div></div>' +
+        '</form>' +
+
+        '      </div>\n' +
+        '      <div class="modal-footer">\n' +
+        '        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>\n' +
+        '        <button type="button" class="btn btn-primary" onclick="saveRewardModifications('+reward.id+')">Sauvegarder</button>\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>';
+
+
+    $("#"+placementId).html(html);
+    $("#myModal").modal();
+}
+
+function saveRewardModifications(rewardId) {
+
+    const newName = document.getElementById('newName').value;
+    const newDescription = document.getElementById('newDescription').value;
+    const newPrice = document.getElementById('newPrice').value;
+    const newImage = document.getElementById('newImage').value;
+
+    const modifReward = {
+        'id': rewardId,
+        'name': newName,
+        'description': newDescription,
+        'price': newPrice,
+        'image': newImage
+    };
+
+
+    window.fetch('/api/p/modif-reward/'+ rewardId, { body: JSON.stringify(modifReward), method: 'PUT' })
+        .then(r => r.json())
+        .then(r => {
+
+            if (r.code === 200) {
+                swal(r.message, {
+                    icon: "success",
+                }).then(() => {
+                    window.location.reload();
+                });
+
+            } else {
+                swal(r.message, {
+                    icon: "error",
+                });
+            }
+        });
+
 }
