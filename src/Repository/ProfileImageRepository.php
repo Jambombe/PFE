@@ -19,6 +19,12 @@ class ProfileImageRepository extends ServiceEntityRepository
         parent::__construct($registry, ProfileImage::class);
     }
 
+    public function findAllSortedBy(String $field) {
+
+        return $this->findBy([], array($field => 'ASC'));
+
+    }
+
     // /**
     //  * @return ProfileImage[] Returns an array of ProfileImage objects
     //  */

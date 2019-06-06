@@ -1,24 +1,33 @@
+{% set levelInfos = lv.infosFromExp(child.exp) %}
+{% set isProfileImage = (image == child.profileimage) %}
+{% set childLv = levelInfos.level %}
+{% set isInUnlockedImages = (image in child.unlockedimages) %}
 
 <div
-        class="image-card four wide column{% if image == child.profileimage %} current-image{% endif %}"
+        class="image-card four wide column{% if isProfileImage %} current-image{% elseif image.requiredLevel>childLv %} not-buyable{% endif %}"
         id="image-card-{{ image.id }}"
-        {% if image not in child.unlockedimages %} onclick="buyImage({{ image.id }})" {% endif %}
+        {% if not isInUnlockedImages %} onclick="buyImage({{ image.id }})" {% endif %}
 >
     <div class="image">
         <img src="{{ image.url }}" alt="Profile image"/>
     </div>
 
-    {% if image in child.unlockedimages and image != child.profileimage %}
+    {# Images débloquées mais pas image de profil #}
+    {% if isInUnlockedImages and not isProfileImage %}
         <div class="price-hover">
             <button class="ui button mini" onclick="changeProfileImage({{ image.id }})">
                 <i class="check icon"></i>
             </button>
         </div>
-    {% elseif image not in child.unlockedimages %}
+
+    {# Images non débloquées #}
+    {% elseif not isInUnlockedImages %}
         <div class="price-hover">
             <img class="ui middle aligned mini image" src="{{ asset('img/level-crystal.png', 'quest-book') }}" alt="Image cristal de niveau"> <span>{{ image.price }}</span>
         </div>
-    {% elseif image == child.profileimage %}
+
+    {# Images de profil #}
+    {% elseif isProfileImage %}
         <div class="price-hover">
             <button class="ui button mini olive disabled">
                 <i class="check icon"></i>
@@ -50,5 +59,10 @@
 
     div.price-hover button  {
         margin: auto;
+    }
+
+    div.image-card.not-buyable img {
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
     }
 </style>

@@ -66,7 +66,8 @@ class QuestBookController extends AbstractController
             'child-dashboard/pages/shop.html.twig',
             [
                 'child' => $user,
-                'images' => $this->getDoctrine()->getRepository(ProfileImage::class)->findAll(),
+//                'images' => $this->getDoctrine()->getRepository(ProfileImage::class)->findAll(),
+                'images' => $this->getDoctrine()->getRepository(ProfileImage::class)->findAllSortedBy('requiredLevel'),
             ]
         );
     }

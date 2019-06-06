@@ -172,9 +172,9 @@ class QuestBookApiController extends AbstractController
             if ($image) {
                 if (! $child->getUnlockedImages()->contains($image)) {
 
-                    if ($child->getLevelCrystal() >= $image->getPrice()) {
+                    if ($ls->infosFromExp($child->getExp())['level'] >= $image->getRequiredLevel()) {
+                        if ($child->getLevelCrystal() >= $image->getPrice()) {
 
-                        if ($ls->infosFromExp($child->getExp())['level'] >= $image->getRequiredLevel()) {
 
                             // On retire les cristaux de niveau à l'enfant
                             $child->addLevelCrystal(-$image->getPrice());
@@ -199,12 +199,12 @@ class QuestBookApiController extends AbstractController
                             $responseCode = JsonResponse::HTTP_OK;
 
                         } else {
-                            // Pas le niveau requis
-                            $message = "Vous n'avez pas le niveau requis pour acheter cette image";
+                            // Pas assez de cristaux
+                            $message = "Vous n'avez pas assez de cristaux de niveau pour acheter cette image";
                         }
                     } else {
-                        // Pas assez de cristaux
-                        $message = "Vous n'avez pas assez de cristaux de niveau pour acheter cette image";
+                        // Pas le niveau requis
+                        $message = "Vous n'avez pas le niveau requis pour acheter cette image (niveau ".$image->getRequiredLevel().")";
                     }
                 } else {
                     // User possède déjà cette image

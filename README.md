@@ -19,7 +19,8 @@
     
 * ChildDashboard
     - [ ] **Faire version mobile**
-    - [ ] Compléter prix et niveau de déblocage des ProfileImages
+    - [X] Compléter prix et niveau de déblocage des ProfileImages
+        - [X] Trier affichage image dans le shop par niveau de déblocage
     
     - Trophées
         - [x] Créer plusieurs trophées
