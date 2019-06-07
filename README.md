@@ -18,7 +18,7 @@
     
     
 * ChildDashboard
-    - [ ] **Faire version mobile**
+    - [En cours] **Faire version mobile**
     - [X] Compléter prix et niveau de déblocage des ProfileImages
         - [X] Trier affichage image dans le shop par niveau de déblocage
     - [X] ERR : Possibilité de créer une quête sans l'assigner  à un enfant
