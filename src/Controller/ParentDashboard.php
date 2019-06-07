@@ -136,9 +136,10 @@ class ParentDashboard extends AbstractController
      * @Route("dashboard/nouvel-enfant", name="dashboard-add-child")
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param TrophyService $ts
      * @return Response
      */
-    public function createChild(Request $request, EntityManagerInterface $em) {
+    public function createChild(Request $request, EntityManagerInterface $em, TrophyService $ts) {
 
         $user = $this->getUser();
 
@@ -162,12 +163,12 @@ class ParentDashboard extends AbstractController
 
             // Assignation Trophées de base
 //            $newChild->addTrophy($em->getRepository(Trophy::class))
+            $ts->lfNewTrophies($newChild);
 
             $em->persist($newChild);
             $em->flush();
 
-//            dump($this->generateUrl('one-child', ['adventurer' => $newChild->getPseudo()]));
-            $this->redirectToRoute('one-child', ['adventurer' => $newChild->getPseudo()]);
+            return $this->redirectToRoute('one-child', ['adventurer' => $newChild->getPseudo()]);
         }
 
         return $this->render(
@@ -186,36 +187,47 @@ class ParentDashboard extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param QuestStatusService $qs
+     * @param LevelService $ls
      * @return Response
      * @throws \Exception
      */
     public function quests(Request $request, EntityManagerInterface $em, QuestStatusService $qs, LevelService $ls) {
 
-        $newQuest = new Quest();
-        $newQuest->setOwner($this->getUser());
+        /** @var ParentUser $user */
+        $user = $this->getUser();
 
-        $questForm = $this->createForm(QuestType::class, $newQuest, ['parent' => $this->getUser(), 'ls'=>$ls]);
+        if (! empty($user->getChildren())) {
 
-        $questForm->handleRequest($request);
+            $newQuest = new Quest();
+            $newQuest->setOwner($this->getUser());
 
-        if ($questForm->isSubmitted() && $questForm->isValid()) {
+            $questForm = $this->createForm(QuestType::class, $newQuest, ['parent' => $this->getUser(), 'ls' => $ls]);
 
+            $questForm->handleRequest($request);
 
-            // Met à jour le status de la quête en fonction de si l'enfant est déjà défini
-            if ($newQuest->getChild()) {
-                $newQuest->setStatus($qs->ASSIGNATED['s']);
-                $newQuest->setAssignatedDate(new DateTime());
+            if ($questForm->isSubmitted() && $questForm->isValid()) {
+
+                // Met à jour le status de la quête en fonction de si l'enfant est déjà défini
+                if ($newQuest->getChild()) {
+                    $newQuest->setStatus($qs->ASSIGNATED['s']);
+                    $newQuest->setAssignatedDate(new DateTime());
+                } else {
+                    $childRow = $questForm->get('child');
+                    $childRow->addError(new FormError("Veuillez sélectionner un enfant"));
+                }
+
+                $em->persist($newQuest);
+                $em->flush();
+
+                $this->redirectToRoute('one-child');
             }
-
-            $em->persist($newQuest);
-            $em->flush();
         }
 
         return $this->render(
             'parent-dashboard/pages/quests.html.twig',
             [
-                'user' => $this->getUser(),
-                'questForm' => $questForm->createView()
+                'user' => $user,
+                'questForm' => !$questForm?:$questForm->createView()
             ]
         );
     }

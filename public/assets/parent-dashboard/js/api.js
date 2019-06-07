@@ -198,3 +198,38 @@ function saveRewardModifications(rewardId) {
         });
 
 }
+
+function deleteChildAccount(childId) {
+
+
+    swal({
+        title: "Voulez-vous vraiment supprimer ce compte Enfant ?",
+        text: "Cette action est définitive et irréversible",
+        icon: "warning",
+        buttons: ['Annuler','Supprimer'],
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                window.fetch('/api/p/delete-child/'+childId)
+                    .then(r => r.json())
+                    .then(r => {
+                        if (r.code === 200) {
+                            swal(r.message, {
+                                icon: "success",
+                            }).then(() => {
+                                document.location.href="/dashboard/mes-enfants";
+                            });
+
+                        } else {
+                            swal("Une erreur est survenue", r.message, {
+                                icon: "error",
+                            });
+                        }
+                    });
+
+
+            }
+
+        });
+}

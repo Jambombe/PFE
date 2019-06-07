@@ -21,6 +21,7 @@
     - [ ] **Faire version mobile**
     - [X] Compléter prix et niveau de déblocage des ProfileImages
         - [X] Trier affichage image dans le shop par niveau de déblocage
+    - [X] ERR : Possibilité de créer une quête sans l'assigner  à un enfant
     
     - Trophées
         - [x] Créer plusieurs trophées
@@ -32,9 +33,12 @@
     - Formulaire création Quête
         - [X] Voir pour afficher %age EXP conseillé
         
+    - [X] Suppression d'un compte Enfant
+        
 * Home
     - [ ] Formatage formulaire Inscription
-    - [ ] Si non loggé, le quest-book ne redirige pas sur le page de Connexion
+    - [X] Si non loggé, le quest-book ne redirige pas sur le page de Connexion
+    - [ ] Page "C'est quoi ?" à compléter
     
 * Inscription
     - [X] Autoriser utilisation de mon email pour validation inscription

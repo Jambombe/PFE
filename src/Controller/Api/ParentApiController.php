@@ -4,13 +4,16 @@
 namespace App\Controller\Api;
 
 
+use App\Entity\ChildUser;
 use App\Entity\CustomReward;
 use App\Entity\Notification;
+use App\Entity\ParentUser;
 use App\Entity\Quest;
 use App\Service\LevelService;
 use App\Service\QuestStatusService;
 use App\Service\TrophyService;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +25,43 @@ class ParentApiController extends AbstractController
 {
 
     /**
+     * @Route("api/p/delete-child/{id}", name="delete-child")
+     * @param ChildUser $child
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
+     */
+    public function deleteChild(ChildUser $child, EntityManagerInterface $em) {
+
+        /** @var ParentUser $user */
+        $user = $this->getUser();
+
+        $responseCode = JsonResponse::HTTP_FORBIDDEN;
+
+        if ($child) {
+            if ($user) {
+                if ($user->getChildren()->contains($child)) {
+                    $em->remove($child);
+                    $em->flush();
+
+                    $message = "Le compte enfant a bien été supprimé";
+                    $responseCode = JsonResponse::HTTP_OK;
+                } else {
+                    // Enfant appartient pas à parent
+                    $message = "Ce compte enfant ne vous appartient pas";
+                }
+            } else {
+                // Parent n'existe pas (pas connecté ou inexistant
+                $message = "Vous devez être connecté pour effectuer cette action";
+            }
+        } else {
+            // Child existe pas
+            $message = "Ce comtpe enfant n'existe pas";
+        }
+
+        return $this->getJsonResponse($responseCode, $message);
+    }
+
+    /**
      * Valider la quête
      *
      * @Route("/api/p/valid/{questId}", name="valid-quest")
@@ -29,7 +69,6 @@ class ParentApiController extends AbstractController
      * @param LevelService $ls
      * @param TrophyService $ts
      * @return JsonResponse
-     * @throws NonUniqueResultException
      */
     public function validQuest($questId, LevelService $ls, TrophyService $ts) {
         $user = $this->getUser();

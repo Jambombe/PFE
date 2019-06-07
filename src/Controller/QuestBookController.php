@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\ChildUser;
 use App\Entity\ProfileImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,6 +19,9 @@ class QuestBookController extends AbstractController
      */
     public function journal() {
 
+        // Temporaire : redirection auto si non loggé ne marche pas
+        if ($redirect = $this->redirectIfNotLogged()) return $redirect;
+
         return $this->redirectToRoute('quest-book-profile');
     }
 
@@ -26,6 +30,9 @@ class QuestBookController extends AbstractController
      * @return Response
      */
     public function profile() {
+
+        // Temporaire : redirection auto si non loggé ne marche pas
+        if ($redirect = $this->redirectIfNotLogged()) return $redirect;
 
         $user = $this->getUser();
 
@@ -42,6 +49,9 @@ class QuestBookController extends AbstractController
      * @return Response
      */
     public function quests() {
+
+        // Temporaire : redirection auto si non loggé ne marche pas
+        if ($redirect = $this->redirectIfNotLogged()) return $redirect;
 
 //        $user = $this->getDoctrine()->getManager()->getRepository(ChildUser::class)->find(1);
         $user = $this->getUser();
@@ -60,6 +70,9 @@ class QuestBookController extends AbstractController
      */
     public function shop() {
 
+        // Temporaire : redirection auto si non loggé ne marche pas
+        if ($redirect = $this->redirectIfNotLogged()) return $redirect;
+
         $user = $this->getUser();
 
         return $this->render(
@@ -70,6 +83,17 @@ class QuestBookController extends AbstractController
                 'images' => $this->getDoctrine()->getRepository(ProfileImage::class)->findAllSortedBy('requiredLevel'),
             ]
         );
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function redirectIfNotLogged() {
+        if (! $this->getUser()) {
+            return $this->redirectToRoute('ouvrir-journal');
+        } else {
+            return null;
+        }
     }
 
 }

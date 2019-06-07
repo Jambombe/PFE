@@ -106,34 +106,38 @@
 
                             <h2>Créer une nouvelle quête</h2>
 
-                            <div class="box box-success">
-                                <div class="box-body">
+                            {% if user.children is empty %}
+                                Pour créer un nouvelle quête, vous devez posséder au moins 1 <a href="{{ path('dashboard-add-child') }}">compte enfant</a>.
+                            {% else %}
+                                <div class="box box-success">
+                                    <div class="box-body">
 
-                                    {{ form_start(questForm) }}
-                                        <div class="form-group">
-                                            {{ form_row(questForm.title) }}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form_row(questForm.description) }}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form_row(questForm.child) }}
-                                        </div>
-                                        <h3>Récompenses</h3>
-                                        <div class="form-group">
-                                            {{ form_row(questForm.exp) }}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form_row(questForm.goldCoins) }}
-                                        </div>
-{#                                        <div class="form-group">#}
-{#                                            {{ form_row(questForm.exp) }}#}
-{#                                        </div>#}
-                                        <input type="submit" value="Créer" class="btn btn-primary">
-                                    {{ form_end(questForm) }}
+                                        {{ form_start(questForm) }}
+                                            <div class="form-group">
+                                                {{ form_row(questForm.title) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_row(questForm.description) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_row(questForm.child) }}
+                                            </div>
+                                            <h3>Récompenses</h3>
+                                            <div class="form-group">
+                                                {{ form_row(questForm.exp) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_row(questForm.goldCoins) }}
+                                            </div>
+    {#                                        <div class="form-group">#}
+    {#                                            {{ form_row(questForm.exp) }}#}
+    {#                                        </div>#}
+                                            <input type="submit" value="Créer" class="btn btn-primary">
+                                        {{ form_end(questForm) }}
 
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                         <!-- /.creer quete -->
                     </div>

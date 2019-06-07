@@ -71,7 +71,7 @@ class QuestBookApiController extends AbstractController
                     }
                 } else {
                     // User existant mais mauvais
-                    $message = "Vous n'avez pas l'autorisation de rendre cette quête (mauvais utilisateur)";
+                    $message = "Tu n'as pas l'autorisation de rendre cette quête (mauvais utilisateur)";
                 }
             } else {
                 // Quete n'existe pas
@@ -79,7 +79,7 @@ class QuestBookApiController extends AbstractController
             }
         } else {
             // User inexistant / non connecté
-            $message = "Vous n'avez pas l'autorisation de rendre cette quête (mauvais utilisateur)";
+            $message = "Tu n'as pas l'autorisation de rendre cette quête (mauvais utilisateur)";
         }
 
         return $this->getJsonResponse($responseCode, $message);
@@ -133,7 +133,7 @@ class QuestBookApiController extends AbstractController
                     }
                 } else {
                     // User existant mais mauvais (enfant n'appartient pas au parent de la récompense)
-                    $message = "Vous n'avez pas l'autorisation d'acheter cette récompense (mauvais utilisateur)";
+                    $message = "Tu n'as pas l'autorisation d'acheter cette récompense (mauvais utilisateur)";
                 }
             } else {
                 // Reward n'existe pas
@@ -141,7 +141,7 @@ class QuestBookApiController extends AbstractController
             }
         } else {
             // User inexistant / non connecté
-            $message = "Vous n'avez pas l'autorisation d'acheter cette récompense (mauvais utilisateur)";
+            $message = "Tu n'as pas l'autorisation d'acheter cette récompense (mauvais utilisateur)";
         }
 
         return $this->getJsonResponse($responseCode, $message);
@@ -200,15 +200,15 @@ class QuestBookApiController extends AbstractController
 
                         } else {
                             // Pas assez de cristaux
-                            $message = "Vous n'avez pas assez de cristaux de niveau pour acheter cette image";
+                            $message = "Tu n'as pas assez de cristaux de niveau pour acheter cette image";
                         }
                     } else {
                         // Pas le niveau requis
-                        $message = "Vous n'avez pas le niveau requis pour acheter cette image (niveau ".$image->getRequiredLevel().")";
+                        $message = "Tu n'as pas le niveau requis pour acheter cette image (niveau ".$image->getRequiredLevel().")";
                     }
                 } else {
                     // User possède déjà cette image
-                    $message = "Vous possédez déjà cette image";
+                    $message = "Tu possèdes déjà cette image";
                 }
             } else {
                 // image n'existe pas
@@ -216,7 +216,7 @@ class QuestBookApiController extends AbstractController
             }
         } else {
             // User inexistant / non connecté
-            $message = "Vous n'avez pas l'autorisation d'acheter cette image (mauvais utilisateur)";
+            $message = "Tu n'as  pas l'autorisation d'acheter cette image (mauvais utilisateur)";
         }
 
         return $this->getJsonResponse($responseCode, $message);
@@ -254,7 +254,7 @@ class QuestBookApiController extends AbstractController
                     $responseCode = JsonResponse::HTTP_OK;
                 } else {
                     // User possède déjà cette image
-                    $message = "Vous devez acheter cette image avant de l'utiliser";
+                    $message = "Tu dois acheter cette image avant de l'utiliser";
                 }
             } else {
                 // image n'existe pas
@@ -262,18 +262,17 @@ class QuestBookApiController extends AbstractController
             }
         } else {
             // User inexistant / non connecté
-            $message = "Vous n'avez pas l'autorisation d'acheter cette image (mauvais utilisateur)";
+            $message = "Tu n'as pas l'autorisation d'acheter cette image (mauvais utilisateur)";
         }
 
-        return $this->getJsonResponse($responseCode, $message, $child);
+        return $this->getJsonResponse($responseCode, $message);
     }
 
-    private function getJsonResponse($responseCode, $message, $user = 'oui') {
+    private function getJsonResponse($responseCode, $message) {
         return new JsonResponse(
             [
                 'code' => $responseCode,
                 'message' => $message,
-                'user' => $user,
             ],
             $responseCode
         );
