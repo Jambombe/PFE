@@ -23,20 +23,23 @@
 
         <div class="container">
             <div id="quest-book">
-                <div class="ui grid">
-                        <div class="left-margin two wide column">
+                <div class="mobile-menu tablet mobile only">
+                    {% include('child-dashboard/includes/mobile-menu.html.twig') %}
+                </div>
+                <div class="ui stackable grid">
+                        <div class=" computer only left-margin two wide column">
                             {% block left_margin %}{% endblock %}
                             {% include 'child-dashboard/includes/left-menu.html.twig' %}
                         </div>
-                        <div class="left-page six wide column">
+                        <div class="left-page six wide computer eight wide tablet column">
                             <h1>{% block left_page_title %}Titre base{% endblock %}</h1>
                             {% block left_page %}{% endblock %}
                         </div>
-                        <div class="right-page six wide column">
+                        <div class="right-page six wide computer eight wide tablet column">
                             <h1>{% block right_page_title %}{% endblock %}</h1>
                             {% block right_page %}{% endblock %}
                         </div>
-                        <div class="right-margin two wide column">
+                        <div class="computer only right-margin two wide column">
                             {% block right_margin %}{% endblock %}
                         </div>
                 </div>

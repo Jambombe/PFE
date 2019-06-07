@@ -1,0 +1,23 @@
+
+<div class="ui compact labeled icon menu">
+    <a class="item" href="{{ path('quest-book-profile') }}">
+        <i class="ra ra-muscle-up"></i>
+        {#                            Profil#}
+    </a>
+    <a class="item" href="{{ path('quest-book-quests') }}">
+        <i class="ra ra-book"></i>
+        {#                            Quêtes#}
+    </a>
+    <a class="item" href="{{ path('quest-book-shop') }}">
+        <i class="ra ra-diamond"></i>
+        {#                            Boutique#}
+    </a>
+</div>
+
+<style>
+    @media all and (min-width: 960px) {
+        .mobile-menu {
+            display: none;
+        }
+    }
+</style>
