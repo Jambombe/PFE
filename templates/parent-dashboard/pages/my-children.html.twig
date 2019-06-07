@@ -6,45 +6,48 @@
 
 {% block content %}
 
-    {% for c in user.children %}
+    {% if user.children is not empty %}
+        {% for c in user.children %}
 
+            {% set currentQuests = 0 %}
+            {% for q in c.quests  | filter(q => q.status == 1)  %}
+                {% set currentQuests = currentQuests +1 %}
+            {% endfor %}
 
-        {% set currentQuests = 0 %}
-        {% for q in c.quests  | filter(q => q.status == 1)  %}
-            {% set currentQuests = currentQuests +1 %}
-        {% endfor %}
+            {% set realisedQuests = 0 %}
+            {% for q in c.quests  | filter(q => q.status == 3 or q.status == 4)  %}
+                {% set realisedQuests = realisedQuests +1 %}
+            {% endfor %}
 
-        {% set realisedQuests = 0 %}
-        {% for q in c.quests  | filter(q => q.status == 3 or q.status == 4)  %}
-            {% set realisedQuests = realisedQuests +1 %}
-        {% endfor %}
-
-
-            <div class="col-md-4">
-                <div class="box box-widget widget-user-2">
-                    <a href="{{ path('one-child', {adventurer: c.pseudo}) }}">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-aqua">
-                            <div class="widget-user-image">
-                                <img class="img-circle" src="{{ c.profileImage.url }}" alt="Child Avatar">
+                <div class="col-md-4">
+                    <div class="box box-widget widget-user-2">
+                        <a href="{{ path('one-child', {adventurer: c.pseudo}) }}">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="widget-user-header bg-aqua">
+                                <div class="widget-user-image">
+                                    <img class="img-circle" src="{{ c.profileImage.url }}" alt="Child Avatar">
+                                </div>
+                                <!-- /.widget-user-image -->
+                                <h3 class="widget-user-username">{{ c.name }}</h3>
+                                <h5 class="widget-user-desc">{{ c.pseudo }}</h5>
                             </div>
-                            <!-- /.widget-user-image -->
-                            <h3 class="widget-user-username">{{ c.name }}</h3>
-                            <h5 class="widget-user-desc">{{ c.pseudo }}</h5>
+                        </a>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li>Niveau <span class="pull-right">{{ lv.infosFromExp(c.exp).level }}</span></li>
+                                <li>Quêtes en cours <span class="pull-right">{{ currentQuests }}</span></li>
+                                <li>Quêtes réalisées <span class="pull-right">{{ realisedQuests }}</span></li>
+                            </ul>
                         </div>
-                    </a>
-                    <div class="box-footer no-padding">
-                        <ul class="nav nav-stacked">
-                            <li>Niveau <span class="pull-right">{{ lv.infosFromExp(c.exp).level }}</span></li>
-                            <li>Quêtes en cours <span class="pull-right">{{ currentQuests }}</span></li>
-                            <li>Quêtes réalisées <span class="pull-right">{{ realisedQuests }}</span></li>
-                        </ul>
                     </div>
                 </div>
-            </div>
 
 
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        Vous ne possédez aucun compte Enfant.</br>
+        <a href="{{ path('dashboard-add-child') }}">Créer un compte Enfant</a>
+    {% endif %}
 
 {% endblock content %}
 
