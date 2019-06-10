@@ -83,13 +83,13 @@ div.left-margin {
     .container { margin: 0 !important;}
 }
 
-@media all and (max-width: 960px){
+@media all and (max-width: 960px) and (min-width: 100px){
     body {
         min-width: 0 !important;
         background: none;
     }
     div#quest-book {
-        background: none;
+        background: none !important;
         /*background: url("../img/book.png") no-repeat center top;*/
         /*-webkit-background-size: cover;*/
         /*-moz-background-size: cover;*/
