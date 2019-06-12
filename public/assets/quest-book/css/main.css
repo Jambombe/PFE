@@ -88,6 +88,10 @@ div.left-margin {
         min-width: 0 !important;
         background: none;
     }
+
+    div.left-page, div.right-page {
+        height: 50vh;
+    }
     div#quest-book {
         background: url("../img/mobile-book.png") no-repeat center center fixed;
         -webkit-background-size: cover;
@@ -95,6 +99,7 @@ div.left-margin {
         -o-background-size: cover;
         background-size: cover;
         padding: 0;
+        height: auto;
         /*background: url("../img/book.png") no-repeat center top;*/
         /*-webkit-background-size: cover;*/
         /*-moz-background-size: cover;*/
