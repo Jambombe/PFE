@@ -79,18 +79,16 @@ div.left-margin {
     color: #A41E1C;
 }
 
+/* Tablet */
 @media all and (max-width: 1300px){
     .container { margin: 0 !important;}
 }
 
+/* Smartphone */
 @media all and (max-width: 960px) and (min-width: 100px){
     body {
         min-width: 0 !important;
         background: none;
-    }
-
-    div.left-page, div.right-page {
-        height: 50vh;
     }
     div#quest-book {
         background: url("../img/mobile-book.png") no-repeat center center fixed;
@@ -100,22 +98,10 @@ div.left-margin {
         background-size: cover;
         padding: 0;
         height: auto;
-        /*background: url("../img/book.png") no-repeat center top;*/
-        /*-webkit-background-size: cover;*/
-        /*-moz-background-size: cover;*/
-        /*-o-background-size: cover;*/
-        /*background-size: contain;*/
-        /*background-size: 100% auto;*/
-        /*background-origin: content-box;*/
-        /*height: 100%;*/
-        /*padding: 50px;*/
+        min-height: 100vh;
     }
 
-    i {
-
-    }
-
-    .left-margin, .right-margin {
-        /*display: none !important;*/
+    div.left-page, div.right-page {
+        max-height: 50vh !important;
     }
 }
