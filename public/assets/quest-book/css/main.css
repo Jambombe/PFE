@@ -56,7 +56,7 @@ h2 {
 /* debug */
 div.wide {
     margin-top: 80px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 div.wide.six {
@@ -89,7 +89,12 @@ div.left-margin {
         background: none;
     }
     div#quest-book {
-        background: none !important;
+        background: url("../img/mobile-book.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        padding: 0;
         /*background: url("../img/book.png") no-repeat center top;*/
         /*-webkit-background-size: cover;*/
         /*-moz-background-size: cover;*/
