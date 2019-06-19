@@ -6,9 +6,15 @@
 
     <div class="quests-page">
         <div class="ui accordion">
-            {% for q in child.quests  | filter(q => q.status == 1)  %}
-                {% include 'child-dashboard/includes/quest-card.html.twig' with {'quest': q} %}
-            {% endfor %}
+
+            {% set childQuests = child.quests | filter(q => q.status == 1) %}
+            {% if childQuests | length == 0 %}
+                Aucune quête
+            {% else %}
+                {% for q in childQuests  %}
+                    {% include 'child-dashboard/includes/quest-card.html.twig' with {'quest': q} %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 
