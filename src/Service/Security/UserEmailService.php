@@ -17,6 +17,8 @@ class UserEmailService
     private $mailerUser;
     private $urlGenerator;
     private $twig;
+
+    const LOST_PASSWORD_VALIDITY_TIME = 1; // en heures
     
     public function __construct(Swift_Mailer $mailer, \Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, string $mailerUser = 'lucas.barneoudarnaud@gmail.com')
     {
@@ -51,7 +53,25 @@ class UserEmailService
             ), 'text/html'
             )
         ;
-        
+        return (bool) $this->mailer->send($message);
+    }
+
+
+    public function sendLostPasswordMail(ParentUser $user){
+        if(!$user->getEmail()){
+
+            return false;
+        }
+
+        $message = (new Swift_Message('SITE - Mot de passe perdu'))
+            ->setFrom($this->mailerUser)
+            ->setTo($user->getEmail())
+            ->setBody(
+            $this->twig->render(
+                    '/security/lostpassword-email.html.twig', array('link' => $this->urlGenerator->generate('resetpassword', ['lostPasswordToken' => $user->getLostPasswordToken()], UrlGeneratorInterface::ABSOLUTE_URL), 'validity' => self::LOST_PASSWORD_VALIDITY_TIME)
+                ), 'text/html'
+            )
+        ;
         return (bool) $this->mailer->send($message);
     }
 }

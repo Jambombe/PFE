@@ -40,6 +40,10 @@
     - [X] Si non loggé, le quest-book ne redirige pas sur le page de Connexion
     - [ ] Page "C'est quoi ?" à compléter
     - [ ] Confirmation envoi email après inscription
+    - [ ] Mot de passe perdu
+        - [X] Envoi email
+        - [X] Reset MdP
+        - [ ] Affichage des confirmations, erreurs ... d'envoi de mail, mot de passe changé
     
 * Inscription
     - [X] Autoriser utilisation de mon email pour validation inscription

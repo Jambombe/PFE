@@ -5,6 +5,7 @@ use App\Service\Security\UserEmailService;
 use App\Form\RegisterUserType;
 use App\Form\ResetPasswordType;
 use App\Entity\ParentUser;
+use DateTime;
 use RuntimeException;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,14 +47,14 @@ class SecurityController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param UserEmailService $userEmailService
+     * @param UserEmailService $ues
      *
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, UserEmailService $userEmailService)
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, UserEmailService $ues)
     {
         // 1) Construire le form User
         $user = new ParentUser();
@@ -73,7 +74,7 @@ class SecurityController extends AbstractController
             if ($needEmailValidation) {
                 $emailToken = md5(uniqid());
                 $user->setRoles(array('ROLE_USER_PENDING'))->setEmail($user->getEmail())->setEmailToken($emailToken);
-                $isSend = $userEmailService->sendValidationEmail($user);
+                $isSend = $ues->sendValidationEmail($user);
             }
 
 //            // 5) Sauvegarder l'utilisateur
@@ -177,29 +178,21 @@ class SecurityController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, Swift_Mailer $mailer)
+    public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, UserEmailService $ues)
     {
         $userMail = $request->get('email');
         $responseParams = [];
         if ($userMail) {
-            $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
-            /* @var $user User */
+            $userRepository = $this->getDoctrine()->getRepository(ParentUser::class);
+            /* @var $user ParentUser */
             $user = $userRepository->findOneByEmail($userMail);
             if ($user) {
                 $resetToken = md5(uniqid());
-                $user->setLostPasswordDate(new \DateTime())->setLostPasswordToken($resetToken);
+                $user->setLostPasswordDate(new DateTime())->setLostPasswordToken($resetToken);
                 $em->flush();
-                $message = (new \Swift_Message('MDP Perdu'))
-                    ->setFrom($this->getParameter('mailer_user'))
-                    ->setTo($userMail)
-                    ->setBody(
-                    $this->renderView(
-                        '/Security/Password/lostpassword-email.html.twig', array('link' => $this->generateUrl('resetpassword', ['lostPasswordToken' => $resetToken], UrlGeneratorInterface::ABSOLUTE_URL), 'validity' => self::LOST_PASSWORD_VALIDITY_TIME)
-                    ), 'text/html'
-                    )
-                ;
+                $mailSent = $ues->sendLostPasswordMail($user);
 
-                if ($mailer->send($message)) {
+                if ($mailSent) {
                     $this->addFlash(
                         "success", "Un email pour redéfinir votre mdp vous a été envoyé"
                     );
@@ -215,7 +208,7 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('/Security/Password/lostpassword.html.twig', $responseParams);
+        return $this->render('/security/lostpassword.html.twig', $responseParams);
     }
 
     /**
@@ -247,7 +240,7 @@ class SecurityController extends AbstractController
                 $user->setLostPasswordToken(null)->setLostPasswordDate(null);
 
                 // On en profite pour valider l'email de l'utilisateur au cas où ce n'était pas déjà fait
-                $user->removeRole('ROLE_USER_PENDING')->addRole('ROLE_USER')->setEmailTemp(null)->setEmailToken(null);
+                $user->removeRole('ROLE_USER_PENDING')->addRole('ROLE_USER')->setEmailToken(null);
 
                 // save the User!
                 $em = $this->getDoctrine()->getManager();
@@ -263,9 +256,9 @@ class SecurityController extends AbstractController
 
             // Afficher le formulaire
             $validity = self::LOST_PASSWORD_VALIDITY_TIME;
-            if ($user->getLostPasswordDate()->modify("+$validity hour") >= new \DateTime()) {
+            if ($user->getLostPasswordDate()->modify("+$validity hour") >= new DateTime()) {
 
-                return $this->render('/Security/Password/resetpassword.html.twig', array('passwordForm' => $passwordForm->createView()));
+                return $this->render('/security/resetpassword.html.twig', array('passwordForm' => $passwordForm->createView()));
             } else {
                 $this->addFlash(
                     "warning", "Le lien n'est plus valide"
@@ -314,13 +307,16 @@ class SecurityController extends AbstractController
 
     /**
      * Afficher la page d'accès refusé (droits insufisants)
-     * 
+     *
      * @Route("/private/accessdenied", name="accessdenied")
-     * 
+     *
      * @param Request $request
      * @param UserEmailService $userEmailService
-     * 
+     *
      * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function accessDenied(Request $request, UserEmailService $userEmailService)
     {
