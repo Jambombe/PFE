@@ -86,14 +86,11 @@ class QuestBookController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * Redirige vers ouvrir-journal si l'utilisateur est null (donc non-loggué à prioris)
+     * @return RedirectResponse|null
      */
     public function redirectIfNotLogged() {
-        if (! $this->getUser()) {
-            return $this->redirectToRoute('ouvrir-journal');
-        } else {
-            return null;
-        }
+        return $this->getUser() ? null : $this->redirectToRoute('ouvrir-journal');
     }
 
 }
