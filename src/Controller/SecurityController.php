@@ -255,7 +255,7 @@ class SecurityController extends AbstractController
                     "success", "Mot de passe changé avec succès"
                 );
 
-                return $this->redirectToRoute('dashboard');
+                return $this->redirectToRoute('home');
             }
 
             // Afficher le formulaire
