@@ -7,7 +7,7 @@
         <a class="toc item"><i class="sidebar icon"></i></a>
         <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil</a>
         <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>
-        <a class="item">Plans</a>
+{#        <a class="item">Plans</a>#}
         <div class="right item">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a class="ui inverted labeled icon button blue" href="{{ path('dashboard') }}"><i class="columns icon"></i>{{ app.user.name }}</a>

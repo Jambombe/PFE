@@ -5,7 +5,7 @@
     <div class="ui container">
         <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil</a>
         <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>
-        <a class="item">Plans</a>
+{#        <a class="item">Plans</a>#}
         <div class="right menu">
             <div class="item"><a class="ui button" href="{{ path('login') }}">Connexion</a></div>
             <div class="item"><a class="ui primary button" href="{{ path('register') }}">S'inscrire</a></div>
@@ -17,7 +17,7 @@
 <div class="ui vertical inverted sidebar menu">
     <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil</a>
     <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>
-    <a class="item">Plans</a>
+{#    <a class="item">Plans</a>#}
 
     <a class="item" href="{{ path('login') }}">Connexion</a>
     <a class="item" href="{{ path('register') }}">S'inscrire</a>
