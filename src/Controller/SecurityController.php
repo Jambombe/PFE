@@ -6,6 +6,7 @@ use App\Form\RegisterUserType;
 use App\Form\ResetPasswordType;
 use App\Entity\ParentUser;
 use DateTime;
+use Exception;
 use RuntimeException;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -89,6 +90,8 @@ class SecurityController extends AbstractController
 //                    'type' => "success"
 //                ]
 //            );
+
+            $this->addFlash('success', "Un e-mail de confirmation vous a été envoyé à l'adresse indiquée");
 
             // Confirmer inscription + prévenir envoi mail
             return $this->redirectToRoute('home');
@@ -176,7 +179,7 @@ class SecurityController extends AbstractController
      * @param Swift_Mailer $mailer
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, UserEmailService $ues)
     {
@@ -194,16 +197,17 @@ class SecurityController extends AbstractController
 
                 if ($mailSent) {
                     $this->addFlash(
-                        "success", "Un email pour redéfinir votre mdp vous a été envoyé"
+                        "success", "Un e-mail pour réinitialiser votre mot de passe vous a été envoyé"
                     );
+                    return $this->redirectToRoute("home");
                 } else {
                     $this->addFlash(
-                        "danger", "Une erreur est survenue, merci d'essayer à nouveau"
+                        "error", "Une erreur est survenue, merci d'essayer à nouveau"
                     );
                 }
             } else {
                 $this->addFlash(
-                    "warning", "Email inconnu"
+                    "warning", "Adresse e-mail inconnue"
                 );
             }
         }
@@ -221,9 +225,9 @@ class SecurityController extends AbstractController
      * @param ParentUser $user
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
-    public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ParentUser $user = null)
+    public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ParentUser $user = null, UserEmailService $ues)
     {
 
         if ($user) {
@@ -255,7 +259,7 @@ class SecurityController extends AbstractController
             }
 
             // Afficher le formulaire
-            $validity = self::LOST_PASSWORD_VALIDITY_TIME;
+            $validity = $ues::LOST_PASSWORD_VALIDITY_TIME;
             if ($user->getLostPasswordDate()->modify("+$validity hour") >= new DateTime()) {
 
                 return $this->render('/security/resetpassword.html.twig', array('passwordForm' => $passwordForm->createView()));
@@ -299,7 +303,7 @@ class SecurityController extends AbstractController
         }
 
         $this->addFlash(
-            "warning", "Cet email n'existe pas, ou le lien est expiré"
+            "warning", "Cette adresse e-mail n'existe pas, ou le lien est expiré"
         );
 
         return $this->redirectToRoute('login');
@@ -324,11 +328,11 @@ class SecurityController extends AbstractController
         if ($request->get('resendEmailValidation') == 1) {
             if ($userEmailService->sendValidationEmail($this->getUser())) {
                 $this->addFlash(
-                    "success", "Email envoyé avec succès"
+                    "success", "E-mail envoyé avec succès"
                 );
             } else {
                 $this->addFlash(
-                    "danger", "Une erreur est survenue, merci d'essayer à nouveau"
+                    "error", "Une erreur est survenue, merci d'essayer à nouveau"
                 );
             }
         }

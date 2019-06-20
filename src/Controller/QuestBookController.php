@@ -4,7 +4,6 @@
 namespace App\Controller;
 
 
-use App\Entity\ChildUser;
 use App\Entity\ProfileImage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

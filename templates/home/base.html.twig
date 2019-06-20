@@ -19,6 +19,17 @@
     <body>
         {% include 'home/includes/main-menu.html.twig' %}
 
+        {% for l, messages in app.flashes %}
+            {% for m in messages %}
+                <div class="ui inline nag {{ l }}" style="display: block">
+                    <span class="title">
+                        {{ m }}
+                    </span>
+{#                    <i class="close icon"></i>#}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
 
         {% include 'home/includes/home-footer.html.twig' %}

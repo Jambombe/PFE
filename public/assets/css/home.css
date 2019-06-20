@@ -13,6 +13,18 @@ h1 {
     font-family: "Fantasy1", Lato, "Helvetica Neue", sans-serif !important;
 }
 
+.nag.success {
+    background: #00a65a;
+}
+
+.nag.warning {
+    background: #ea0;
+}
+
+.nag.error {
+    background: #e55;
+}
+
 .hidden.menu {
     display: none;
 }
