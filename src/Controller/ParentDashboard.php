@@ -19,6 +19,7 @@ use App\Service\TrophyService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,6 +81,7 @@ class ParentDashboard extends AbstractController
             $childUser = null;
         }
 
+        /** @var ParentUser $user */
         $user = $this->getUser();
 
         if (! $user->getChildren()->contains($childUser)) {
@@ -227,23 +229,26 @@ class ParentDashboard extends AbstractController
             'parent-dashboard/pages/quests.html.twig',
             [
                 'user' => $user,
-                'questForm' => !$questForm?:$questForm->createView()
+                'questForm' => !$questForm?:$questForm->createView(),
             ]
         );
     }
 
     /**
-     * Dashboard des quêtes - Permet de voir les quetes en cours, à valider en d'en créer de nouvelles
+     * Dashboard des récompenses perso
      *
      * @Route("dashboard/recompenses", name="dashboard-custom-rewards")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function customRewards(Request $request, EntityManagerInterface $em, \Symfony\Component\Asset\Packages $assetsManager) {
+    public function customRewards(Request $request, EntityManagerInterface $em) {
+
+        /** @var ParentUser $user */
+        $user = $this->getUser();
 
         $newCustomReward = new CustomReward();
-        $newCustomReward->setRewardOwner($this->getUser());
+        $newCustomReward->setRewardOwner($user);
 
         $customRewardForm = $this->createForm(CustomRewardType::class, $newCustomReward);
 
@@ -266,7 +271,7 @@ class ParentDashboard extends AbstractController
         return $this->render(
             'parent-dashboard/pages/custom-rewards.html.twig',
             [
-                'user' => $this->getUser(),
+                'user' => $user,
                 'customRewardForm' => $customRewardForm->createView()
             ]
         );
@@ -290,6 +295,8 @@ class ParentDashboard extends AbstractController
     }
 
     /**
+     * Modifier les infos de son compte Parent
+     *
      * @Route("dashboard/options", name="parent-options")
      * @param Request $request
      * @param UserPasswordEncoderInterface $pe
@@ -337,8 +344,6 @@ class ParentDashboard extends AbstractController
      * @Route("test")
      * @param TrophyService $ts
      * @return Response
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function testTrophy(TrophyService $ts) {
         /** @var ChildUser $u */
@@ -348,6 +353,4 @@ class ParentDashboard extends AbstractController
 
         return new Response();
     }
-
-
 }

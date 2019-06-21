@@ -17,9 +17,7 @@ class HomeController extends AbstractController {
 
         return $this->render(
             'home/pages/home.html.twig',
-            [
-
-            ]
+            []
         );
     }
 

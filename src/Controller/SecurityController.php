@@ -176,10 +176,11 @@ class SecurityController extends AbstractController
      *
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @param Swift_Mailer $mailer
-     *
+     * @param UserEmailService $ues
      * @return Response
-     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function sendLostPasswordMailAction(Request $request, EntityManagerInterface $em, UserEmailService $ues)
     {
@@ -224,12 +225,12 @@ class SecurityController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param ParentUser $user
      *
+     * @param UserEmailService $ues
      * @return Response
      * @throws Exception
      */
-    public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ParentUser $user = null, UserEmailService $ues)
+    public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ParentUser $user, UserEmailService $ues)
     {
-
         if ($user) {
             // Changer le MDP si form submitted
             $passwordForm = $this->createForm(ResetPasswordType::class, $user);
@@ -251,25 +252,21 @@ class SecurityController extends AbstractController
                 $em->flush();
                 $this->authenticateUser($user);
 
-                $this->addFlash(
-                    "success", "Mot de passe changé avec succès"
-                );
+                $this->addFlash("success", "Mot de passe modifié avec succès");
 
                 return $this->redirectToRoute('home');
             }
 
-            // Afficher le formulaire
             $validity = $ues::LOST_PASSWORD_VALIDITY_TIME;
             if ($user->getLostPasswordDate()->modify("+$validity hour") >= new DateTime()) {
 
                 return $this->render('/security/resetpassword.html.twig', array('passwordForm' => $passwordForm->createView()));
             } else {
-                $this->addFlash(
-                    "warning", "Le lien n'est plus valide"
-                );
+                $this->addFlash("warning", "Le lien n'est plus valide");
             }
         }
 
+        $this->addFlash('error', "Une erreur est survenue, veuillez ré-essayer plus tard");
         return $this->redirectToRoute('lostpassword');
     }
 
@@ -278,13 +275,12 @@ class SecurityController extends AbstractController
      * 
      * @Route("/validate/{emailTemp}/{emailToken}", name="validateemail")
      * 
-     * @param Request $request
      * @param EntityManagerInterface $em
      * @param ParentUser $user
      * 
      * @return Response
      */
-    public function validateEmail(Request $request, EntityManagerInterface $em, ParentUser $user = null)
+    public function validateEmail(EntityManagerInterface $em, ParentUser $user)
     {
 
         if ($user) {
@@ -295,16 +291,12 @@ class SecurityController extends AbstractController
             $em->flush();
             // On authentifie l'utilisateur au cas où ce ne soit pas déjà fait
             $this->authenticateUser($user);
-            $this->addFlash(
-                "success", "Email validé avec succès"
-            );
+            $this->addFlash("success", "Adresse e-mail validée avec succès");
 
             return $this->redirectToRoute('home');
         }
 
-        $this->addFlash(
-            "warning", "Cette adresse e-mail n'existe pas, ou le lien est expiré"
-        );
+        $this->addFlash("warning", "Cette adresse e-mail n'existe pas, ou le lien est expiré");
 
         return $this->redirectToRoute('login');
     }
