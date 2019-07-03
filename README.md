@@ -44,7 +44,7 @@
         - [X] Envoi email
         - [X] Reset MdP
         - [X] Affichage des confirmations, erreurs ... d'envoi de mail, mot de passe changé
-    - [ ] Sitemap / Mentions légales
+    - [x] Sitemap / Mentions légales
     
 * Inscription
     - [X] Autoriser utilisation de mon email pour validation inscription
