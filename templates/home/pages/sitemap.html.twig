@@ -1,0 +1,26 @@
+{% extends 'home/base.html.twig' %}
+
+{% block title %}Sitemap{% endblock %}
+
+{% block body %}
+
+    <h1>Sitemap</h1>
+
+    <div>
+        <ul>
+            <li><a href="{{ path('home') }}">Accueil</a></li>
+            <br/>
+            <li><a href="{{ path('login') }}">Connexion</a></li>
+            <li><a href="{{ path('register') }}">Inscription</a></li>
+            <br/>
+            <li><a href="{{ path('ouvrir-journal') }}">Connexion Enfant</a></li>
+            <br/>
+            <li><a href="{{ path('sitemap') }}">Sitemap</a></li>
+            <li><a href="{{ path('mentions_legales') }}">Mentions légales</a></li>
+        </ul>
+    </div>
+
+
+
+
+{% endblock body %}
