@@ -1,5 +1,7 @@
 {% extends 'home/base.html.twig' %}
 
+{% block title %}Inscription{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -36,15 +38,16 @@
 
                 <br>
                 <div class="ui fluid input">
-                    {{ form_row(registerForm.email) }}
+                    {{ form_widget(registerForm.email) }}
                 </div>
                 <br>
                 <div class="ui fluid input">
-                    {{ form_row(registerForm.name, {attr: {class: 'test'}}) }}
+                    {{ form_widget(registerForm.name, {attr: {class: 'test'}}) }}
                 </div>
                 <br>
                 <div class="ui fluid input">
-                    {{ form_row(registerForm.plainPassword) }}
+                    {{ form_widget(registerForm.plainPassword.first) }}
+                    {{ form_widget(registerForm.plainPassword.second) }}
                 </div>
                 <br>
                 <br>

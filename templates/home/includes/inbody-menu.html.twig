@@ -6,7 +6,7 @@
     <div class="ui large secondary inverted pointing menu">
         <a class="toc item"><i class="sidebar icon"></i></a>
         <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil</a>
-        <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>
+{#        <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>#}
 {#        <a class="item">Plans</a>#}
         <div class="right item">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}

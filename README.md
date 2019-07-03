@@ -36,9 +36,9 @@
     - [X] Suppression d'un compte Enfant
         
 * Home
-    - [ ] Formatage formulaire Inscription / Reset password
+    - [X] Formatage formulaire Inscription / Reset password
     - [X] Si non loggé, le quest-book ne redirige pas sur le page de Connexion
-    - [ ] Page "C'est quoi ?" à compléter (la fusionner dans Home ?)
+    - [X] Page "C'est quoi ?" à compléter (la fusionner dans Home ?)
     - [X] Confirmation envoi email après inscription
     - [X] Mot de passe perdu
         - [X] Envoi email
