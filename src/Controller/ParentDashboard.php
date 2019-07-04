@@ -221,7 +221,7 @@ class ParentDashboard extends AbstractController
                 $em->persist($newQuest);
                 $em->flush();
 
-                $this->redirectToRoute('one-child');
+                return $this->redirectToRoute('one-child', ['adventurer' => $newQuest->getChild()->getPseudo()]);
             }
         }
 
