@@ -44,8 +44,8 @@ class QuestBookApiController extends AbstractController
 
         if ($user) {
             if ($quest) {
-//                if ($quest->getChild() === $user) {
-                if ($quest->getChild() !== $user) { // Pour tester avec le mauvais utilisateur
+                if ($quest->getChild() === $user) {
+//                if ($quest->getChild() !== $user) { // Pour tester avec le mauvais utilisateur
 
                     if ($quest->getStatus() === QuestStatusService::ASSIGNATED) {
 
@@ -79,7 +79,7 @@ class QuestBookApiController extends AbstractController
             }
         } else {
             // User inexistant / non connecté
-            $message = "Tu n'as pas l'autorisation de rendre cette quête (mauvais utilisateur)";
+            $message = "Tu n'as pas l'autorisation de rendre cette quête (utilisateur inexistant / non connecté)";
         }
 
         return $this->getJsonResponse($responseCode, $message);
