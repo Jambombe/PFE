@@ -69,7 +69,7 @@ class ChildUser implements UserInterface, Serializable
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Quest", mappedBy="child")
+     * @ORM\OneToMany(targetEntity="Quest", mappedBy="child", cascade={"remove"})
      */
     private $quests;
 

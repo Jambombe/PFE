@@ -25,15 +25,18 @@ class ParentApiController extends AbstractController
 {
 
     /**
-     * @Route("api/p/delete-child/{id}", name="delete-child")
-     * @param ChildUser $child
+     * @Route("api/p/delete-child/{childId}", name="delete-child")
+     * @param $childId
      * @param EntityManagerInterface $em
      * @return JsonResponse
      */
-    public function deleteChild(ChildUser $child, EntityManagerInterface $em) {
+    public function deleteChild($childId, EntityManagerInterface $em) {
 
         /** @var ParentUser $user */
         $user = $this->getUser();
+
+        /** @var ChildUser $child */
+        $child = $em->getRepository(ChildUser::class)->find($childId);
 
         $responseCode = JsonResponse::HTTP_FORBIDDEN;
 
