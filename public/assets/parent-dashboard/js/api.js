@@ -217,10 +217,9 @@ function deleteChildAccount(childId) {
                         if (r.code === 200) {
                             swal(r.message, {
                                 icon: "success",
+                            }).then(() => {
+                                document.location.href="/dashboard/mes-enfants";
                             });
-                                // .then(() => {
-                                // document.location.href="/dashboard/mes-enfants";
-                            // });
 
                         } else {
                             swal("Une erreur est survenue", r.message, {
