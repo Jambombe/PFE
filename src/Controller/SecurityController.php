@@ -309,7 +309,7 @@ class SecurityController extends AbstractController
     public function accessDenied(Request $request, UserEmailService $userEmailService)
     {
 
-        if ($request->get('resendEmailValidation') == 1) {
+        if ($request->get('r') == 1) {
             dump('alo');
             if ($userEmailService->sendValidationEmail($this->getUser())) {
                 $this->addFlash('success', "Un e-mail de confirmation vous a été envoyé à l'adresse indiquée");
