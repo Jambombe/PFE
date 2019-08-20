@@ -1,5 +1,29 @@
 # PFE
 
+## Todo retour exam blanc
+
+### Accueil
+- [ ] Connexion sans valider email : erreur 500
+- [ ] Messages d'erreur inscription (non mis en forme ?)
+- [x] Footer : lien connexion enfant ne marche pas
+- [x] "Inscription" -> "S'inscrire"
+
+### Dashboard parent
+- [ ] Refresh après avoir créé quête : duplication car formulaire soumi à nouveau
+- [ ] Déconnexion et retour Accueil absents du dashboard parent
+- [ ] Lu / non lu notification
+- [ ] Clic notif "Quête rendue" -> dirige sur la quête
+- [ ] Pouvoir relancer la quête au refus de celle-ci
+- [ ] Mettre des malus en cas d'échec
+- [ ] Suivi des récompenses côté parent
+- [ ] Enlever <a> titre des quêtes
+
+### Journal enfant
+- [ ] Alertes du journal enfant à customiser
+- [ ] Barres de scrolls journal enfant à masquer
+- [ ] "Inventaire" de récompenses enfant
+- [ ] Nombre de récompenses dispo
+
     
 ## Todo
 * CustomReward
@@ -8,15 +32,12 @@
     - [X] Modification
     - [X] Suppression
     - [X] Possibilité pour l'enfant d'acheter en pièce d'or une récompense perso
-
-
     
 * ProfileImage
     - [X] En ajouter plusieurs
     - [X] Possibilité pour l'enfant d'en acheter avec les cristaux de niveaux
     - [X] Sélection d'une image pour l'enfant en tant qu'image de profil
-    
-    
+        
 * ChildDashboard
     - [X] **Faire version mobile**
     - [X] Compléter prix et niveau de déblocage des ProfileImages
@@ -25,7 +46,6 @@
     
     - Trophées
         - [x] Créer plusieurs trophées
-
 
 * ParentDashboard 
     - Mon compte
