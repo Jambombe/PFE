@@ -97,9 +97,14 @@ h1 {
 }
 
 div.error-msg {
+    list-style: none !important;
     color: #c00 !important;
     border: 1px solid #c00;
     border-radius: 1px;
+}
+
+div.error-msg>ul {
+    list-style: none;
 }
 
 @media only screen and (max-width: 700px) {

@@ -1,0 +1,39 @@
+{% extends 'home/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #main {
+            min-height: 100vh;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    <div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment" id="main">
+
+            {% include 'home/includes/inbody-menu.html.twig' %}
+
+            <div class="ui text container">
+                <h1 class="ui inverted header"></h1>
+                <br>
+                <div class="error-msg">
+                    Veuillez confirmer votre adresse e-mail avant de vous connecter
+                </div>
+                <br/>
+                <br/>
+                <a type="submit" class="ui  green button huge" href="{{ path('accessdenied', { 'resendEmailValidation': 1 }) }}">Envoyer un nouvel e-mail de confirmation</a>
+
+                <br/>
+                <br>
+                <a href="{{ path('register') }}">Créer un compte</a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

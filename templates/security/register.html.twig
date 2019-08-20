@@ -21,18 +21,21 @@
             <div class="ui text container">
                 <h1 class="ui inverted header">Inscription</h1>
                 <br>
-{#                {% if error %}#}
-{#                    {% if error.code == 0 %}#}
-{#                        <div class="error-msg">Cet email est déjà enregistré</div>#}
-{#                        <br>#}
-{#                    {% endif %}#}
-{#                {% endif %}#}
+                {% if errors is defined %}
+                    {#{% if errors.code == 0 %}#}
+                        {#<div class="error-msg">err</div>#}
+                    {#{{ dump(errors) }}#}
+                        <br>
+                    {#{% endif %}#}
+                {% endif %}
 
                 {{ form_start(registerForm, {attr: {class: 'ui form'}}) }}
 
-                {% if form_errors(registerForm) %}
+                {% if form_errors(registerForm.email) != "" or form_errors(registerForm.plainPassword.first) != ""  %}
                     <div class="error-msg">
-                        {{ form_errors(registerForm) }}
+                        {{ form_errors(registerForm.email) }}
+                        {{ form_errors(registerForm.plainPassword.first) }}
+                        {#{{ form_errors(registerForm.plainPassword.second) }}#}
                     </div>
                 {% endif %}
 

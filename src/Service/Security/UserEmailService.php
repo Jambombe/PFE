@@ -49,7 +49,7 @@ class UserEmailService
             return false;
         }
         
-        $message = (new Swift_Message('SITE - Validez votre e-mail'))
+        $message = (new Swift_Message('One Quest - Validez votre e-mail'))
             ->setFrom($this->mailerUser)
             ->setTo($user->getEmail())
             ->setBody(
@@ -75,7 +75,7 @@ class UserEmailService
             return false;
         }
 
-        $message = (new Swift_Message('SITE - Mot de passe perdu'))
+        $message = (new Swift_Message('One Quest - Mot de passe perdu'))
             ->setFrom($this->mailerUser)
             ->setTo($user->getEmail())
             ->setBody(

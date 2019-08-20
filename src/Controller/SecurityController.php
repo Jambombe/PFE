@@ -82,15 +82,6 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-//            $this->render(
-//                'global/alert-modal.html.twig',
-//                [
-//                    'title' => "Vous êtes inscris !",
-//                    'message' => "Veillez valider votre compte à l'aide de le-mail envoyé à l'adresse saisie.",
-//                    'type' => "success"
-//                ]
-//            );
-
             $this->addFlash('success', "Un e-mail de confirmation vous a été envoyé à l'adresse indiquée");
 
             // Confirmer inscription + prévenir envoi mail
@@ -101,6 +92,7 @@ class SecurityController extends AbstractController
                 'security/register.html.twig',
                 [
                     'registerForm' => $registerForm->createView(),
+                    'errors' => $registerForm->getErrors(),
                 ]
         );
     }
@@ -304,7 +296,7 @@ class SecurityController extends AbstractController
     /**
      * Afficher la page d'accès refusé (droits insufisants)
      *
-     * @Route("/private/accessdenied", name="accessdenied")
+     * @Route("/accessdenied", name="accessdenied")
      *
      * @param Request $request
      * @param UserEmailService $userEmailService
@@ -318,10 +310,11 @@ class SecurityController extends AbstractController
     {
 
         if ($request->get('resendEmailValidation') == 1) {
+            dump('alo');
             if ($userEmailService->sendValidationEmail($this->getUser())) {
-                $this->addFlash(
-                    "success", "E-mail envoyé avec succès"
-                );
+                $this->addFlash('success', "Un e-mail de confirmation vous a été envoyé à l'adresse indiquée");
+
+                return $this->redirectToRoute('home');
             } else {
                 $this->addFlash(
                     "error", "Une erreur est survenue, merci d'essayer à nouveau"
@@ -329,6 +322,6 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('/Security/AccessDenied/accessdenied.html.twig');
+        return $this->render('/security/accessdenied.html.twig');
     }
 }

@@ -47,6 +47,7 @@ class RegisterUserType extends AbstractType
                     'attr' => [
                         'class' => 'ui input',
                     ],
+                    'invalid_message' => "Les mots de passe ne sont pas identiques",
                 ]
             )
             ->add('name', TextType::class,

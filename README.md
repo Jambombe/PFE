@@ -3,8 +3,8 @@
 ## Todo retour exam blanc
 
 ### Accueil
-- [ ] Connexion sans valider email : erreur 500
-- [ ] Messages d'erreur inscription (non mis en forme ?)
+- [x] Connexion sans valider email : erreur 500
+- [x] Messages d'erreur inscription (non affichés)
 - [x] Footer : lien connexion enfant ne marche pas
 - [x] "Inscription" -> "S'inscrire"
 

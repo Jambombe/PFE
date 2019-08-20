@@ -7,18 +7,28 @@
 {#        <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>#}
 {#        <a class="item">Plans</a>#}
         <div class="right menu">
-            <div class="item"><a class="ui button" href="{{ path('login') }}">Connexion</a></div>
-            <div class="item"><a class="ui primary button" href="{{ path('register') }}">S'inscrire</a></div>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="ui labeled icon button blue" href="{{ path('dashboard') }}"><i class="columns icon"></i>{{ app.user.name }}</a>
+                <a class="ui icon button black" href="{{ path('logout') }}"><i class="sign-out icon"></i></a>
+            {% else %}
+                <div class="item"><a class="ui button" href="{{ path('login') }}">Connexion</a></div>
+                <div class="item"><a class="ui primary button" href="{{ path('register') }}">Inscription</a></div>
+            {% endif %}
         </div>
     </div>
 </div>
 
-<!--Sidebar Menu-->
+<!--Sidebar Menu (mobile)-->
 <div class="ui vertical inverted sidebar menu">
     <a class="{% if currentPath is same as(path('home')) %}active {% endif %}item" href="{{ path('home') }}">Accueil</a>
 {#    <a class="{% if currentPath is same as(path('presentation')) %}active {% endif %}item" href="{{ path('presentation') }}">C'est quoi ?</a>#}
 {#    <a class="item">Plans</a>#}
 
-    <a class="item" href="{{ path('login') }}">Connexion</a>
-    <a class="item" href="{{ path('register') }}">S'inscrire</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a class="item" href="{{ path('dashboard') }}"><i class="columns icon"></i>Tableau de bord</a>
+        <a class="item" href="{{ path('logout') }}"><i class="sign-out icon"></i> Déconnexion</a>
+    {% else %}
+        <a class="item" href="{{ path('login') }}">Connexion</a>
+        <a class="item" href="{{ path('register') }}">Inscription</a>
+    {% endif %}
 </div>

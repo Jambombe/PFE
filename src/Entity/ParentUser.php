@@ -32,7 +32,7 @@ class ParentUser implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Email(
-     *     message = "L'email '{{ value }}' n'est pas valide",
+     *     message = "L'adresse e-mail {{ value }} n'est pas valide",
      * )
      */
     private $email;
