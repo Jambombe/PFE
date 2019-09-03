@@ -21,6 +21,8 @@
                         <!-- ONGLET QUETES EN COURS-->
                         <div class="active tab-pane" id="activeQuests">
 
+                            {% set questToValidExists = true %}
+
                             {% if user.quests | length > 0 %}
                                 {% for q in user.quests | reverse %}
                                     {% if q.status is same as (qs.ASSIGNATED.s) %}
@@ -33,7 +35,7 @@
                                             <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
 
                                             <span class="username">
-                                              <a href="#">{{ q.title }}</a>
+                                              {{ q.title }}
                                             </span>
                                             <span class="description">{{ q.description }}</span>
                                         </div>
@@ -48,10 +50,13 @@
                                         </ul>
                                     </div>
                                     <!-- /.quete -->
+                                    {% elseif q.status is same as (qs.RETURNED.s) %}
+                                        {% set questToValidExists = false %}
                                     {% endif %}
                                 {% endfor %}
-                            {% else %}
-                                Aucune quête à afficher <br>
+                            {% endif %}
+                            {% if (user.quests | length == 0 or not questToValidExists) %}
+                                    Aucune quête à afficher <br>
                                 <a href="">Créer une nouvelle quête</a>
                             {% endif %}
                         </div>
@@ -63,38 +68,40 @@
                             {% if user.quests |length > 0 %}
                                 {% for q in user.quests %}
                                     {% if q.status is same as (qs.RETURNED.s) %}
-                                    <!-- Quete -->
-                                    <div class="post" id="quest-post-{{ q.id }}">
-                                        <div class="user-block">
-{#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
+                                        <!-- Quete -->
+                                        <div class="post" id="quest-post-{{ q.id }}">
+                                            <div class="user-block">
+    {#                                            <img class="img-circle img-bordered-sm" src="" alt="status" style="background-color: red">#}
 
-                                            {% set questStatus = qs.statusByNumber(q.status) %}
-                                            <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
+                                                {% set questStatus = qs.statusByNumber(q.status) %}
+                                                <span class="quest-status {{ questStatus.colorclass }}"><i class="{{ questStatus.icon }}"></i></span>
 
-                                            <span class="username">
-                                              <a href="#">{{ q.title }}</a>
-                                            </span>
-                                            <span class="description">{{ q.description }}</span>
+                                                <span class="username">
+                                                  <a href="#">{{ q.title }}</a>
+                                                </span>
+                                                <span class="description">{{ q.description }}</span>
+                                            </div>
+                                            <!-- /.user-block -->
+                                            <ul>
+                                                <li>Assignée à <b>{{ q.child.name }}</b></li>
+                                                <li>le <b>{{ q.assignatedDate | date("d/m/Y")}}</b> à <b>{{ q.assignatedDate | date("H:i") }}</b></li>
+
+                                                {% if q.status >= 2 %}
+                                                    <li>Rendue le <b>{{ q.returnDate | date("d/m/Y")}}</b> à <b>{{ q.returnDate | date("H:i") }}</b></li>
+                                                {% endif %}
+                                            </ul>
+
+                                            <div class="valid-btns">
+                                                <a onclick="validQuest({{ q.id }})" class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</a>
+                                                <a onclick="refuseQuest({{ q.id }})" class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</a>
+                                            </div>
                                         </div>
-                                        <!-- /.user-block -->
-                                        <ul>
-                                            <li>Assignée à <b>{{ q.child.name }}</b></li>
-                                            <li>le <b>{{ q.assignatedDate | date("d/m/Y")}}</b> à <b>{{ q.assignatedDate | date("H:i") }}</b></li>
-
-                                            {% if q.status >= 2 %}
-                                                <li>Rendue le <b>{{ q.returnDate | date("d/m/Y")}}</b> à <b>{{ q.returnDate | date("H:i") }}</b></li>
-                                            {% endif %}
-                                        </ul>
-
-                                        <div class="valid-btns">
-                                            <a onclick="validQuest({{ q.id }})" class="btn btn-app {{ qs.VALIDATED.colorclass }}"><i class="{{ qs.VALIDATED.icon }}"></i> Valider la quête</a>
-                                            <a onclick="refuseQuest({{ q.id }})" class="btn btn-app {{ qs.FAILED.colorclass }}"><i class="{{ qs.FAILED.icon }}"></i> Refuser la quête</a>
-                                        </div>
-                                    </div>
-                                    <!-- /.quete -->
+                                        <!-- /.quete -->
+                                        {% set questToValidExists = false %}
                                     {% endif %}
                                 {% endfor %}
-                            {% else %}
+                            {% endif %}
+                            {% if (user.quests | length == 0 or questToValidExists) %}
                                 Aucune quête à afficher <br>
                                 <a href="">Créer une nouvelle quête</a>
                             {% endif %}

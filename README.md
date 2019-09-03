@@ -16,7 +16,7 @@
 - [ ] Pouvoir relancer la quête au refus de celle-ci
 - [ ] Mettre des malus en cas d'échec
 - [ ] Suivi des récompenses côté parent
-- [ ] Enlever <a> titre des quêtes
+- [x] Enlever <a> titre des quêtes
 
 ### Journal enfant
 - [ ] Alertes du journal enfant à customiser
