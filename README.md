@@ -10,7 +10,7 @@
 
 ### Dashboard parent
 - [ ] Refresh après avoir créé quête : duplication car formulaire soumi à nouveau
-- [ ] Déconnexion et retour Accueil absents du dashboard parent
+- [x] Déconnexion et retour Accueil absents du dashboard parent
 - [ ] Lu / non lu notification
 - [ ] Clic notif "Quête rendue" -> dirige sur la quête
 - [ ] Pouvoir relancer la quête au refus de celle-ci
