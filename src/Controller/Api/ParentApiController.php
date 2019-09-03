@@ -290,6 +290,7 @@ class ParentApiController extends AbstractController
             'name' => $reward->getName(),
             'description' => $reward->getDescription(),
             'price' => $reward->getGoldCoinPrice(),
+            'newNbUnitAvailable' => $reward->getNbUnitAvailable(),
             'image' => $reward->getImage()
         ];
 
@@ -313,6 +314,7 @@ class ParentApiController extends AbstractController
                 $newReward['name'] === '' ?: $reward->setName($newReward['name']);
                 $newReward['description'] === '' ?: $reward->setDescription($newReward['description']);
                 $newReward['price'] === '' ?: $reward->setGoldCoinPrice($newReward['price']);
+                $newReward['newNbUnitAvailable'] === '' ?: $reward->setNbUnitAvailable($newReward['newNbUnitAvailable']);
                 $newReward['image'] === '' ?: $reward->setImage($newReward['image']);
 //                $reward->setDescription($newReward['description']);
 //                $reward->setGoldCoinPrice($newReward['price']);

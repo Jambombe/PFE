@@ -32,6 +32,11 @@ class CustomReward
     private $goldCoinPrice;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbUnitAvailable;
+
+    /**
      * @ORM\Column(type="string", length=1023)
      */
     private $image;
@@ -102,6 +107,24 @@ class CustomReward
     public function setRewardOwner(?ParentUser $rewardOwner): self
     {
         $this->rewardOwner = $rewardOwner;
+
+        return $this;
+    }
+
+    public function getNbUnitAvailable(): ?int
+    {
+        return $this->nbUnitAvailable;
+    }
+
+    public function setNbUnitAvailable(int $nbUnitAvailable): self
+    {
+        $this->nbUnitAvailable = $nbUnitAvailable;
+
+        return $this;
+    }
+
+    public function removeOneUnit(): self {
+        $this->nbUnitAvailable -= 1;
 
         return $this;
     }

@@ -32,6 +32,15 @@
                                             </span>
                                             <span class="description">{{ r.description }}</span>
                                             <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ r.goldCoinPrice }}</span>
+                                            <br/>
+                                            <br/>
+                                            <span class="e">Disponible :
+                                                {% if r.nbUnitAvailable == -1  %}
+                                                    Illimité
+                                                {% else %}
+                                                    {{ r.nbUnitAvailable }}
+                                                {% endif %}
+                                            </span>
 
                                             {#                                            <span class="description">{{ r.image }}</span>#}
                                             <div class="action-buttons">
@@ -68,6 +77,9 @@
                                         </div>
                                         <div class="form-group">
                                             {{ form_row(customRewardForm.goldCoinPrice) }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_row(customRewardForm.nbUnitAvailable) }}
                                         </div>
                                         <div class="form-group">
                                             {{ form_row(customRewardForm.image) }}

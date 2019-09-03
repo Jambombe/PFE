@@ -3,20 +3,22 @@
 {#</div>#}
 
 {#<div class="ui accordion">#}
-<div class="reward-card eight wide column" id="quest-card-{{ reward.id }}" onclick="buyItem({{ reward.id }})">
-    <div class="title">
-        <img class="ui middle aligned mini image" src="{{ r.image }}" alt="Image">
-        {{ reward.name }}
-    </div>
+{% if reward.nbUnitAvailable > 0 %}
+    <div class="reward-card eight wide column" id="quest-card-{{ reward.id }}" onclick="buyItem({{ reward.id }})">
+        <div class="title">
+            <img class="ui middle aligned mini image" src="{{ r.image }}" alt="Image">
+            {{ reward.name }}
+        </div>
 
-    <div class="content">
-        <p><i>{{ reward.description }}</i></p>
-        <p>
-            <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ reward.goldCoinPrice }}</span>
-        </p>
+        <div class="content">
+            <p><i>{{ reward.description }}</i></p>
+            <p>
+                <img class="ui middle aligned mini image" src="{{ asset('img/gold-coins.png', 'quest-book') }}" alt="Image pièces d'or"> <span>{{ reward.goldCoinPrice }}</span>
+            <p><i>{{ reward.nbUnitAvailable }} restant(s)</i></p>
+            </p>
+        </div>
     </div>
-</div>
-{#</div>#}
+{% endif %}
 
 
 <style>

@@ -171,7 +171,8 @@ function doModal(placementId, reward)
         '<form>' +
         '<div class="form-group"> <div> <label for="newName" class="required">Titre</label><input value="'+reward.name+'" id="newName" class="form-control" type="text"/></div></div>' +
         '<div class="form-group"> <div> <label for="newDescription" class="required">Description</label><textarea id="newDescription" class="form-control">'+reward.description+'</textarea></div></div>' +
-        '<div class="form-group"> <div> <label for="newPrice" class="required">Pices d\'or</label><input value="'+reward.price+'" id="newPrice" class="form-control" type="number"/></div></div>' +
+        '<div class="form-group"> <div> <label for="newPrice" class="required">Pièces d\'or</label><input value="'+reward.price+'" id="newPrice" class="form-control" type="number"/></div></div>' +
+        '<div class="form-group"> <div> <label for="newNbUnitAvailable" class="required">Nombre disponible</label><input value="'+  (reward.newNbUnitAvailable ===-1 ? '': reward.newNbUnitAvailable) +'" id="newNbUnitAvailable" class="form-control" type="number"/></div></div>' +
         '<div class="form-group"> <div> <label for="newImage" class="required">Image</label><input value="'+reward.image+'" id="newImage" class="form-control" type="text"/></div></div>' +
         '</form>' +
 
@@ -194,6 +195,7 @@ function saveRewardModifications(rewardId) {
     const newName = document.getElementById('newName').value;
     const newDescription = document.getElementById('newDescription').value;
     const newPrice = document.getElementById('newPrice').value;
+    const newNbUnitAvailable = document.getElementById('newNbUnitAvailable').value;
     const newImage = document.getElementById('newImage').value;
 
     const modifReward = {
@@ -201,6 +203,7 @@ function saveRewardModifications(rewardId) {
         'name': newName,
         'description': newDescription,
         'price': newPrice,
+        'newNbUnitAvailable': newNbUnitAvailable,
         'image': newImage
     };
 

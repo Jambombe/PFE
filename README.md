@@ -17,7 +17,7 @@
 - [ ] Mettre des malus en cas d'échec
 - [ ] Suivi des récompenses côté parent
 - [x] Enlever <a> titre des quêtes
-
+- [x] Nombre d'unités pour récompenses
 ### Journal enfant
 - [ ] Alertes du journal enfant à customiser
 - [ ] Barres de scrolls journal enfant à masquer

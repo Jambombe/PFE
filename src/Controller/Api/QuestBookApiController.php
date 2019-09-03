@@ -105,6 +105,8 @@ class QuestBookApiController extends AbstractController
         if ($child) {
 
             $em = $this->getDoctrine();
+
+            /** @var CustomReward $reward */
             $reward = $em->getRepository(CustomReward::class)->find($rewardId);
 
             if ($reward) {
@@ -114,6 +116,8 @@ class QuestBookApiController extends AbstractController
 
                         // On retire les pièces d'or à l'enfant
                         $child->addGoldCoins(-$reward->getGoldCoinPrice());
+
+                        $reward->removeOneUnit();
 
                         $notif = new Notification();
                         $notif->setTitle($child->getName() . " a acheté une récompense !");

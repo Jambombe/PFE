@@ -256,6 +256,9 @@ class ParentDashboard extends AbstractController
 
         if ($customRewardForm->isSubmitted() && $customRewardForm->isValid()) {
 
+            if ($newCustomReward->getNbUnitAvailable() === null) {
+                $newCustomReward->setNbUnitAvailable(-1);
+            }
 
             if (! $newCustomReward->getImage() || ! file_exists($newCustomReward->getImage())) {
 //                $path = $assetsManager->getUrl('assets/img/home/white-image.png');

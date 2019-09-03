@@ -41,6 +41,17 @@ class CustomRewardType extends AbstractType
                     ]
                 ]
             )
+            ->add('nbUnitAvailable', IntegerType::class,
+                [
+                    'label'=>"Nombre disponible",
+                    "required" => false,
+                    'attr'=> [
+                        'class'=>'form-control',
+                        'placeholder' => "Laisser vide pour illimité",
+                        'min'=>0,
+                    ]
+                ]
+            )
             ->add('image', TextType::class,
                 [
                     'required'=>false,
