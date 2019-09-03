@@ -94,10 +94,10 @@ function editReward(rewardId) {
         .then(r => r.json())
         .then(r => {
             if (r.code === 200) {
-                console.log(r);
+                // console.log(r);
                 doModal('idMyModal', r.message);
             } else {
-                console.log(r);
+                // console.log(r);
             }
         });
 }
@@ -154,9 +154,6 @@ function deleteNotif(notifId) {
 
 function doModal(placementId, reward)
 {
-
-    console.log(reward);
-
 
     var html = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\n' +
         '  <div class="modal-dialog" role="document">\n' +
