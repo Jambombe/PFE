@@ -36,28 +36,54 @@ function refuseQuest(questId) {
         title: "Voulez-vous refuser la quête ?",
         text: "L'enfant ne recevra pas les récompenses",
         icon: "warning",
-        buttons: ['Annuler','Oui'],
+        buttons: {
+            confirm: "Oui",
+            restart: "Relancer la quête",
+            cancel: "Annuler"
+        },
         dangerMode: true,
     })
-        .then((willDelete) => {
-            if (willDelete) {
-                window.fetch('/api/p/refuse/'+questId)
-                    .then(r => r.json())
-                    .then(r => {
-                        if (r.code === 200) {
-                            swal(r.message, {
-                                icon: "success",
-                            });
+        .then((value) => {
+            switch (value) {
+                case "confirm" :
+                    window.fetch('/api/p/refuse/'+questId)
+                        .then(r => r.json())
+                        .then(r => {
+                            if (r.code === 200) {
+                                swal(r.message, {
+                                    icon: "success",
+                                });
 
-                            const questCard = document.getElementById('quest-post-'+questId);
+                                const questCard = document.getElementById('quest-post-'+questId);
 
-                            questCard.remove();
-                        } else {
-                            swal("Une erreur est survenue", r.message, {
-                                icon: "error",
-                            });
-                        }
-                    });
+                                questCard.remove();
+                            } else {
+                                swal("Une erreur est survenue", r.message, {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    break;
+                case "restart" :
+                    window.fetch('/api/p/restart/'+questId)
+                        .then(r => r.json())
+                        .then(r => {
+                            if (r.code === 200) {
+                                swal(r.message, {
+                                    icon: "success",
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                                // const questCard = document.getElementById('quest-post-'+questId);
+                                //
+                                // questCard.remove();
+                            } else {
+                                swal("Une erreur est survenue", r.message, {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    break;
             }
         });
 }

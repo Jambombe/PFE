@@ -13,7 +13,7 @@
 - [x] Déconnexion et retour Accueil absents du dashboard parent
 - [ ] Lu / non lu notification
 - [ ] Clic notif "Quête rendue" -> dirige sur la quête
-- [ ] Pouvoir relancer la quête au refus de celle-ci
+- [x] Pouvoir relancer la quête au refus de celle-ci
 - [ ] Mettre des malus en cas d'échec
 - [ ] Suivi des récompenses côté parent
 - [x] Enlever <a> titre des quêtes

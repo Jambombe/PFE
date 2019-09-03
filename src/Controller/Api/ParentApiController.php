@@ -186,6 +186,55 @@ class ParentApiController extends AbstractController
 
 
     /**
+     * Relancer la quête (après échec)
+     *
+     * @Route("/api/p/restart/{questId}", name="restart-quest")
+     * @param $questId
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function restartQuest($questId) {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine();
+
+        $quest = $em->getRepository(Quest::class)->find($questId);
+
+        $responseCode = JsonResponse::HTTP_FORBIDDEN;
+
+        if ($user) {
+            if ($quest) {
+                if ($quest->getOwner() === $user) {
+                    if ($quest->getStatus() === QuestStatusService::RETURNED) {
+
+                        // On change le statut de la quête
+                        $quest->setStatus(QuestStatusService::ASSIGNATED);
+                        $em->getManager()->flush();
+
+                        $message = "Quête relancée avec succès";
+                        $responseCode = JsonResponse::HTTP_OK;
+                    } else {
+                        // Quete ayant un status différent de Assigné
+                        $message = "Impossible de relancer cette quête";
+                    }
+                } else {
+                    // User existant mais mauvais
+                    $message = "Vous n'avez pas l'autorisation pour relancer cette quête (mauvais utilisateur)";
+                }
+            } else {
+                // Quete n'existe pas
+                $message = "Impossible de relancer cette quête";
+            }
+        } else {
+            // User inexistant / non connecté
+            $message = "Vous n'avez pas l'autorisation pour relancer cette quête (mauvais utilisateur)";
+        }
+
+        return $this->getJsonResponse($responseCode, $message);
+    }
+
+
+    /**
      * Supprimer une reward
      *
      * @Route("/api/p/delete-reward/{rewardId}", name="delete-reward")
