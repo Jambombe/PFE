@@ -4,7 +4,7 @@
 
 {#<div class="ui accordion">#}
 {% if reward.nbUnitAvailable > 0 %}
-    <div class="reward-card eight wide column" id="quest-card-{{ reward.id }}" onclick="buyItem({{ reward.id }})">
+    <div class="reward-card eight wide column" id="quest-card-{{ reward.id }}" onclick="buyItem({{ reward.id }}, {{  reward.goldCoinPrice }})">
         <div class="title">
             <img class="ui middle aligned mini image" src="{{ r.image }}" alt="Image">
             {{ reward.name }}

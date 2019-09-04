@@ -67,6 +67,11 @@ div.wide.six {
     /*max-height: 1000px;*/
 }
 
+/* Cache la barre de scroll */
+div.wide.six::-webkit-scrollbar {
+    display: none;
+}
+
 div.left-margin {
     height: 100%;
 }
