@@ -12,20 +12,21 @@
             <div class="col-md-9">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#activeQuests" data-toggle="tab">Quêtes en cours</a></li>
-                        <li><a href="#finishedQuests" data-toggle="tab">Quêtes à valider</a></li>
-                        <li><a href="#add-quest" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
+                        <li class="active" id="activeQuestsTab"><a href="#activeQuests" data-toggle="tab">Quêtes en cours</a></li>
+                        <li id="finishedQuestsTab" ><a href="#finishedQuests"data-toggle="tab">Quêtes à valider</a></li>
+                        <li id="add-quest-tab"><a href="#add-quest" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
                     </ul>
                     <div class="tab-content">
 
                         <!-- ONGLET QUETES EN COURS-->
                         <div class="active tab-pane" id="activeQuests">
 
-                            {% set questToValidExists = true %}
+                            {% set activeQuestExists = true %}
 
                             {% if user.quests | length > 0 %}
                                 {% for q in user.quests | reverse %}
                                     {% if q.status is same as (qs.ASSIGNATED.s) %}
+                                        {% set activeQuestExists = true %}
                                     <!-- Quete -->
                                     <div class="post">
                                         <div class="user-block">
@@ -50,14 +51,17 @@
                                         </ul>
                                     </div>
                                     <!-- /.quete -->
-                                    {% elseif q.status is same as (qs.RETURNED.s) %}
-                                        {% set questToValidExists = false %}
+                                    {% else %}
+                                        {% set activeQuestExists = false %}
                                     {% endif %}
                                 {% endfor %}
+                            {% else %}
+                                {% set activeQuestExists = false %}
                             {% endif %}
-                            {% if (user.quests | length == 0 or not questToValidExists) %}
+
+                            {% if not activeQuestExists %}
                                     Aucune quête à afficher <br>
-                                <a href="">Créer une nouvelle quête</a>
+                                <a href="#" onclick="swapToAddQuest()">Créer une nouvelle quête</a>
                             {% endif %}
                         </div>
                         <!-- /.quetes en cours -->
@@ -65,9 +69,12 @@
                         <!-- ONGLET QUETES EN ATTENTE DE VALIDATION-->
                         <div class="tab-pane" id="finishedQuests">
 
+                            {% set questToValidExists = true %}
+
                             {% if user.quests |length > 0 %}
                                 {% for q in user.quests %}
                                     {% if q.status is same as (qs.RETURNED.s) %}
+                                        {% set questToValidExists = true %}
                                         <!-- Quete -->
                                         <div class="post" id="quest-post-{{ q.id }}">
                                             <div class="user-block">
@@ -97,13 +104,16 @@
                                             </div>
                                         </div>
                                         <!-- /.quete -->
+                                    {% else %}
                                         {% set questToValidExists = false %}
                                     {% endif %}
                                 {% endfor %}
+                            {% else %}
+                                {% set questToValidExists = false %}
                             {% endif %}
-                            {% if (user.quests | length == 0 or questToValidExists) %}
+                            {% if not questToValidExists %}
                                 Aucune quête à afficher <br>
-                                <a href="">Créer une nouvelle quête</a>
+                                <a onclick="swapToAddQuest()">Créer une nouvelle quête</a>
                             {% endif %}
                         </div>
                         <!-- /.quetes en cours -->
@@ -227,6 +237,29 @@
         $(function () {
             /* BOOTSTRAP SLIDER */
             $('.slider').slider()
-        })
+        });
+
+
+        function swapToAddQuest() {
+
+            const activeQuestsDiv = document.getElementById("activeQuests");
+            const finishedQuestsDiv = document.getElementById("finishedQuests");
+            const addQuestDiv = document.getElementById("add-quest");
+
+            const activeQuestsTab = document.getElementById("activeQuestsTab");
+            const finishedQuestsTab = document.getElementById("finishedQuestsTab");
+            const addQuestTab = document.getElementById("add-quest-tab");
+
+            finishedQuestsDiv.classList.remove("active");
+            activeQuestsDiv.classList.remove("active");
+
+            addQuestDiv.classList.add("active");
+
+            activeQuestsTab.classList.remove("active");
+            finishedQuestsTab.classList.remove("active");
+
+            addQuestTab.classList.add("active");
+
+        }
     </script>
 {% endblock %}

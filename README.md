@@ -18,6 +18,8 @@
 - [ ] Suivi des récompenses côté parent
 - [x] Enlever <a> titre des quêtes
 - [x] Nombre d'unités pour récompenses
+- [x] Clic sur "Créer nouvelle quête" ouvre l'onglet de création
+
 ### Journal enfant
 - [x] Alertes du journal enfant à customiser
 - [x] Barres de scrolls journal enfant à masquer
